@@ -115,7 +115,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
     $scope.login = function(){
 
-
+          window.location = "app.html"
 
     }
 
