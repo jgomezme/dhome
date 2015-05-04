@@ -8,25 +8,98 @@
     <link rel="stylesheet" href="assets/libs/angular-material/angular-material.css">
     <link rel="stylesheet" href="assets/font/custom/style.css">
     <link rel="stylesheet/less"  href="assets/less/default.less">
-    <script src="assets/libs/less/less.js"></script>    
+    <script src="assets/libs/less/less.js"></script>   
+
+    <style type="text/css">
+    html, body{
+      background: url(assets/img/bg-1.png);
+    }
+    </style> 
   </head>
   <body layout="column" >
     <div ng-controller="mainCtrl" layout="column" layout-fill>
 
-    <div ng-include="'views/common/header.html'"></div>  
 
 <div layout="row" flex class="content-wrapper" ng-click="$root.insearch=false">
 
-   <div layout="column" flex>
-    <md-content  class="md-default-theme" style="height: 89%;" ui-view></md-content>
-    </div>
+   
+    
+    <md-content layout   class="" flex style="background:transparent">
 
-   <div layout="column">
+         
+          <form hide-sm layout-align="center" style="margin:0 auto" flex="33" ng-model="form">
+          <br>
+          <br>
+          <br>
+          <label>
+          <h2 style="text-align:center;">Digital Homes</h2>
+          </label>
+          <br>
+          <md-content  style="padding:4rem; border-radius:1rem">
+              <md-input-container flex>
+                <label>Nombre de Usuario *</label>
+                <input ng-model="form.username" ng-init="portero@rtcdigitalconsulting.com">
+              </md-input-container>
+               <md-input-container flex>
+                <label>Contraseña *</label>
+                <input ng-model="form.password" ng-init="123456">
+              </md-input-container>
 
-   <div ng-include="'views/common/sidebar.html'"></div>
-   </div>
+<br>
+              <div>
 
-   </div>
+              <md-button >
+                 Recuperar Contraseña
+              </md-button>
+
+                <md-button ng-click="login()" class="md-raised md-primary" style="float:right;display:block">
+                 Ingresar
+              </md-button>
+
+              </div>
+
+</md-content>
+              </form>
+
+                        <form hide-gt-sm layout-align="center" style="margin:0 auto" flex="33" ng-model="form">
+          <br>
+          <br>
+          <br>
+          <label>
+          <h2 style="text-align:center;">Digital Homes</h2>
+          </label>
+          <br>
+          <md-content  style="padding:4rem; border-radius:1rem">
+              <md-input-container flex>
+                <label>Nombre de Usuario *</label>
+                <input ng-model="form.username" ng-init="portero@rtcdigitalconsulting.com">
+              </md-input-container>
+               <md-input-container flex>
+                <label>Contraseña *</label>
+                <input ng-model="form.password" ng-init="123456">
+              </md-input-container>
+
+<br>
+              <div>
+
+              <md-button >
+                 Recuperar Contraseña
+              </md-button>
+
+                <md-button ng-click="login()" class="md-raised md-primary" style="float:right;display:block">
+                 Ingresar
+              </md-button>
+
+              </div>
+
+</md-content>
+              </form>
+
+    </md-content>
+
+    
+
+
 
   </div>
     <!-- Angular Material Dependencies -->
@@ -38,7 +111,7 @@
     <script src="assets/libs/angular-material-icons/angular-material-icons.min.js"></script>
     <script src='assets/libs/lodash/dist/lodash.min.js'></script>
     <script src="assets/helpers/config.js"></script>
-    <script src="assets/js/config.js"></script>
+    <script src="assets/js/main.js"></script>    
     <script src="assets/js/api_service.js"></script>
     <script src="assets/js/services.js"></script>
     <script src="assets/js/controllers.js"></script>

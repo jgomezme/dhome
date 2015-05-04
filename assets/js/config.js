@@ -1,12 +1,41 @@
-var app = angular.module('dhome', ['ngMaterial', 'ui.router', 'ngMdIcons']);
+var app = angular.module('dhome');
 
-app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $mdThemingProvider) {
+
+  // theming
+
+   $mdThemingProvider.definePalette('dhomePalette', {
+    '50': 'ffebee',
+    '100': '287D7D',
+    '200': 'ef9a9a',
+    '300': 'e57373',
+    '400': 'ef5350',
+    '500': '91C46C',
+    '600': 'e53935',
+    '700': 'd32f2f',
+    '800': 'c62828',
+    '900': 'b71c1c',
+    'A100': 'ff8a80',
+    'A200': 'ff5252',
+    'A400': 'ff1744',
+    'A700': 'd50000',
+    'contrastDefaultColor': 'light',   
+                                        
+    'contrastDarkColors': ['50', '100', 
+     '200', '300', '400', 'A100'],
+    'contrastLightColors': undefined    
+  });
+  $mdThemingProvider.theme('default')
+    .primaryPalette('dhomePalette')
 
 
   $httpProvider.interceptors.push(function(){
         return {
            'request': function(config) {
-                // $httpProvider.defaults.withCredentials = true;                
+                // $httpProvider.defaults.withCredentials = true;       
+
+              /*  if(!localStorage.token)
+                  window.location = "index.html"   */      
 
                 $httpProvider.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.token;  // common
  
@@ -23,6 +52,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
                 
                 //do something 
 
+              if(window.config.env.match('qa|dev'))                  
                 console.log(response,'response rq');
 
                return response;
@@ -34,7 +64,8 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
                 }
 
                 if(err.status === 401){ //manejamos autorizacion
-                    window.location = 'login.html';
+                    window.localStorage.clear();                  
+                    window.location = 'index.html';
                 }
 
                 return err;
@@ -51,14 +82,9 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
       templateUrl: "views/visitas.html",
       controller : visitasCtrl
     }) 
-    .state('login', {
-      url: "/login",
-      templateUrl: "views/login.html",
-      controller : mainCtrl
-    }) 
     .state('nueva-visita', {
       url: "/nueva-visita",
-      templateUrl: "views/login.html",
+      templateUrl: "views/nueva_visita.html",
       controller : visitasCtrl
     }) 
     ;

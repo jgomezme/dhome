@@ -25,7 +25,7 @@ function localStorage(){
 }
 
 
-function API($http){
+/*function API($http){
 
 
 	  this.baseUrl = window.config.apiUrlBase + window.config.apiBaseUri;
@@ -34,7 +34,7 @@ function API($http){
 	  return this;
 
 }
-
+*/
 
 
 angular.module('dhome')

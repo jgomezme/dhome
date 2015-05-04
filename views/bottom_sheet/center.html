@@ -3,45 +3,25 @@
   <md-list>
     
     <md-list-item >
-      <md-button class="md-list-item-content" ui-sref="cita">
+      <md-button class="md-list-item-content" >
         <ng-md-icon icon="layers" style="fill:gray" ></ng-md-icon>        
-        <span class="md-inline-list-icon-label">Solicitar Cita</span>
-      </md-button>
-    </md-list-item>
-
-    <md-list-item >
-      <md-button class="md-list-item-content" ng-click="$root.requetsAmbulance()">
-        <ng-md-icon icon="directions_bus" style="fill:gray" ></ng-md-icon>        
-        <span class="md-inline-list-icon-label">Solicitar Ambulancia</span>
-      </md-button>
-    </md-list-item>
-
-    <md-list-item >
-      <md-button class="md-list-item-content" ui-sref="call">
-        <ng-md-icon icon="call" style="fill:gray" ></ng-md-icon>
-        <span class="md-inline-list-icon-label">Llamar</span>
+        <span class="md-inline-list-icon-label">Ver detalles</span>
       </md-button>
     </md-list-item>
 
 
-    <md-list-item >
-      <md-button class="md-list-item-content" ui-sref="map">
-        <ng-md-icon icon="room" style="fill:gray" ></ng-md-icon>        
-        <span class="md-inline-list-icon-label">Ubicar en Mapa</span>
-      </md-button>
-    </md-list-item>
 
     <md-list-item ng-hide="$root.state == 'favorites'">
       <md-button class="md-list-item-content" ng-click="favorite()">
         <ng-md-icon icon="favorite" style="fill:gray" ></ng-md-icon>        
-        <span class="md-inline-list-icon-label">Marcar como favorito</span>
+        <span class="md-inline-list-icon-label">Marcar como visita frecuente</span>
       </md-button>
     </md-list-item>
 
     <md-list-item  ng-hide="$root.state != 'favorites'">
       <md-button class="md-list-item-content" ng-click="unfavorite()">
         <ng-md-icon icon="favorite" style="fill:gray" ></ng-md-icon>        
-        <span class="md-inline-list-icon-label">Quitar como favorito</span>
+        <span class="md-inline-list-icon-label">Quitar como visita frecuente</span>
       </md-button>
     </md-list-item>
 

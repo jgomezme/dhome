@@ -9,12 +9,12 @@
       </md-lis-item>   
      
 
-      <img  ng-src="{{ value.image || 'assets/img/logo.png' }}" class="md-avatar" ng-click="goToProfile()" aria-label="profile">
+      <img  ng-src="{{ value.image || 'assets/img/guest.png' }}" class="md-avatar" ng-click="goToProfile()" aria-label="profile">
       
       <div class="md-list-item-text" flex  aria-label="profile" ng-click="goToProfile()">
           
           <h3>{{ value.name }}</h3>          
-          <p class="p-aligned">{{ value.description.ellipsis() }}</p>
+          <p class="p-aligned">{{ value.description.ellipsis() }}</p>          
         </div>
         <div layout="column">
         <div layout="row">

@@ -4,6 +4,9 @@ var app = angular.module('dhome');
 String.prototype.ellipsis = function(limit){
 
 	 var limit = limit || 50;
+
+   if(this.length < 50 )
+    return this+'';
 	 
 	 var st = (this + '').substring(0,limit);
 	 var complete = '';
@@ -110,6 +113,11 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
     };
 
 
+    $scope.login = function(){
+
+
+
+    }
 
 
 }
@@ -145,6 +153,9 @@ function entityCtrlBase($scope, $rootScope, $stateParams){
 
 
    }
+
+
+
 }
 
 
@@ -154,7 +165,10 @@ function entityCtrlBase($scope, $rootScope, $stateParams){
 
 function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $localStorage, $location, $state) {
   
-   
+$scope.takeimage = function(){
+     document.getElementById('visit').click()
+   }
+
   $scope.centerBottomSheet = function() {  
    
     $rootScope.center = $rootScope.center || this.value;	
@@ -194,7 +208,7 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $lo
 
 
 
-   	      $api
+   	    $api
 		   .centers()
 		   .get()
 		   .success(function(rs){
@@ -215,7 +229,7 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $lo
    	   $mdBottomSheet.hide()
    	   .then(function(){   	   	
 
-   	   	   $rootScope.alerta({title:'Nuevo Favorito',content:'Se añadió ' + ($rootScope.center.name || this.value.name ) + ' a tus favoritos.'})
+   	   	   $rootScope.alerta({title:'Nuevo Visitante Frecuente',content:'Se añadió ' + ($rootScope.center.name || this.value.name ) + ' a visitantes frecuentes.'})
 
    	   });
 
