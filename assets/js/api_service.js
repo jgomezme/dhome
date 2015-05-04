@@ -20,8 +20,8 @@ function API(){
 		 	var centers = [
 		 	{
 		    _id : '97162182912a8s7as8a9',		    
-		 	name:'Javier Gómez (Apto. 433 - torre 9)',		 	
-		 	description : '12 de Enero de 2015 a las 20:30.',
+		 	name:'Javier Gómez',		 	
+		 	description : 'Apto. 433 - torre 9 - 12 de Enero de 2015 a las 20:30.',
 		 	tel : [{name:"barranquilla" , tel: 3017681}],		 			 		 	
 		 	uci:true,
 		 	urgencias:true,		 	
@@ -35,8 +35,8 @@ function API(){
 		 	},
 		 	{
 		    _id : '97162182912aohh123',		 		
-		     name:'Carlos Perez (Apto. 233 - torre 2)',		 	
-		 	description : '11 de Febrero de 2015 a las 18:30.',
+		     name:'Carlos Perez',		 	
+		 	description : 'Apto. 233 - Torre 2 - 11 de Febrero de 2015 a las 18:30.',
 		 	tel : [{name:"barranquilla" , tel: 3017682}],		 			 		 			 			 
 		 	uci:false,
 		 	urgencias:true,		 			 			 	
@@ -50,8 +50,8 @@ function API(){
 		 	},
 		 	{
 		    _id : 'kasja812912a8s7as8a9',		 		
-		 	name:'Alejandro Zakzuk (Apto. 502 - torre 5)',		 	
-		 	description : '17 de Marzo de 2015 a las 08:30.',
+		 	name:'Alejandro Zakzuk',		 	
+		 	description : 'Apto. 502 - Torre 5 - 17 de Marzo de 2015 a las 08:30.',
 		 	tel : [{name:"barranquilla" , tel: 3017683}],		 			 		 			 			 			 			 	
 		 	doctors : [
 		 	        {_id : '98127621612891029asa7612', name:'Juan Alberto', especiality : 'Ortopeedia'},
@@ -63,8 +63,8 @@ function API(){
 		 	},
 		 	{
 		    _id : '0812klasias712',		 		
-		 	name:'Luis Mora (Apto. 766 - torre 7)',		 	
-		 	description : '27 de Febrero de 2015 a las 09:30.',
+		 	name:'Luis Mora',		 	
+		 	description : 'Apto. 766 - Torre 7 - 27 de Febrero de 2015 a las 09:30.',
 		 	uci:false,
 		 	urgencias:false,
 		 	tel : [{name:"barranquilla" , tel: 3017684}],		 			 		 			 			 		 		 
@@ -79,7 +79,7 @@ function API(){
 		 	{
 		 	_id : "lkmklmsad8981271",
 		 	name:'Janna Sabagh',		 			 
-		 	description : '27 de Abril de 2015 a las 15:10.',		 	
+		 	description : 'Apto. 766 - Torre 7 - 27 de Abril de 2015 a las 15:10.',		 	
 		 	tel : [{name:"barranquilla" , tel: 3017685}],		 			 
 		 	uci:true,
 		 	urgencias:false,		 			 			 
