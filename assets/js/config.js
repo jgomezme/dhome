@@ -10,7 +10,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $mdThemin
     '200': 'ef9a9a',
     '300': 'e57373',
     '400': 'ef5350',
-    '500': '91C46C',
+    '500': '287D7D',
     '600': 'e53935',
     '700': 'd32f2f',
     '800': 'c62828',
