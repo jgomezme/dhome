@@ -2,7 +2,7 @@
 
      <md-list ng-init="load()" style="position:relative" layout-padding>
 
-     <md-list-item class="md-3-line" md-swipe-right="requetsAmbulance()"  ng-repeat="value in values track by $index | filter:$root.search" aria-label="swipe">
+     <md-list-item class="md-3-line"   ng-repeat="value in values track by $index | filter:$root.search" aria-label="swipe">
 
         <md-lis-item ng-if="values.length == 0">
         <p>Vaya, parece que no tienes citas pendientes por el momento.</p>
