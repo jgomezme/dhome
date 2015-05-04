@@ -1,0 +1,47 @@
+<div class="blog-masthead">
+  <div class="container">
+    <nav class="blog-nav">
+    </nav>
+  </div>
+</div>
+<form>
+  <div id="container-form">
+    <div class="blog-header">
+      <h2 class="blog-post-title">Registrar Visita</h2>
+    </div>
+    <div class="row-form">
+      <div class="col-xs-5">
+        <div class="form-group">
+          <label for="empresa">Empresa: </label>
+          <input type="text" class="form-control" placeholder="Empresa..." ng-model="visita.empresa">
+        </div>
+      </div>
+      <div class="col-xs-5 pull-right">
+        <div class="form-group">
+          <label for="name">Nombre del visitante: </label>
+          <input type="text" class="form-control" placeholder="Nombre..." ng-model="visita.nombre">
+        </div>
+      </div>
+    </div>
+
+    <div class="row-form">
+      <div class="col-xs-5">
+        <div class="form-group">
+          <label for="document">Documenta de Identidado o Cedula</label>
+          <input type="text" class="form-control" placeholder="documento..." ng-model="visita.identidad">
+        </div>
+      </div>
+      <div class="col-xs-5 pull-right">
+        <div class="form-group">
+          <label for="busca">Busca</label>
+          <input type="text" class="form-control" placeholder="Busqueda..." ng-model="visita.busqueda">
+        </div>
+      </div>
+    </div>
+    <div class="row-form">
+      <a href="" class="btn-form-cancel pull-left" ng-click="goToInicio()">Cancelar</a>
+      <a ng-click="registrarVisita()" class="btn-form-save pull-right" data-dismiss="modal">Guardar</a>
+    </div>
+
+  </div>
+</form>

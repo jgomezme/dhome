@@ -1,0 +1,38 @@
+<md-bottom-sheet class="md-list md-has-header">
+	<div layout="column">
+		<md-list>
+			<md-checkbox ng-model="uci" aria-label="Finished?">
+			  UCI
+			</md-checkbox>
+			<md-checkbox md-no-ink ng-model="urgencias" aria-label="No Ink Effects">
+			  Urgencias
+			</md-checkbox>
+		</md-list>
+	</div>
+	<div class="column" >
+		<md-list>
+			<md-list-item layout-fill layout-padding>	
+				<md-autocomplete
+					ng-model="entidad" 
+					placeholder="Entidad de Salud"
+					md-selected-item="selectedItem" 
+					md-search-text="searchText" 
+					md-items="value in entities" 
+					md-item-text="item.display">
+			  		<span md-highlight-text="searchText">{{item.display}}</span>
+				</md-autocomplete>			
+			</md-list-item>	
+			<md-list-item layout-fill layout-padding>	
+				<md-autocomplete
+					ng-model="especialidad"
+					placeholder="Especialidad" 
+					md-selected-item="selectedItem" 
+					md-search-text="searchText" 
+					md-items="item in getMatches(searchText)" 
+					md-item-text="item.display">
+			  		<span md-highlight-text="searchText">{{item.display}}</span>
+				</md-autocomplete>	
+			</md-list-item>	
+		</md-list>
+	</div>
+</md-bottom-sheet>

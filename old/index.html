@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en-US" ng-app="DigitalHomes">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+  <title>Bienvenidos a D-Home</title>    
+ 
+
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css" href="/css/fuelux.min.css" >
+  <!--<link rel="stylesheet" type="text/css" href="../css/bootstrap-spinedit.css" />-->
+  <link rel="stylesheet" type="text/css" href="/css/site/creation.css"/> 
+</head>
+<body class="{{bodyClass}}"> 
+
+  <div ui-view id="index"></div>
+
+  <script type="text/javascript" src="/js/angular/angular.min.js"></script>
+  <script src="https://code.angularjs.org/1.2.5/i18n/angular-locale_es-co.js"></script>
+  <script type="text/javascript"src="/js/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script type="text/javascript" src="/js/jquery/dist/jquery.min.js"></script>   
+  <script type="text/javascript" src="/js/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/js/angular-animate/angular-animate.min.js"></script> 
+  <script type="text/javascript" src="/js/angular-local-storage/dist/angular-local-storage.min.js"></script> 
+  <script type="text/javascript" src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.0.js"></script>
+  <script type="text/javascript" src="/js/lodash/lodash.min.js"></script>
+
+  <script type="text/javascript" src="/app/app.js"></script>
+
+  <!--Controladores-->
+  <script type="text/javascript" src="/app/controllers/LoginController.js"></script>
+  <script type="text/javascript" src="/app/controllers/InicioController.js"></script>
+  <script type="text/javascript" src="/app/controllers/RecibirCorrespondenciaController.js"></script>
+  <script type="text/javascript" src="/app/controllers/CorrespondenciaPendienteController.js"></script>
+  <script type="text/javascript" src="/app/controllers/RegistrarVisitaController.js"></script>
+  <script type="text/javascript" src="/app/controllers/VisitasAutorizadasController.js"></script>
+  <script type="text/javascript" src="/app/controllers/HomeController.js"></script>
+
+  <!--Servicios-->
+  <script type="text/javascript" src="/app/services/LoginService.js"></script>
+  <script type="text/javascript" src="/app/services/ConexionService.js"></script>
+  <script type="text/javascript" src="/app/services/EdificioService.js"></script>
+  <script type="text/javascript" src="/app/services/CorrespondenciaService.js"></script>
+  <script type="text/javascript" src="/app/services/VisitasService.js"></script>
+
+</body>
+</html>

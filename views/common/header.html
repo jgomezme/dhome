@@ -1,0 +1,35 @@
+<md-toolbar layout="row" md-scroll-shrink>
+      <div class="md-toolbar-tools">
+        
+        <md-button class="md-icon-button menu-btn" aria-label="back" ng-if="$root.back && !$root.insearch" ng-click="goback()">
+         <ng-md-icon icon="arrow_back" style="fill:white;   top: 0;"  ></ng-md-icon>
+        </md-button>
+
+        <span ng-hide="$root.insearch" flex= style="cursor:default" ui-sref="centers" class="noselect">
+         <h2>Dhome</h2>
+          </span>
+
+          <md-autocomplete layout="column" flex='44' ng-hide="!$root.insearch"
+					ng-model="$root.search" 
+					placeholder="Buscar..."
+					md-selected-item="selectedItem" 
+					md-search-text="$root.search" 
+					md-items="value in values" 
+					md-item-text="item.display">
+			  		<span md-highlight-text="searchText">{{item.display}}</span>
+				</md-autocomplete>			
+        
+        <div ng-click="$root.insearch=false" flex></div>
+        
+ 
+
+        <md-button class="md-icon-button menu-btn" aria-label="menu" ng-click="$root.insearch=!$root.insearch">
+         <ng-md-icon icon="search" style="fill:white;   top: 0;"  ></ng-md-icon>
+        </md-button>
+        
+
+        <md-button hide-gt-sm class="md-icon-button menu-btn" aria-label="menu" ng-click="menu_right()">
+         <md-icon md-svg-icon="assets/icons/more_vert.svg"  style="color:white"></md-icon>
+        </md-button>
+      </div>
+</md-toolbar>

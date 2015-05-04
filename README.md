@@ -1,2 +1,1 @@
-# DigitalHomes
-Repositorio Digital Homes
+# clinikapp-frontend

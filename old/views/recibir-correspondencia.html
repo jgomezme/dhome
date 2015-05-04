@@ -1,0 +1,73 @@
+<div class="blog-masthead">
+  <div class="container">
+    <nav class="blog-nav">
+    </nav>
+  </div>
+</div>
+<div id="container-form">
+  <form class="form-inline" ng-submit="recibirCorrespondencia()">
+    <div class="row-form">
+      <div class="col-xs-3">
+        <div class="form-group">
+          <label for="bloque">Bloque: </label>
+          <span for="bloque"></span>
+        </div>
+      </div>
+      <div class="col-xs-3">
+        <div class="form-group">
+          <label for="apartamento">Apartamento: </label>
+          <span for="apartamento">A7</span>
+        </div>
+      </div>
+      <div class="col-xs-6">
+        <div class="form-group">
+          <label for="date">Fecha y hora: </label>
+          <span for="date">{{current | date:'fullDate'}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-form">
+      <div class="col-xs-6">
+        <div class="form-group">
+          <label for="recibido">Recibido por: </label>
+          <span for="recibido">Luis Gomez</span>
+        </div>
+      </div>
+      <div class="col-xs-6">
+        <div class="form-group">
+          <label for="date">Tipo: </label>
+          <span for="date">icons</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-form">
+      <div class="col-xs-6">
+        <div class="form-group">
+          <label for="recibido">Foto: </label>
+          <span for="recibido">Foto</span>
+        </div>
+      </div>
+    </div>
+    <div class="row-form">
+      <label class="col-md-5" for="para">Para: </label>
+    </div>
+    <div class="row-form">
+      <div class="col-md-12">
+        <input class="form-control" id="para" ng-model="correspondencia.para" />
+      </div>
+    </div>
+
+    <div class="row-form">
+      <label class="col-md-5" for="TextArea">Descripción</label>
+    </div>
+    <div class="row-form">
+      <div class="col-md-12">
+        <textarea style="width:100%" class="form-control" id="TextArea" rows="5" ng-model="correspondencia.descripcion"></textarea>
+      </div>
+    </div>
+      <a href="" class="btn-form-cancel pull-left" ng-click="goToInicio()">Cancelar</a>
+      <input type="submit"  value="Guardar" class="btn-form-save pull-right"/>
+    </form>
+</div>

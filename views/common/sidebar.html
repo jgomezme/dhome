@@ -1,0 +1,46 @@
+<md-sidenav class="md-sidenav-right " md-component-id="right" md-is-locked-open="$mdMedia('gt-sm')">
+<md-toolbar  hide-gt-sm class="md-theme-light">
+        <h1 class="md-toolbar-tools">Opciones</h1>
+      </md-toolbar>
+      <md-content  layout-padding>
+     
+       <md-list flex>
+          <md-item layout="row" flex>
+           <md-item-content flex>
+               <md-button ui-sref="visitas">
+               <ng-md-icon icon="my_library_books" style="fill:gray" ></ng-md-icon>                  
+               <span>
+               Visitas
+               </span>
+               </md-button>
+               </md-item-content>
+          </md-item>
+          <md-item-content flex>
+               <md-button ui-sref="visitas">
+               <ng-md-icon icon="layers" style="fill:gray" ></ng-md-icon>                  
+               <span>
+               Correspondencias
+               </span>
+               </md-button>
+               </md-item-content>
+          </md-item>
+  
+
+
+
+     
+
+          <md-item layout="row" flex hide-gt-sm>
+           <md-item-content flex>
+                                                
+
+           <md-button ng-click="menu_right()" class="md-primary">
+             Cerrar
+           </md-button>
+           </md-item-content>
+          </md-item>
+       </md-list>
+
+       
+      </md-content>
+    </md-sidenav>
