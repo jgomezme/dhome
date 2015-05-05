@@ -1,4 +1,4 @@
-function localStorage(){
+function storage(){
 
 		
 	this.get = function(key){
@@ -49,6 +49,6 @@ function API($http){
 
 
 angular.module('dhome')
-       .factory('$localStorage', localStorage)
+       .factory('$storage', storage)
        .factory('$API', API)
        ;

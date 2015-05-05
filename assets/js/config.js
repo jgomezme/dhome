@@ -32,12 +32,14 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $mdThemin
   $httpProvider.interceptors.push(function(){
         return {
            'request': function(config) {
-                // $httpProvider.defaults.withCredentials = true;       
+                $httpProvider.defaults.withCredentials = true; 
+
+                alert(window.localStorage.token)      
 
                 if(!window.localStorage.token)
-                  window.location = "index.html" 
+                  window.location = "index.html";
 
-                $httpProvider.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.token;  // common
+                $httpProvider.defaults.headers.common['Authorization'] = 'Bearer ' + window.localStorage.token;  // common
  
                 for(x in config.data){
                     if(typeof config.data[x]  ===  'boolean'){
@@ -64,7 +66,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $mdThemin
                 }
 
                 if(err.status === 401){ //manejamos autorizacion
-                    window.localStorage.clear();                  
+                    //window.localStorage.clear();                  
                     window.location = 'index.html';
                 }
 
