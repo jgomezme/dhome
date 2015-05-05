@@ -95,7 +95,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $mdThemin
     .state('nueva-correspondencia', {
       url: "/correspondencia",
       templateUrl: "views/nueva_correspondencia.html",
-      controller : correspondenciaCtrl
+      controller : mainCtrl
     }) 
 
     ;
