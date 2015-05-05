@@ -32,9 +32,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $mdThemin
   $httpProvider.interceptors.push(function(){
         return {
            'request': function(config) {
-                $httpProvider.defaults.withCredentials = true; 
-
-                alert(window.localStorage.token)      
+                $httpProvider.defaults.withCredentials = true;                 
 
                 if(!window.localStorage.token)
                   window.location = "index.html";
