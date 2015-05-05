@@ -150,6 +150,13 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
     }
 
+    $scope.logout = function(){
+         $storage.delete('config');
+         $storage.delete('token');
+
+         window.location.reload();
+    }
+
 
 }
 
@@ -193,23 +200,33 @@ function entityCtrlBase($scope, $rootScope, $stateParams){
 
 function buildingCtrl($scope, $rootScope, $storage, $API){
 
-  $scope.building = $storage.get('config').buildingId;
+   $scope.building = $storage.get('config').buildingId;
+
+   $scope.load = function(callback){
+
+    console.log($scope.building)
 
 
-   $scope.load = function(){
 
        $API
        .building()
-       .get($scope.building)
+       .add('/' + $scope.building)
+       .get()
        .success(function(rs){
 
-           console.log(rs);
+           console.log(rs, 'javier');
 
            $scope.thebuilding = rs;
 
+           if(callback)
+               callback(rs);
+
        })
        .error(function(err){
-         console.log(err);
+         console.log(err, 'javier');
+
+         if(callback)
+               callback(false);
        })
 
    }
@@ -217,21 +234,62 @@ function buildingCtrl($scope, $rootScope, $storage, $API){
 
 
    $scope.getTowers = function(){
-          $scope.towers = $scope.thebuilding.Towers;
+
+       if(!$scope.thebuilding)
+         $scope.load(function(rs){
+            if(rs)
+             $scope.values = $scope.thebuilding.Towers;              
+         })
+       else
+          $scope.values = $scope.thebuilding.Towers;
+
+
    }
 
    $scope.getFloors = function(){
-      $scope.floors = $scope.thebuilding.floors;
+      
+      if(!$scope.thebuilding)
+         $scope.load(function(rs){
+            if(rs)
+              $scope.values = $scope.thebuilding.floors;              
+         })
+      else
+          $scope.values = $scope.thebuilding.floors;
+
    }
 
-   $scope.suites = function(){  
+   $scope.getSuites = function(){  
 
+      $scope.values = [];
       $scope.suites = [];
 
-       for(x in $scope.thebuilding.Towers)
-          for(j in $scope.thebuilding.Towers[x].Floors)
-              for(z in $scope.thebuilding.Towers[x].Floors[j].suites)
-                  $scope.suites.push({ tower: $scope.thebuilding.Towers[x].name, suites : $scope.thebuilding.Towers[x].Floors[j].suites[z]});
+      var loadSuites = function(){
+
+        console.log($scope.thebuilding.Towers, 'tower')
+
+        for(var x in $scope.thebuilding.Towers)
+              for(var j in $scope.thebuilding.Towers[x].Floors)                 
+                  for(var n in $scope.thebuilding.Towers[x].Floors[j].Suites)
+                   $scope.values.push($scope.thebuilding.Towers[x].Floors[j].Suites[n]);  
+               //else
+                //$scope.values.push({ tower: $scope.thebuilding.Towers[x].name, suites : $scope.thebuilding.Towers[x].Floors[j].Suites});     
+                           
+                 
+
+            console.log($scope.values, $scope.suites)
+      }
+
+      if(!$scope.thebuilding)
+          $scope.load(function(rs){
+
+            if(rs)
+               loadSuites();
+          });
+      else
+        loadSuites();
+
+
+       
    }
 
 
@@ -452,6 +510,7 @@ function citasCtrl($scope, $rootScope, $stateParams, $state, $location, $storage
 app
 .controller('mainCtrl', mainCtrl)
 .controller('entityCtrlBase', entityCtrlBase)
+.controller('buildingCtrl', buildingCtrl)
 ;
 
 
