@@ -27,7 +27,9 @@
     <md-content layout   class="" flex style="background:transparent">
 
          
-          <form hide-sm layout-align="center" style="margin:0 auto" flex="33" ng-model="form">
+          <form hide-sm layout-align="center" style="margin:0 auto" flex="33" aria-label="login" ng-model="form">
+
+
           <br>
           <br>
           <br>
@@ -37,15 +39,21 @@
           <br>
           <md-content  style="padding:4rem; border-radius:1rem">
               <md-input-container flex>
+
+
                 <label>Nombre de Usuario *</label>
-                <input ng-model="form.username" ng-init="portero@rtcdigitalconsulting.com">
+                <input ng-model="form.username" >
               </md-input-container>
                <md-input-container flex>
                 <label>Contraseña *</label>
-                <input ng-model="form.password" ng-init="123456">
+                <input ng-model="form.password">
               </md-input-container>
+             
+             <div layout="row">
+                  <span style="color:red">{{error_login || ''}}</span>
+              </div>
 
-<br>
+             <br>
               <div>
 
               <md-button >
@@ -72,14 +80,19 @@
           <md-content  style="padding:4rem; border-radius:1rem">
               <md-input-container flex>
                 <label>Nombre de Usuario *</label>
-                <input ng-model="form.username" ng-init="portero@rtcdigitalconsulting.com">
+                <input ng-model="form.username" >
               </md-input-container>
                <md-input-container flex>
                 <label>Contraseña *</label>
-                <input ng-model="form.password" ng-init="123456">
+                <input ng-model="form.password" >
               </md-input-container>
 
-<br>
+             
+             <div layout="row">
+                  <span style="color:red">{{error_login || ''}}</span>
+              </div>
+
+       <br>
               <div>
 
               <md-button >

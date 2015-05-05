@@ -1,0 +1,26 @@
+<!-- bloque - aptos -->
+
+<div layout="row" ng-if="bloques">
+<md-toolbar>
+  <div class="md-toolbar-tools  md-whiteframe-z1" style="background:rgb(236, 236, 236)" flex  layout-align="center center">
+      <md-button style="color:black" flex>
+       Bloques
+      </md-button>     
+      <md-button style="color:black" flex>
+       Apartamentos
+      </md-button>
+  </div>
+</md-toolbar>
+</div>
+
+<div layout="row" ng-init="load()">
+  <md-content>
+     <md-list>
+       <md-list-item ng-if="values.length == 0 || !values">
+         <p><br>Vaya, parece que no hay bloques disponibles.</p>
+       </md-list-item>
+        <md-list-item ng-repeat="value in values">
+        </md-list-item>
+     </md-list>
+  </md-content>
+</div>

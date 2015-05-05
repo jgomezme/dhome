@@ -24,7 +24,7 @@ String.prototype.ellipsis = function(limit){
 }
 
 
-function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdMedia, $mdBottomSheet, $state){
+function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdMedia, $mdBottomSheet, $state, $API, $localStorage){
 
 
 			  $rootScope.alerta = function(data){
@@ -113,9 +113,30 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
     };
 
 
-    $scope.login = function(){
+    $scope.login = function(){  
 
-          window.location = "app.html"
+        $scope.form.grant_type="password";
+        $scope.form.login_type="door";
+   
+
+          //window.location = "app.html";
+          $API
+          .login()          
+          .post("login_type=door&grant_type=password&username="+$scope.form.username+'&password='+$scope.form.password, {
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            })
+          .success(function(rs){
+              console.log(rs);
+              $localStorage.save('config',rs); 
+              $localStorage.save('token', rs.access_token);         
+              window.location = "app.html";    
+          })
+          .error(function(err){
+            console.log(err)
+            $scope.error_login = err.error;
+          })
+
+
 
     }
 
@@ -159,6 +180,52 @@ function entityCtrlBase($scope, $rootScope, $stateParams){
 }
 
 
+
+function buildingCtrl($scope, $rootScope, $localStorage, $API){
+
+  $scope.building = $localStorage.get('config').buildingId;
+
+
+   $scope.load = function(){
+
+       $API
+       .building()
+       .get($scope.building)
+       .success(function(rs){
+
+           console.log(rs);
+
+           $scope.thebuilding = rs;
+
+       })
+       .error(function(err){
+         console.log(err);
+       })
+
+   }
+
+
+
+   $scope.getTowers = function(){
+          $scope.towers = $scope.thebuilding.Towers;
+   }
+
+   $scope.getFloors = function(){
+      $scope.floors = $scope.thebuilding.floors;
+   }
+
+   $scope.suites = function(){  
+
+      $scope.suites = [];
+
+       for(x in $scope.thebuilding.Towers)
+          for(j in $scope.thebuilding.Towers[x].Floors)
+              for(z in $scope.thebuilding.Towers[x].Floors[j].suites)
+                  $scope.suites.push({ tower: $scope.thebuilding.Towers[x].name, suites : $scope.thebuilding.Towers[x].Floors[j].suites[z]});
+   }
+
+
+}
 
 
 
@@ -268,7 +335,7 @@ $scope.takeimage = function(){
 
    $scope.call = function(){
              if(!$rootScope.center)
-   	 	 $location.path('/centers').replace();
+   	 	 window.location  = '#/centers';
              console.log($rootScope.center)
              $scope.center = $rootScope.center;
 
@@ -289,14 +356,14 @@ $scope.takeimage = function(){
 
    	    $rootScope.center = this.value;
 
-   	    $location.path('/profile').replace();
+   	    window.location = '#/profile';
 
    }
 
    $scope.loadProfile = function(){
 
    	 if(!$rootScope.center)
-   	 	 $location.path('/centers').replace();
+   	 	 window.location = '#/centers';
 
    	   $scope.center = $rootScope.center;
 

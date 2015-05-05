@@ -2,12 +2,13 @@
 
      <md-list ng-init="load()" style="position:relative" layout-padding>
 
+  <md-lis-item ng-if="values.length == 0">
+        <p>Vaya, parece que no tienes citas pendientes por el momento.</p>
+       </md-lis-item>   
+     
+     
      <md-list-item class="md-3-line"   ng-repeat="value in values track by $index | filter:$root.search" aria-label="swipe">
 
-        <md-lis-item ng-if="values.length == 0">
-        <p>Vaya, parece que no tienes citas pendientes por el momento.</p>
-      </md-lis-item>   
-     
 
       <img  ng-src="{{ value.image || 'assets/img/guest.png' }}" class="md-avatar" ng-click="goToProfile()" aria-label="profile">
       
@@ -24,18 +25,7 @@ left: 25px;">
       </md-button>
       </div>
       </div>
-      <!-- <div layout="row" ng-if="!isfavorite()">
-           <md-button  class="md-icon-button" ng-click="favorite()" aria-label="more-center" style="position: relative;
-left: 25px;">
-          <ng-md-icon icon="favorite" style="fill:gray"></ng-md-icon>
-      </md-button>          
-      </div>
-      <div layout="row" ng-if="isfavorite()">
-           <md-button  class="md-icon-button" ng-click="unfavorite()" aria-label="more-center" style="position: relative;
-left: 25px;">
-          <ng-md-icon icon="favorite" style="fill:rgb(249, 55, 84)"></ng-md-icon>
-      </md-button>          
-      </div> -->
+ 
       <br>
        <md-divider inset></md-divider>
 

@@ -34,8 +34,8 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $mdThemin
            'request': function(config) {
                 // $httpProvider.defaults.withCredentials = true;       
 
-              /*  if(!localStorage.token)
-                  window.location = "index.html"   */      
+                if(!window.localStorage.token)
+                  window.location = "index.html" 
 
                 $httpProvider.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.token;  // common
  
@@ -87,10 +87,15 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $mdThemin
       templateUrl: "views/nueva_visita.html",
       controller : visitasCtrl
     }) 
+    .state('home', {
+      url: "/home",
+      templateUrl: "views/selection.html",
+      controller : buildingCtrl
+    }) 
     ;
      
  	 
- 	$urlRouterProvider.otherwise("/visitas");
+ 	$urlRouterProvider.otherwise("/home");
 
  });
 
