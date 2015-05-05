@@ -23,8 +23,12 @@ String.prototype.ellipsis = function(limit){
 
 }
 
+var map_error = {
+   "invalid_client" : "Usuario o contraseña no validos."
+}
 
-function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdMedia, $mdBottomSheet, $state, $API, $localStorage){
+
+function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdMedia, $mdBottomSheet, $state, $API, $storage){
 
 
 			  $rootScope.alerta = function(data){
@@ -115,6 +119,12 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
     $scope.login = function(){  
 
+        if(!$scope.form)
+            {
+               $scope.error_login = "Todos los campos son requeridos";
+               return;
+            }
+
         $scope.form.grant_type="password";
         $scope.form.login_type="door";
    
@@ -127,13 +137,13 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
             })
           .success(function(rs){
               console.log(rs);
-              $localStorage.save('config',rs); 
-              $localStorage.save('token', rs.access_token);         
+              $storage.save('config',rs);  
+              $storage.save('token', rs.access_token)                     
               window.location = "app.html";    
           })
           .error(function(err){
             console.log(err)
-            $scope.error_login = err.error;
+            $scope.error_login = map_error[err.error.toLowerCase()];
           })
 
 
@@ -181,9 +191,9 @@ function entityCtrlBase($scope, $rootScope, $stateParams){
 
 
 
-function buildingCtrl($scope, $rootScope, $localStorage, $API){
+function buildingCtrl($scope, $rootScope, $storage, $API){
 
-  $scope.building = $localStorage.get('config').buildingId;
+  $scope.building = $storage.get('config').buildingId;
 
 
    $scope.load = function(){
@@ -230,7 +240,7 @@ function buildingCtrl($scope, $rootScope, $localStorage, $API){
 
 
 
-function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $localStorage, $location, $state) {
+function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $storage, $location, $state) {
   
 $scope.takeimage = function(){
      document.getElementById('visit').click()
@@ -269,7 +279,7 @@ $scope.takeimage = function(){
    	    if(params.favorites)
    	    	{
 
-   	    		$scope.values = $localStorage.get('favorites') || [];
+   	    		$scope.values = $storage.get('favorites') || [];
    	    		return;
    	    	}
 
@@ -288,10 +298,10 @@ $scope.takeimage = function(){
 
    $scope.favorite = function(){
 
-   	   var favorites = $localStorage.get('favorites') || [];
+   	   var favorites = $storage.get('favorites') || [];
    	   favorites.push($rootScope.center || this.value);
 
-   	   $localStorage.save('favorites',favorites);   	   
+   	   $storage.save('favorites',favorites);   	   
 
    	   $mdBottomSheet.hide()
    	   .then(function(){   	   	
@@ -305,16 +315,16 @@ $scope.takeimage = function(){
 
    $scope.unfavorite = function(){
 
-   	   var favorites = $localStorage.get('favorites') || [];
+   	   var favorites = $storage.get('favorites') || [];
 
    	   console.log(favorites,'get');
 
    	   favorites.splice(favorites.indexOf($rootScope.center || this.value),1);
 
    	   if(favorites.length > 0)
-   	   $localStorage.save('favorites', favorites);
+   	   $storage.save('favorites', favorites);
    	   else
-   	   $localStorage.delete('favorites')
+   	   $storage.delete('favorites')
 
    	 if($rootScope.center)
    	   $scope.load({favorites:true})
@@ -344,7 +354,7 @@ $scope.takeimage = function(){
 
    $scope.isfavorite = function(){
 
-        var myfavorites = $localStorage.get('favorites') || [];  
+        var myfavorites = $storage.get('favorites') || [];  
 
      	console.log(myfavorites.indexOf(this.value));
 
@@ -379,11 +389,11 @@ $scope.takeimage = function(){
 
 
 
-function citasCtrl($scope, $rootScope, $stateParams, $state, $location, $localStorage){
+function citasCtrl($scope, $rootScope, $stateParams, $state, $location, $storage){
 
    $scope.load = function(id){
 
-   	  $scope.values = $localStorage.get('citas') || [];
+   	  $scope.values = $storage.get('citas') || [];
 
    }
 
@@ -393,7 +403,7 @@ function citasCtrl($scope, $rootScope, $stateParams, $state, $location, $localSt
 
    	  var data = data || $scope.form;
 
-   	  var citas = $localStorage.get('citas') || [];
+   	  var citas = $storage.get('citas') || [];
 
    	  data.status = 'pending';
    	  data.center = $rootScope.center || data.center;
@@ -402,7 +412,7 @@ function citasCtrl($scope, $rootScope, $stateParams, $state, $location, $localSt
 
    	  console.log(citas)
 
-   	  $localStorage.save('citas',citas);
+   	  $storage.save('citas',citas);
 
    	  $rootScope.alerta('Nueva Cita', 'Se ha creado una nueva cita.')
    	  .then(function(){
