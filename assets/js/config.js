@@ -66,7 +66,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $mdThemin
                 }
 
                 if(err.status === 401){ //manejamos autorizacion
-                    //window.localStorage.clear();                  
+                    window.localStorage.clear();                  
                     window.location = 'index.html';
                 }
 
