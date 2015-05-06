@@ -92,6 +92,11 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $mdThemin
       templateUrl: "views/selection.html",
       controller : buildingCtrl
     })
+    .state('correspondencias', {
+      url: "/correspondencias",
+      templateUrl: "views/correspondencias.html",
+      controller : mainCtrl
+    })
     .state('nueva-correspondencia', {
       url: "/correspondencia",
       templateUrl: "views/nueva_correspondencia.html",
@@ -131,6 +136,8 @@ app.run(function($rootScope, $mdSidenav, $mdBottomSheet, $state){
 			});
 
  $rootScope.backcounter = 0;
+
+
 
   $rootScope.$on('$stateChangeSuccess', 
               function(event, toState, toParams, fromState, fromParams){ 

@@ -2,9 +2,11 @@
 
      <md-list ng-init="load()" style="position:relative" layout-padding>
 
+  <div ng-if="values">
   <md-lis-item ng-if="values.length == 0">
         <p>Vaya, parece que no tienes citas pendientes por el momento.</p>
-       </md-lis-item>   
+  </md-lis-item>   
+  </div>
      
      
      <md-list-item class="md-3-line"   ng-repeat="value in values track by $index | filter:$root.search" aria-label="swipe">

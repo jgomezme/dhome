@@ -46,9 +46,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 			  }
 			
 
-			 if(window.history.length > 0)
-			 	 $scope.back = true;
-	  		 
+			 
 	  		 
 		      	$scope.menu_right = function(){
 		        	$mdSidenav("right").toggle();
