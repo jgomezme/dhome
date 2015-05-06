@@ -30,6 +30,7 @@ var map_error = {
 
 function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdMedia, $mdBottomSheet, $state, $API, $storage){
 
+        $scope.values = []; 
 
 			  $rootScope.alerta = function(data){
 
@@ -330,8 +331,7 @@ $scope.takeimage = function(){
 
    $scope.load = function(params){
 
-   
-
+  
    	var params = params || {};
 
    	    if(params.favorites)
@@ -503,8 +503,6 @@ function citasCtrl($scope, $rootScope, $stateParams, $state, $location, $storage
 
 
 }
-
-
 
 
 app
