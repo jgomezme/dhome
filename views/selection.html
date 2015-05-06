@@ -1,9 +1,9 @@
 <!-- bloque - aptos -->
 
-<div layout="row" ng-if="bloques">
+<div layout="row" ng-if="thebuilding.Towers.length > 1">
 <md-toolbar>
-  <div class="md-toolbar-tools  md-whiteframe-z1" style="background:rgb(236, 236, 236)" flex  layout-align="center center">
-      <md-button style="color:black" flex>
+  <div class="md-toolbar-tools   md-whiteframe-z1" style="background:rgb(236, 236, 236)" flex  layout-align="center center">
+      <md-button style="color:black"  flex>
        Bloques
       </md-button>     
       <md-button style="color:black" flex>
@@ -12,15 +12,44 @@
   </div>
 </md-toolbar>
 </div>
+<br>
 
-<div layout="row" ng-init="load()">
-  <md-content>
-     <md-list>
+<div layout="row" flex ng-if="thebuilding.length > 0" ng-init="getTowers()" style="overflow-x:hidden !important">
+     <md-list flex>
        <md-list-item ng-if="values.length == 0 || !values">
          <p><br>Vaya, parece que no hay bloques disponibles.</p>
        </md-list-item>
         <md-list-item ng-repeat="value in values">
         </md-list-item>
      </md-list>
-  </md-content>
+</div>
+
+
+
+<div layout="row" flex ng-init="getSuites()" style="overflow-x:hidden !important">
+     <md-list flex>
+       <md-list-item ng-if="values.length == 0 || !values">
+         <p><br>Vaya, parece que no hay Aptos. disponibles.</p>
+       </md-list-item>
+
+
+        <md-list-item class="md-3-line" ng-repeat="value in values">
+          <p>APTO. {{value.Name}}</p>
+          <div layout="column" flex>
+          <div layout="row">
+           <ng-md-icon icon="person" style="fill:gray"></ng-md-icon>
+           &nbsp;
+           <ng-md-icon icon="archive" style="fill:gray"></ng-md-icon>
+           </div>
+          </div>
+            <div layout="column" >
+            <div layout="row" >
+      <md-button  class="md-icon-button" ng-click="centerBottomSheet($ev)" aria-label="more-center" style="position: relative;
+left: 25px;">
+          <md-icon md-svg-icon="assets/icons/more_vert.svg"></md-icon>    
+      </md-button>
+      </div>
+            </div>
+        </md-list-item>
+     </md-list>
 </div>

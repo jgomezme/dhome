@@ -7,6 +7,16 @@
        <md-list flex>
           <md-item layout="row" flex>
            <md-item-content flex>
+               <md-button ui-sref="home">
+               <ng-md-icon icon="domain" style="fill:gray" ></ng-md-icon>                  
+               <span>
+               Home
+               </span>
+               </md-button>
+               </md-item-content>
+          </md-item>
+          <md-item layout="row" flex>
+           <md-item-content flex>
                <md-button ui-sref="visitas">
                <ng-md-icon icon="my_library_books" style="fill:gray" ></ng-md-icon>                  
                <span>
@@ -16,40 +26,42 @@
                </md-item-content>
           </md-item>
           <md-item-content flex>
-               <md-button ui-sref="visitas">
-               <ng-md-icon icon="layers" style="fill:gray" ></ng-md-icon>                  
+               <md-button ui-sref="correspondencias">
+               <ng-md-icon icon="archive" style="fill:gray" ></ng-md-icon>                  
                <span>
                Correspondencias
                </span>
                </md-button>
                </md-item-content>
           </md-item>
-
-           <md-item-content layout="row" flex>
+<!--     <md-item-content layout="row" flex>
                <md-button ui-sref="visitas">
                <ng-md-icon icon="center_focus_weak" style="fill:gray" ></ng-md-icon>                  
                <span>
                Camaras
                </span>
                </md-button>
-               </md-item-content>
+               </md-item-content> -->
+        
+
           </md-item>
 
-           <md-item-content layout="row" flex>
-               <md-button ui-sref="visitas">
-               <ng-md-icon icon="directions_car" style="fill:gray" ></ng-md-icon>                  
-               <span>
-               Solicitar Taxi
-               </span>
-               </md-button>
-               </md-item-content>
-          </md-item>
 
            <md-item-content flex>
                <md-button ui-sref="visitas">
                <ng-md-icon icon="inbox" style="fill:gray" ></ng-md-icon>                  
                <span>
                Inbox
+               </span>
+               </md-button>
+               </md-item-content>
+          </md-item>
+
+          <md-item-content layout="row" flex>
+               <md-button ng-click="logout()">
+               <ng-md-icon icon="close" style="fill:gray" ></ng-md-icon>                  
+               <span>
+               Cerrar Sesión
                </span>
                </md-button>
                </md-item-content>

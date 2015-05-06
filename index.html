@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="assets/libs/angular-material/angular-material.css">
     <link rel="stylesheet" href="assets/font/custom/style.css">
     <link rel="stylesheet/less"  href="assets/less/default.less">
-    <script src="assets/libs/less/less.js"></script>   
+    <script src="assets/less/less.js"></script>   
 
     <style type="text/css">
     html, body{
@@ -28,7 +28,7 @@
     <md-content layout   class="" flex style="background:transparent">
 
          
-          <form hide-sm layout-align="center" style="margin:0 auto" flex="33" aria-label="login" ng-model="form" autocomplete='off'>
+          <form ng-click="login()"  hide-sm layout-align="center" style="margin:0 auto" flex="33" aria-label="login" ng-model="form" autocomplete='off'>
 
 
           <br>
@@ -100,7 +100,7 @@
                  Recuperar Contraseña
               </md-button>
 
-                <md-button ng-click="login()" class="md-raised md-primary" style="float:right;display:block">
+                <md-button class="md-raised md-primary" style="float:right;display:block">
                  Ingresar
               </md-button>
 
