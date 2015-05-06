@@ -91,7 +91,19 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $mdThemin
             controller: visitasCtrl,
             data:{title:'visita'}
         })
-        .state('correspondencias', {
+        .state('enviar-inbox', {
+            url: "/enviar-inbox",
+            templateUrl: "views/enviar_inbox.html",
+            controller: mainCtrl,
+            data : {title:'enviar inbox'}            
+        })
+        .state('inboxs', {
+            url: "/inboxs",
+            templateUrl: "views/inboxs.html",
+            controller: visitasCtrl,
+            data : {title:'inboxs'}            
+        })      
+         .state('correspondencias', {
             url: "/correspondencias",
             templateUrl: "views/correspondencias.html",
             controller: visitasCtrl,
