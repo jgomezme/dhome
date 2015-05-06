@@ -88,6 +88,11 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $mdThemin
             url: "/nueva-visita",
             templateUrl: "views/nueva_visita.html",
             controller: visitasCtrl
+        }) 
+        .state('enviar-inbox', {
+            url: "/enviar-inbox",
+            templateUrl: "views/enviar_inbox.html",
+            controller: mainCtrl
         })
         .state('correspondencias', {
             url: "/correspondencias",
