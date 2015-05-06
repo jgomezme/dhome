@@ -82,27 +82,32 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $mdThemin
         .state('visitas', {
             url: "/visitas",
             templateUrl: "views/visitas.html",
-            controller: visitasCtrl
+            controller: visitasCtrl,
+            data : {title:'visitas'}
         })
         .state('nueva-visita', {
             url: "/nueva-visita",
             templateUrl: "views/nueva_visita.html",
-            controller: visitasCtrl
+            controller: visitasCtrl,
+            data:{title:'visita'}
         })
         .state('correspondencias', {
             url: "/correspondencias",
             templateUrl: "views/correspondencias.html",
-            controller: visitasCtrl
+            controller: visitasCtrl,
+            data : {title:'correspondencias'}            
         })
         .state('nueva-correspondencia', {
             url: "/nueva-correspondencia",
             templateUrl: "views/nueva_correspondencia.html",
-            controller: mainCtrl
+            controller: mainCtrl,
+            data : {title:'Correspondencia'}            
         })
         .state('home', {
             url: "/home",
             templateUrl: "views/selection.html",
-            controller: buildingCtrl
+            controller: buildingCtrl,
+            data : {title:'home'}                             
         });
 
 
@@ -142,6 +147,8 @@ app.run(function($rootScope, $mdSidenav, $mdBottomSheet, $state) {
 
             $rootScope.back = fromState.name != '' && toState.name != '' ? true : false;
             $rootScope.backcounter++;
+            $rootScope.pageTitle = toState.data.title || 'Home';
+
 
             console.log($rootScope.back, 'back')
 

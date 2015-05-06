@@ -7,7 +7,7 @@
 
         <span ng-hide="$root.insearch" flex style="cursor:default" ui-sref="home" class="noselect">
          <h2 hide-gt-sm flex >DH</h2>
-         <h2 hide-sm flex >Digital Homes</h2>
+         <h2 hide-sm flex style="text-transform:capitalize">{{$root.pageTitle || 'home'}}</h2>
           </span>
 
           <md-autocomplete layout="column" flex='44' ng-hide="!$root.insearch"
