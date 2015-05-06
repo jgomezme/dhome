@@ -1,6 +1,6 @@
 <!-- nueva visita -->
 
-<section ng-init="centerCita()">
+<section>
     <div layout="row">
     	<md-content layout-padding flex>
             <br>      
@@ -8,10 +8,12 @@
             <br>            
 
             <form ng-model="form">
+            
               <md-input-container flex>
                 <label>Nombre del Visitante *</label>
                 <input ng-model="form.full_name">
               </md-input-container>
+
               <md-input-container flex>
                 <label>No. Documento *</label>
                 <input ng-model="form.no_documento">
