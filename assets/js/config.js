@@ -95,13 +95,7 @@ angular.module('dhome')
             url: "/enviar-inbox",
             templateUrl: "views/enviar_inbox.html",
             controller: mainCtrl
-        })
-        .state('enviar-inbox', {
-            url: "/enviar-inbox",
-            templateUrl: "views/enviar_inbox.html",
-            controller: mainCtrl,
-            data : {title:'enviar inbox'}            
-        })
+        })   
         .state('inboxs', {
             url: "/inboxs",
             templateUrl: "views/inboxs.html",
