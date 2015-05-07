@@ -35,7 +35,7 @@
                 <label>Fotografía del Visitante *</label>
                
                <label>
-                <input name="photo" required style="display:none !important" ng-model="form.photo" type="file" accept="image/*;capture=camera" id="visit">
+                <input name="photo" required style="display:none !important" type="file" accept="image/*;capture=camera" id="visit" onchange="photoChanged()">
 
                 </label>
 

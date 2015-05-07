@@ -1,6 +1,6 @@
-var app = angular.module('dhome');
 
-app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $mdThemingProvider) {
+angular.module('dhome')
+.config(function($stateProvider, $urlRouterProvider, $httpProvider, $mdThemingProvider) {
 
     // theming
 
@@ -105,27 +105,36 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $mdThemin
         })
         .state('home', {
             url: "/home",
-            templateUrl: "views/selection.html",
+            templateUrl: "views/building.html",
             controller: buildingCtrl,
             data : {title:'home'}                             
-        });
+        })
+        .state('home.towers', {
+            url: "/towers",
+            templateUrl: "views/building/towers.html",
+            controller: buildingCtrl,
+            data : {title:'towers'}                             
+        })
+        .state('home.towers.suites', {
+            url: "/towers/:id",
+            templateUrl: "views/building/suites.html",
+            controller: mainCtrl,
+            data : {title:'towers'}                             
+        })
+        .state('home.suites', {
+            url: "/suites",
+            templateUrl: "views/building/suites.html",
+            controller: buildingCtrl,
+            data : {title:'suites'}                             
+        })
+
+        ;
 
 
     $urlRouterProvider.otherwise("/home");
 
-});
-
-
-/*
-    }, ['uiGmapGoogleMapApi', function(GoogleMapApiProviders){
-    
-         GoogleMapApiProvider.configure({ });
-          }]);
-
-*/
-
-
-app.run(function($rootScope, $mdSidenav, $mdBottomSheet, $state) {
+})
+.run(function($rootScope, $mdSidenav, $mdBottomSheet, $state) {
 
     $rootScope.$on('$viewContentLoaded',
         function(event, toState, toParams, fromState, fromParams) {

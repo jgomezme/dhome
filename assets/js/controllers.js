@@ -1,5 +1,5 @@
 // controllers 
-var app = angular.module('dhome');
+
 
 String.prototype.ellipsis = function(limit){
 
@@ -45,6 +45,8 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 			    		)
 
 			  }
+
+
 			
 
 			 
@@ -201,10 +203,22 @@ function buildingCtrl($scope, $rootScope, $storage, $API){
 
    $scope.building = $storage.get('config').buildingId;
 
+
+  $scope.loadView = function(){    
+
+        
+        if($scope.thebuilding.Towers.length > 0)
+            window.location = "#/home/towers";
+        else
+            window.location = "#/home/suites";
+
+  }
+
+
    $scope.load = function(callback){
 
-    console.log($scope.building)
 
+    console.log($scope.building);
 
 
        $API
@@ -217,8 +231,11 @@ function buildingCtrl($scope, $rootScope, $storage, $API){
 
            $scope.thebuilding = rs;
 
+
            if(callback)
                callback(rs);
+            else
+              $scope.loadView();
 
        })
        .error(function(err){
@@ -233,6 +250,7 @@ function buildingCtrl($scope, $rootScope, $storage, $API){
 
 
    $scope.getTowers = function(){
+    
 
        if(!$scope.thebuilding)
          $scope.load(function(rs){
@@ -302,6 +320,30 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
 $scope.takeimage = function(){
      document.getElementById('visit').click()
    }
+
+
+
+        $scope.photoChanged = function() {
+          
+          var oFReader = new FileReader();
+
+          console.log($scope.photo, 'photo');
+          return;
+          
+
+           angular.element(this).scope().fileChanged(this);
+
+           console.log(this)
+           
+           oFReader.readAsDataURL(document.getElementById('visit').files[0]);
+
+
+           oFReader.onload = function (oFREvent) {
+            alert('hey')
+             $scope.previewImage = oFREvent.target.result;
+           };
+
+        };
 
   $scope.centerBottomSheet = function() {  
    
@@ -503,7 +545,7 @@ function citasCtrl($scope, $rootScope, $stateParams, $state, $location, $storage
 }
 
 
-app
+angular.module('dhome')
 .controller('mainCtrl', mainCtrl)
 .controller('entityCtrlBase', entityCtrlBase)
 .controller('buildingCtrl', buildingCtrl)
