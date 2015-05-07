@@ -89,7 +89,12 @@ angular.module('dhome')
             url: "/nueva-visita",
             templateUrl: "views/nueva_visita.html",
             controller: visitasCtrl,
-            data:{title:'visita'}
+            data:{title:'visita'}            
+        }) 
+        .state('enviar-inbox', {
+            url: "/enviar-inbox",
+            templateUrl: "views/enviar_inbox.html",
+            controller: mainCtrl
         })
         .state('correspondencias', {
             url: "/correspondencias",
