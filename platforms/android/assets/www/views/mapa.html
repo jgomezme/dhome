@@ -1,0 +1,18 @@
+<div id="map" style="position:relative; height:99%; width:100%; z-index:1" ng-init="load()">
+</div>
+<div  style="position:absolute; height:99.5%; width:99%; top:0; left:0; z-index:2" >
+	
+	<md-autocomplete style="position:absolute; top:20px; left:50px; width:40%" flex layout="column" 
+					ng-model="$root.search" 
+					placeholder="Buscar..."
+					md-selected-item="selectedItem" 
+					md-search-text="$root.search" 
+					md-items="value in values" 
+					md-item-text="item.display">
+			  		<span md-highlight-text="searchText">{{item.display}}</span>
+				</md-autocomplete>	
+
+  	<md-button style="position:absolute; bottom:10px; right:10px;" class="md-fab md-default-theme" ng-click="openBottomSheet()" >
+  	<ng-md-icon icon="filter_list" style="fill:white"></ng-md-icon>
+  	</md-button>
+</div>
