@@ -18,4 +18,10 @@
 
 </platform>
 
+<platform name="ios">
+     <feature name="Camera">
+        <param name="ios-package" value="CDVCamera" />
+    </feature>
+</platform>
+
 </widget>

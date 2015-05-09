@@ -1,0 +1,49 @@
+<!-- enviar inbox -->
+<section>
+    <div layout="row">
+        <md-content layout-padding flex>
+            <br>
+            <h4>Enviar Inbox</h4>
+            <br>
+            <form ng-model="form">
+                <md-content layout="row" flex>
+                    <md-select ng-required ng-model="form.torre" placeholder="Torre *" flex>
+                        <md-option ng-repeat="value in [1,2,3,4,5,6,7,8,9]">{{value}}</md-option>
+                    </md-select>
+                </md-content layout="row">
+                <md-content layout="row" flex>
+                    <md-select ng-required ng-model="form.nro_apto" placeholder="Numero de Apto *" flex>
+                        <md-option ng-repeat="value in [402,403,404,405,406,407,408]">{{value}}</md-option>
+                    </md-select>
+                </md-content layout="row">
+                <md-input-container flex>
+                    <label>Para</label>
+                    <input ng-model="form.to">
+                </md-input-container>
+                <md-input-container>
+                    <label>Mensaje *</label>
+                    <textarea ng-required ng-model="form.mensaje" columns="1" md-maxlength="150"></textarea>
+                </md-input-container>
+
+                <md-input-container flex>
+                    <label>Foto/Achivo *</label>
+                    <label>
+                        <input name="photo" required style="display:none !important" ng-model="form.photo" type="file" accept="image/*;capture=camera" id="visit">
+                    </label>
+                    <md-button layout="row" class="md-fab md-primary" ng-click="takeimage()">
+                        <ng-md-icon icon="photo_camera" style="fill:white; top:1px"></ng-md-icon>
+                    </md-button>
+                </md-input-container>
+                
+                <md-content layout="row">
+                    <div>
+                        <img ng-if="form.photo" ng-src="form.photo"></div>
+    </div>
+    </md-content>
+    <md-content layout="row" flex layout-align="end">
+        <md-button class="md-raised md-primary" ng-disabled="form.$invalid" ng-click="create()">Registrar</md-button>
+    </md-content>
+    </form>
+    </md-content>
+    </div>
+</section>
