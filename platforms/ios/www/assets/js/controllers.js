@@ -30,6 +30,15 @@ var map_error = {
 
 function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdMedia, $mdBottomSheet, $state, $API, $storage){
 
+       //handling device ready
+
+        document.addEventListener('deviceready', function(){
+         console.log(JSON.stringify(cordova.plugins))
+         
+      })
+
+     
+
        $rootScope.$watch('photo', function(n){
            
            if(!n)
@@ -45,6 +54,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
                 $rootScope.photosrc = e.target.result;
            };
        })
+
     
         $scope.values = []; 
 
@@ -131,6 +141,13 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
     };
 
 
+    if(window.config.env.match('dev'))
+    {
+      $scope.form = {};
+      $scope.form.username = 1047;
+      $scope.form.password = "C0ntr4";
+    }
+
     $scope.login = function(){  
 
         if(!$scope.form)
@@ -215,6 +232,11 @@ function entityCtrlBase($scope, $rootScope, $stateParams){
 function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBottomSheet){
 
    $scope.building = $storage.get('config').buildingId;
+
+    document.addEventListener('deviceready', function(){
+         StatusBar.show();
+      });
+
 
 
     $scope.towerBottomSheet = function() {  
@@ -555,66 +577,18 @@ $scope.takeimage = function(){
    
    $scope.scanId = function(){
        
-       alert(JSON.stringify(cordova.plugins))
-       
-        
-       // This license key allows setting overlay views for this application ID: mobi.pdf417.demo
-var licenseiOs = "YUY3-MHTT-COH4-SOQF-4M77-R6MN-Y73H-GIPF";
-
-// This license is only valid for package name "mobi.pdf417.demo"
-var licenseAndroid = "BTH7-L4JO-UI5T-JAFP-YSKX-BXZT-SDKE-LKIZ";  
-       
-       
-        cordova.plugins.pdf417Scanner.scan(
-
-            // Register the callback handler
-            function callback(scanningResult) {
-
-                // handle cancelled scanning
-                if (scanningResult.cancelled == true) {
-                    alert( "Cancelled!");
-                    return;
-                }
-
-                // Obtain list of recognizer results
-                var resultList = scanningResult.resultList;
-
-                // Iterate through all results
-                for (var i = 0; i < resultList.length; i++) {
-
-                    // Get individual resilt
-                    var recognizerResult = resultList[i];
-
-                    if (recognizerResult.resultType == "Barcode result") {
-                        // handle Barcode scanning result
-
-                        alert(JSON.stringify(recognizerResult));
-
-                    } else if (recognizerResult.resultType == "USDL result") {
-                        // handle USDL parsing result
-
-                        var fields = recognizerResult.fields;
-                        
-
-                        alert(JSON.stringify(fields));
-
-
-                    }
-                }
-            },
-
-            // Register the error callback
-            function errorHandler(err) {
-                alert('Error');
-            },
-
-            types, options, licenseiOs, licenseAndroid
-        );
-       
-       
-       
-   }
-
+       cordova.plugins.barcodeScanner.scan(
+      function (result) {
+          $rootScope.alerta({title: "Readed" , content: "We got a barcode\n" +
+                          "Result: " + result.text + "\n" +
+                          "Format: " + result.format + "\n" +
+                          "Cancelled: " + result.cancelled});
+      }, 
+      function (error) {
+          $rootScope.alerta({title:"Error",content:"Scanning failed: " + error});
+      }
+   );
+     }
 
 }
 

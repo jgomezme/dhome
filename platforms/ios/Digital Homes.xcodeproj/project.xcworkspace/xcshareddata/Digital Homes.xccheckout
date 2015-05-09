@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>CD30D143-8164-4BBF-A42E-07B50464009A</string>
 	<key>IDESourceControlProjectName</key>
-	<string>Digital Homes</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>268BD17E4D2CA2923DABFCA15621931AE57E86A7</key>
 		<string>https://github.com/nativapps/DigitalHomes.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>platforms/ios/Digital Homes.xcodeproj</string>
+	<string>platforms/ios/Digital Homes.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>268BD17E4D2CA2923DABFCA15621931AE57E86A7</key>

@@ -6,8 +6,11 @@
 	objectVersion = 46;
 	objects = {
 /* Begin PBXBuildFile section */
+		14B7A86EBEC44ACFB37E246F /* zxing-all-in-one.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBEDD425C12E4A6CA3BC941A /* zxing-all-in-one.cpp */; };
+		170A7C7BB97244DEBE4F50CC /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 48601046E47D456A8BC9829D /* libiconv.dylib */; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		2713F0F0160447679F242F98 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55AA1EAF220847AC899FC846 /* CoreVideo.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		301BF552109A68D80062928A /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 301BF535109A57CC0062928A /* libCordova.a */; };
 		302D95F114D2391D003F00A1 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 302D95EF14D2391D003F00A1 /* MainViewController.m */; };
@@ -27,6 +30,7 @@
 		30B4F30219D5E07200D9F7D8 /* Default-Landscape-736h.png in Resources */ = {isa = PBXBuildFile; fileRef = 30B4F2FF19D5E07200D9F7D8 /* Default-Landscape-736h.png */; };
 		30C1856619D5FC0A00212699 /* icon-60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30C1856519D5FC0A00212699 /* icon-60@3x.png */; };
 		30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30FC414816E50CA1004E6F35 /* icon-72@2x.png */; };
+		3EBC640A1C0F42C5BEF4982C /* scannerOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30AB1D56B6A54330813AF5D0 /* scannerOverlay.xib */; };
 		5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */; };
 		7E7966DE1810823500FA85AD /* icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D41810823500FA85AD /* icon-40.png */; };
 		7E7966DF1810823500FA85AD /* icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D51810823500FA85AD /* icon-40@2x.png */; };
@@ -38,25 +42,11 @@
 		7E7966E51810823500FA85AD /* icon-76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966DB1810823500FA85AD /* icon-76@2x.png */; };
 		7E7966E61810823500FA85AD /* icon-small.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966DC1810823500FA85AD /* icon-small.png */; };
 		7E7966E71810823500FA85AD /* icon-small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966DD1810823500FA85AD /* icon-small@2x.png */; };
-		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
-		F8A7AC3E5E9C49548936954D /* CDVpdf417.m in Sources */ = {isa = PBXBuildFile; fileRef = AFDC8F95F30A4E0C9E05E667 /* CDVpdf417.m */; };
-		E362BA6CCE214FB6A2546135 /* light.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1E85ABBD404354A3CCCE86 /* light.png */; };
-		608FD45C8E874E889CC05C18 /* light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2402AF636BE744978C4094F4 /* light@2x.png */; };
-		2D261C2149834BA88B234DC4 /* lighton.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E59EC5F08664F31A2373889 /* lighton.png */; };
-		4950AD39881644A6BAA36417 /* lighton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C759D893F0C47729EB22344 /* lighton@2x.png */; };
-		94D313FB78FF425BBE4AC558 /* beep_pdf417.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 02F7622224B447209562D1AE /* beep_pdf417.mp3 */; };
-		8CEA036876F146F4A28BE6D2 /* de.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3CB0F6E387B34E5BBD789720 /* de.strings */; };
-		D9386F888F89414A957F8A4B /* en.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8104B35FEF6B4A74AB77E68D /* en.strings */; };
-		944AFBA810204120835B4C4F /* hr.strings in Resources */ = {isa = PBXBuildFile; fileRef = D63E7D48F89F47A896A4F089 /* hr.strings */; };
-		F3809623775A4201A14EC619 /* pdf417.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 863DBB64C6D44DB5BFE9F293 /* pdf417.framework */; };
-		78EBEB9BA566495A84F40B17 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CCCD5097A25040908B276008 /* libc++.dylib */; };
-		49B4731E381F4ED6A2E80932 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C0E7F24C8734673B7AB350E /* libz.dylib */; };
-		170A7C7BB97244DEBE4F50CC /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 48601046E47D456A8BC9829D /* libiconv.dylib */; };
-		2713F0F0160447679F242F98 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55AA1EAF220847AC899FC846 /* CoreVideo.framework */; };
-		67CF0B06A7E44538B5F38C51 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34277CE502074B5B9841E58D /* OpenGLES.framework */; };
-		AAFCACA876BA4FFD95283E37 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05067900D32845408307903D /* CoreMedia.framework */; };
+		82E5CBAD8E38474791F95009 /* CDVStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD73720AF3F4376978E199A /* CDVStatusBar.m */; };
+		8DEA1B1EA64743B6859A1DA4 /* CDVBarcodeScanner.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E1E46459E5C4FDC8620745A /* CDVBarcodeScanner.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9FF87A1B46624858BB2CA698 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83FE65F380CB4C4C8D63FD71 /* QuartzCore.framework */; };
-		7446E87FC79946C9BDAC3AE1 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93FC02AD7A9047279EB9173F /* AudioToolbox.framework */; };
+		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
+		E31856FD6F8B4BD5BC72C15C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 753DD882234B4A4594D8C780 /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,14 +67,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		02F7622224B447209562D1AE /* beep_pdf417.mp3 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = unknown; path = beep_pdf417.mp3; sourceTree = "<group>"; };
+		05067900D32845408307903D /* CoreMedia.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* Digital Homes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Digital Homes.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1F766FDD13BBADB100FB74C0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
-		1F766FE013BBADB100FB74C0 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Localizable.strings; sourceTree = "<group>"; };
+		1DD73720AF3F4376978E199A /* CDVStatusBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVStatusBar.m; path = org.apache.cordova.statusbar/CDVStatusBar.m; sourceTree = "<group>"; };
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CordovaLib.xcodeproj; path = "CordovaLib/CordovaLib.xcodeproj"; sourceTree = "<group>"; };
+		2E59EC5F08664F31A2373889 /* lighton.png */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = unknown; path = lighton.png; sourceTree = "<group>"; };
+		301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CordovaLib.xcodeproj; path = CordovaLib/CordovaLib.xcodeproj; sourceTree = "<group>"; };
 		301BF56E109A69640062928A /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = SOURCE_ROOT; };
 		302D95EE14D2391D003F00A1 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		302D95EF14D2391D003F00A1 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
@@ -99,13 +91,22 @@
 		308D052E1370CCF300D202BF /* icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-72.png"; sourceTree = "<group>"; };
 		308D052F1370CCF300D202BF /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		308D05301370CCF300D202BF /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
+		30AB1D56B6A54330813AF5D0 /* scannerOverlay.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = scannerOverlay.xib; sourceTree = "<group>"; };
 		30B4F2FD19D5E07200D9F7D8 /* Default-667h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-667h.png"; sourceTree = "<group>"; };
 		30B4F2FE19D5E07200D9F7D8 /* Default-736h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-736h.png"; sourceTree = "<group>"; };
 		30B4F2FF19D5E07200D9F7D8 /* Default-Landscape-736h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape-736h.png"; sourceTree = "<group>"; };
 		30C1856519D5FC0A00212699 /* icon-60@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-60@3x.png"; sourceTree = "<group>"; };
 		30FC414816E50CA1004E6F35 /* icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-72@2x.png"; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* Digital Homes-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Digital Homes-Prefix.pch"; sourceTree = "<group>"; };
+		34277CE502074B5B9841E58D /* OpenGLES.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		3C0E7F24C8734673B7AB350E /* libz.dylib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		3CB0F6E387B34E5BBD789720 /* de.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = unknown; path = de.strings; sourceTree = "<group>"; };
+		4082F3BA5DDC40829116D1AA /* CDVpdf417.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVpdf417.h; path = mobi.pdf417.Pdf417Scanner/CDVpdf417.h; sourceTree = "<group>"; };
+		48601046E47D456A8BC9829D /* libiconv.dylib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
+		55AA1EAF220847AC899FC846 /* CoreVideo.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		753DD882234B4A4594D8C780 /* AVFoundation.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		7E1E85ABBD404354A3CCCE86 /* light.png */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = unknown; path = light.png; sourceTree = "<group>"; };
 		7E7966D41810823500FA85AD /* icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-40.png"; sourceTree = "<group>"; };
 		7E7966D51810823500FA85AD /* icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-40@2x.png"; sourceTree = "<group>"; };
 		7E7966D61810823500FA85AD /* icon-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-50.png"; sourceTree = "<group>"; };
@@ -116,31 +117,22 @@
 		7E7966DB1810823500FA85AD /* icon-76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-76@2x.png"; sourceTree = "<group>"; };
 		7E7966DC1810823500FA85AD /* icon-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-small.png"; sourceTree = "<group>"; };
 		7E7966DD1810823500FA85AD /* icon-small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-small@2x.png"; sourceTree = "<group>"; };
+		8104B35FEF6B4A74AB77E68D /* en.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = unknown; path = en.strings; sourceTree = "<group>"; };
+		83FE65F380CB4C4C8D63FD71 /* QuartzCore.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		863DBB64C6D44DB5BFE9F293 /* pdf417.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = pdf417.framework; path = "Digital Homes/Plugins/mobi.pdf417.Pdf417Scanner/pdf417.framework"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Digital Homes-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Digital Homes-Info.plist"; path = "../Digital Homes-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		8E1337EF21E74A3E967576C0 /* zxing-all-in-one.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "zxing-all-in-one.h"; path = "com.phonegap.plugins.barcodescanner/zxing-all-in-one.h"; sourceTree = "<group>"; };
+		8E1E46459E5C4FDC8620745A /* CDVBarcodeScanner.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = unknown; name = CDVBarcodeScanner.mm; path = com.phonegap.plugins.barcodescanner/CDVBarcodeScanner.mm; sourceTree = "<group>"; };
+		93FC02AD7A9047279EB9173F /* AudioToolbox.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		A23A068755554C5FB1BE8FD3 /* CDVStatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVStatusBar.h; path = org.apache.cordova.statusbar/CDVStatusBar.h; sourceTree = "<group>"; };
+		AFDC8F95F30A4E0C9E05E667 /* CDVpdf417.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVpdf417.m; path = mobi.pdf417.Pdf417Scanner/CDVpdf417.m; sourceTree = "<group>"; };
+		CBEDD425C12E4A6CA3BC941A /* zxing-all-in-one.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = unknown; name = "zxing-all-in-one.cpp"; path = "com.phonegap.plugins.barcodescanner/zxing-all-in-one.cpp"; sourceTree = "<group>"; };
 		D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x~iphone.png"; sourceTree = "<group>"; };
+		D63E7D48F89F47A896A4F089 /* hr.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = unknown; path = hr.strings; sourceTree = "<group>"; };
 		EB87FDF21871DA7A0020F90C /* merges */ = {isa = PBXFileReference; lastKnownFileType = folder; name = merges; path = ../../merges; sourceTree = "<group>"; };
 		EB87FDF31871DA8E0020F90C /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; name = www; path = ../../www; sourceTree = "<group>"; };
 		EB87FDF41871DAF40020F90C /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = "Digital Homes/config.xml"; sourceTree = "<group>"; };
-		AFDC8F95F30A4E0C9E05E667 /* CDVpdf417.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVpdf417.m"; path = "mobi.pdf417.Pdf417Scanner/CDVpdf417.m"; sourceTree = "<group>"; fileEncoding = 4; };
-		4082F3BA5DDC40829116D1AA /* CDVpdf417.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVpdf417.h"; path = "mobi.pdf417.Pdf417Scanner/CDVpdf417.h"; sourceTree = "<group>"; fileEncoding = 4; };
-		7E1E85ABBD404354A3CCCE86 /* light.png */ = {isa = PBXFileReference; lastKnownFileType = unknown; name = "light.png"; path = "light.png"; sourceTree = "<group>"; fileEncoding = 4; };
-		2402AF636BE744978C4094F4 /* light@2x.png */ = {isa = PBXFileReference; lastKnownFileType = unknown; name = "light@2x.png"; path = "light@2x.png"; sourceTree = "<group>"; fileEncoding = 4; };
-		2E59EC5F08664F31A2373889 /* lighton.png */ = {isa = PBXFileReference; lastKnownFileType = unknown; name = "lighton.png"; path = "lighton.png"; sourceTree = "<group>"; fileEncoding = 4; };
-		4C759D893F0C47729EB22344 /* lighton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = unknown; name = "lighton@2x.png"; path = "lighton@2x.png"; sourceTree = "<group>"; fileEncoding = 4; };
-		02F7622224B447209562D1AE /* beep_pdf417.mp3 */ = {isa = PBXFileReference; lastKnownFileType = unknown; name = "beep_pdf417.mp3"; path = "beep_pdf417.mp3"; sourceTree = "<group>"; fileEncoding = 4; };
-		3CB0F6E387B34E5BBD789720 /* de.strings */ = {isa = PBXFileReference; lastKnownFileType = unknown; name = "de.strings"; path = "de.strings"; sourceTree = "<group>"; fileEncoding = 4; };
-		8104B35FEF6B4A74AB77E68D /* en.strings */ = {isa = PBXFileReference; lastKnownFileType = unknown; name = "en.strings"; path = "en.strings"; sourceTree = "<group>"; fileEncoding = 4; };
-		D63E7D48F89F47A896A4F089 /* hr.strings */ = {isa = PBXFileReference; lastKnownFileType = unknown; name = "hr.strings"; path = "hr.strings"; sourceTree = "<group>"; fileEncoding = 4; };
-		863DBB64C6D44DB5BFE9F293 /* pdf417.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "pdf417.framework"; path = "Digital Homes/Plugins/mobi.pdf417.Pdf417Scanner/pdf417.framework"; sourceTree = "<group>"; };
-		CCCD5097A25040908B276008 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; fileEncoding = 4; };
-		3C0E7F24C8734673B7AB350E /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libz.dylib"; path = "usr/lib/libz.dylib"; sourceTree = SDKROOT; fileEncoding = 4; };
-		48601046E47D456A8BC9829D /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libiconv.dylib"; path = "usr/lib/libiconv.dylib"; sourceTree = SDKROOT; fileEncoding = 4; };
-		55AA1EAF220847AC899FC846 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "CoreVideo.framework"; path = "System/Library/Frameworks/CoreVideo.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
-		34277CE502074B5B9841E58D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "OpenGLES.framework"; path = "System/Library/Frameworks/OpenGLES.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
-		05067900D32845408307903D /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "CoreMedia.framework"; path = "System/Library/Frameworks/CoreMedia.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
-		83FE65F380CB4C4C8D63FD71 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "QuartzCore.framework"; path = "System/Library/Frameworks/QuartzCore.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
-		93FC02AD7A9047279EB9173F /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "AudioToolbox.framework"; path = "System/Library/Frameworks/AudioToolbox.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,15 +144,10 @@
 				301BF552109A68D80062928A /* libCordova.a in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
 				305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */,
-				F3809623775A4201A14EC619 /* pdf417.framework in Frameworks */,
-				78EBEB9BA566495A84F40B17 /* libc++.dylib in Frameworks */,
-				49B4731E381F4ED6A2E80932 /* libz.dylib in Frameworks */,
 				170A7C7BB97244DEBE4F50CC /* libiconv.dylib in Frameworks */,
 				2713F0F0160447679F242F98 /* CoreVideo.framework in Frameworks */,
-				67CF0B06A7E44538B5F38C51 /* OpenGLES.framework in Frameworks */,
-				AAFCACA876BA4FFD95283E37 /* CoreMedia.framework in Frameworks */,
 				9FF87A1B46624858BB2CA698 /* QuartzCore.framework in Frameworks */,
-				7446E87FC79946C9BDAC3AE1 /* AudioToolbox.framework in Frameworks */,
+				E31856FD6F8B4BD5BC72C15C /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,13 +210,12 @@
 				308D05311370CCF300D202BF /* splash */,
 				8D1107310486CEB800E47090 /* Digital Homes-Info.plist */,
 				7E1E85ABBD404354A3CCCE86 /* light.png */,
-				2402AF636BE744978C4094F4 /* light@2x.png */,
 				2E59EC5F08664F31A2373889 /* lighton.png */,
-				4C759D893F0C47729EB22344 /* lighton@2x.png */,
 				02F7622224B447209562D1AE /* beep_pdf417.mp3 */,
 				3CB0F6E387B34E5BBD789720 /* de.strings */,
 				8104B35FEF6B4A74AB77E68D /* en.strings */,
 				D63E7D48F89F47A896A4F089 /* hr.strings */,
+				30AB1D56B6A54330813AF5D0 /* scannerOverlay.xib */,
 			);
 			name = Resources;
 			path = "Digital Homes/Resources";
@@ -242,7 +228,6 @@
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
 				305D5FD0115AB8F900A74A75 /* MobileCoreServices.framework */,
 				863DBB64C6D44DB5BFE9F293 /* pdf417.framework */,
-				CCCD5097A25040908B276008 /* libc++.dylib */,
 				3C0E7F24C8734673B7AB350E /* libz.dylib */,
 				48601046E47D456A8BC9829D /* libiconv.dylib */,
 				55AA1EAF220847AC899FC846 /* CoreVideo.framework */,
@@ -250,6 +235,7 @@
 				05067900D32845408307903D /* CoreMedia.framework */,
 				83FE65F380CB4C4C8D63FD71 /* QuartzCore.framework */,
 				93FC02AD7A9047279EB9173F /* AudioToolbox.framework */,
+				753DD882234B4A4594D8C780 /* AVFoundation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -267,6 +253,11 @@
 			children = (
 				AFDC8F95F30A4E0C9E05E667 /* CDVpdf417.m */,
 				4082F3BA5DDC40829116D1AA /* CDVpdf417.h */,
+				8E1E46459E5C4FDC8620745A /* CDVBarcodeScanner.mm */,
+				CBEDD425C12E4A6CA3BC941A /* zxing-all-in-one.cpp */,
+				8E1337EF21E74A3E967576C0 /* zxing-all-in-one.h */,
+				1DD73720AF3F4376978E199A /* CDVStatusBar.m */,
+				A23A068755554C5FB1BE8FD3 /* CDVStatusBar.h */,
 			);
 			name = Plugins;
 			path = "Digital Homes/Plugins";
@@ -349,8 +340,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 510;
+				TargetAttributes = {
+					1D6058900D05DD3D006BFB54 = {
+						DevelopmentTeam = 3XBLCM92HR;
+					};
+				};
 			};
-			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "__CLI__" */;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Digital Homes" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
@@ -420,14 +416,7 @@
 				7E7966E11810823500FA85AD /* icon-50@2x.png in Resources */,
 				7E7966E51810823500FA85AD /* icon-76@2x.png in Resources */,
 				30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */,
-				E362BA6CCE214FB6A2546135 /* light.png in Resources */,
-				608FD45C8E874E889CC05C18 /* light@2x.png in Resources */,
-				2D261C2149834BA88B234DC4 /* lighton.png in Resources */,
-				4950AD39881644A6BAA36417 /* lighton@2x.png in Resources */,
-				94D313FB78FF425BBE4AC558 /* beep_pdf417.mp3 in Resources */,
-				8CEA036876F146F4A28BE6D2 /* de.strings in Resources */,
-				D9386F888F89414A957F8A4B /* en.strings in Resources */,
-				944AFBA810204120835B4C4F /* hr.strings in Resources */,
+				3EBC640A1C0F42C5BEF4982C /* scannerOverlay.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,7 +448,9 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
-				F8A7AC3E5E9C49548936954D /* CDVpdf417.m in Sources */,
+				8DEA1B1EA64743B6859A1DA4 /* CDVBarcodeScanner.mm in Sources */,
+				14B7A86EBEC44ACFB37E246F /* zxing-all-in-one.cpp in Sources */,
+				82E5CBAD8E38474791F95009 /* CDVStatusBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -479,7 +470,12 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"Digital Homes/Plugins/mobi.pdf417.Pdf417Scanner\"",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -502,10 +498,6 @@
 				);
 				PRODUCT_NAME = "Digital Homes";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"Digital Homes/Plugins/mobi.pdf417.Pdf417Scanner\"",
-				);
 			};
 			name = Debug;
 		};
@@ -514,7 +506,12 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"Digital Homes/Plugins/mobi.pdf417.Pdf417Scanner\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Digital Homes/Digital Homes-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
@@ -535,10 +532,6 @@
 				);
 				PRODUCT_NAME = "Digital Homes";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"Digital Homes/Plugins/mobi.pdf417.Pdf417Scanner\"",
-				);
 			};
 			name = Release;
 		};
@@ -641,7 +634,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "__CLI__" */ = {
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Digital Homes" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,

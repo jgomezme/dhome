@@ -1,17 +1,25 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
 module.exports = [
     {
-        "file": "plugins/mobi.pdf417.Pdf417Scanner/www/pdf417scanner.js",
-        "id": "mobi.pdf417.Pdf417Scanner.Pdf417Scanner",
+        "file": "plugins/com.phonegap.plugins.barcodescanner/www/barcodescanner.js",
+        "id": "com.phonegap.plugins.barcodescanner.BarcodeScanner",
         "clobbers": [
-            "cordova.plugins.pdf417Scanner"
+            "cordova.plugins.barcodeScanner"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.statusbar/www/statusbar.js",
+        "id": "org.apache.cordova.statusbar.statusbar",
+        "clobbers": [
+            "window.StatusBar"
         ]
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
-    "mobi.pdf417.Pdf417Scanner": "1.0.3"
+    "com.phonegap.plugins.barcodescanner": "2.0.1",
+    "org.apache.cordova.statusbar": "0.1.10"
 }
 // BOTTOM OF METADATA
 });
