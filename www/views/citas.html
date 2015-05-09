@@ -1,0 +1,68 @@
+<div layout-padding>
+<section >
+      <md-subheader class="md-primary">Citas Pendientes</md-subheader>
+
+      <md-list ng-init="load()" >
+
+      <md-lis-item ng-if="values.length == 0">
+        <p>Vaya, parece que no tienes citas pendientes por el momento.</p>
+      </md-lis-item>    
+
+     <md-list-item class="md-3-line" md-swipe-right="requetsAmbulance()"  ng-repeat="value in values track by $index | filter : 'pending'" >
+
+      <img  ng-src="{{ value.center.image || 'assets/img/logo.png' }}" class="md-avatar" />
+      
+      <div class="md-list-item-text" ui-sref="mapa" >
+          
+          <h3>{{ value.center.name }}</h3>          
+          <p class="p-aligned">{{ value.sintomas.ellipsis() }}</p>
+          <small class="p-aligned">Fecha: {{ value.date }}</small>
+        </div>
+    <md-button class="md-icon-button" ng-click="centerBottomSheet($ev)" style="position: relative;
+left: 25px;">
+          <md-icon md-svg-icon="assets/icons/more_vert.svg"></md-icon>    
+      </md-button>
+      <br>
+       <md-divider inset></md-divider>
+
+     </md-list-item> 
+      
+    </md-list>
+
+  </section>
+
+
+
+  <section>
+      <md-subheader class="md-accent">Citas Completadas</md-subheader>
+
+      <md-list ng-init="load()" >
+
+      <md-lis-item ng-if="values.length == 0">
+        <p>Vaya, parece que no tienes citas completadas por el momento.</p>
+      </md-lis-item>    
+
+
+     <md-list-item class="md-3-line" md-swipe-right="requetsAmbulance()"  ng-repeat="value in values track by $index  | filter : 'completed'" >
+      <img  ng-src="{{ value.center.image || 'assets/img/logo.png' }}" class="md-avatar" />
+      
+      <div class="md-list-item-text" ui-sref="mapa" >
+          
+          <h3>{{ value.center.name }}</h3>          
+          <p class="p-aligned">{{ value.sintomas.ellipsis() }}</p>
+          <small class="p-aligned">Fecha: {{ value.date }}</small>          
+        </div>
+    <md-button class="md-icon-button" ng-click="centerBottomSheet($ev)" style="position: relative;
+left: 25px;">
+          <md-icon md-svg-icon="assets/icons/more_vert.svg"></md-icon>    
+      </md-button>
+      <br>
+       <md-divider inset></md-divider>
+
+     </md-list-item> 
+      
+    </md-list>
+
+  </section>
+
+  </div>
