@@ -6,12 +6,10 @@
 
 
         <md-list-item class="md-3-line" ng-repeat="value in values track by $index">
-          <p>APTO. {{value.Name}}</p>
+          <p>APTO. {{value.suite.Name}}</p>
           <div layout="column" flex>
           <div layout="row">
-           <ng-md-icon icon="person" style="fill:gray"></ng-md-icon>
-           &nbsp;
-           <ng-md-icon icon="archive" style="fill:gray"></ng-md-icon>
+      
            </div>
           </div>
             <div layout="column" >

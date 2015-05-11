@@ -102,12 +102,13 @@ angular.module('dhome')
             url: "/nueva-visita",
             templateUrl: "views/nueva_visita.html",
             controller: visitasCtrl,
-            data:{title:'visita'}            
+            data:{title:'nueva visita'}            
         }) 
         .state('enviar-inbox', {
             url: "/enviar-inbox",
             templateUrl: "views/enviar_inbox.html",
-            controller: mainCtrl
+            controller: mainCtrl,
+            data : {title:'enviar mensaje'}
         }) 
          .state('cambiar-contrasena', {
             url: "/cambiar-contrasena",
@@ -130,14 +131,14 @@ angular.module('dhome')
          .state('correspondencias', {
             url: "/correspondencias",
             templateUrl: "views/correspondencias.html",
-            controller: visitasCtrl,
+            controller: correspondenceCtrl,
             data : {title:'correspondencias'}            
         })
         .state('nueva-correspondencia', {
             url: "/nueva-correspondencia",
             templateUrl: "views/nueva_correspondencia.html",
-            controller: mainCtrl,
-            data : {title:'Correspondencia'}            
+            controller: correspondenceCtrl,
+            data : {title:'nueva correspondencia'}            
         })
         .state('home', {
             url: "/home",
@@ -149,19 +150,19 @@ angular.module('dhome')
             url: "/towers",
             templateUrl: "views/building/towers.html",
             controller: buildingCtrl,
-            data : {title:'towers'}                             
+            data : {title:'torres'}                             
         })
         .state('home.tower', {
             url: "/tower/:id",
             templateUrl: "views/building/suites.html",
             controller: buildingCtrl,
-            data : {title:'suites'}                             
+            data : {title:'apartamentos'}                             
         })
         .state('home.suites', {
             url: "/suites",
             templateUrl: "views/building/suites.html",
             controller: buildingCtrl,
-            data : {title:'suites'}                             
+            data : {title:'apartamentos'}                             
         })
 
         ;

@@ -4,7 +4,7 @@
          <p><br>Vaya, parece que no hay torres disponibles.</p>
        </md-list-item>       
            <md-list-item class="md-3-line"  ng-repeat="value in values">
-          <p style='' ui-sref="home.tower({id:{{value.Id}}})">{{value.Name}}</p>
+          <p style='' ui-sref="home.tower({id:{{value.Id}}})" >{{value.Name}}</p>
             <div layout="column" >
             <div layout="row" >
       <md-button  class="md-icon-button" ng-click="towerBottomSheet($ev)"  style="position: relative;
