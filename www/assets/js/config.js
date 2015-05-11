@@ -30,10 +30,15 @@ angular.module('dhome')
         .primaryPalette('dhomePalette')
 
 
-    $httpProvider.interceptors.push(function() {
+    $httpProvider.interceptors.push(function($injector) {
+
+        rootScope = $injector.get('$rootScope');
+
         return {
             'request': function(config) {
-                $rootScope.loading = true
+                
+                rootScope.loading = true;
+                
 
                 $httpProvider.defaults.withCredentials = true;
 
@@ -58,7 +63,8 @@ angular.module('dhome')
                 if (window.config.env.match('qa|dev'))
                     console.log(response, 'response rq');
 
-                $rootScope.loading = false
+                rootScope.loading = false;
+                
 
                 return response;
             },
@@ -73,7 +79,8 @@ angular.module('dhome')
                     window.location = 'index.html';
                 }
 
-                $rootScope.loading = false
+                rootScope.loading = false;
+                
 
                 return err;
 

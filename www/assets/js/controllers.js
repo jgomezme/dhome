@@ -24,7 +24,7 @@ String.prototype.ellipsis = function(limit){
 }
 
 var map_error = {
-   "invalid_client" : "Usuario o contraseña no validos."
+   "invalid_grant" : "Usuario o contraseña no validos."
 }
 
 
