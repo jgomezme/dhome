@@ -1,1 +1,0 @@
-angular.module('dhome', ['ngMaterial', 'ui.router', 'ngMdIcons']);
