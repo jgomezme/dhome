@@ -77,8 +77,9 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
            reader.onload = function(e){          
 
                 $rootScope.loading=false;     
-                $rootScope.photosrc = e.target.result;
                 document.getElementById('photo').click();
+                
+                $rootScope.photosrc = e.target.result;
 
            };
        })
