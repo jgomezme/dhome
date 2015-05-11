@@ -33,6 +33,8 @@ angular.module('dhome')
     $httpProvider.interceptors.push(function() {
         return {
             'request': function(config) {
+                $rootScope.loading = true
+
                 $httpProvider.defaults.withCredentials = true;
 
                 if (!window.localStorage.token)
@@ -56,6 +58,8 @@ angular.module('dhome')
                 if (window.config.env.match('qa|dev'))
                     console.log(response, 'response rq');
 
+                $rootScope.loading = false
+
                 return response;
             },
             'responseError': function(err) { //usamos los interceptors para manipular los errores
@@ -68,6 +72,8 @@ angular.module('dhome')
                     window.localStorage.clear();
                     window.location = 'index.html';
                 }
+
+                $rootScope.loading = false
 
                 return err;
 
@@ -159,6 +165,11 @@ angular.module('dhome')
 })
 .run(function($rootScope, $mdSidenav, $mdBottomSheet, $state) {
 
+    $rootScope.$on('$stateChangeStart', 
+        function(event, toState, toParams, fromState, fromParams){ 
+            $rootScope.loading = true
+    });
+
     $rootScope.$on('$viewContentLoaded',
         function(event, toState, toParams, fromState, fromParams) {
 
@@ -180,6 +191,7 @@ angular.module('dhome')
             $rootScope.back = fromState.name != '' && toState.name != '' ? true : false;
             $rootScope.backcounter++;
             $rootScope.pageTitle = toState.data.title || 'Home';
+            $rootScope.loading = false
 
 
             console.log($rootScope.back, 'back')
