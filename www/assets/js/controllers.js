@@ -74,10 +74,12 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
            reader.readAsDataURL(n);
                    
            
-           reader.onload = function(e){               
+           reader.onload = function(e){          
+
+                $rootScope.loading=false;     
                 $rootScope.photosrc = e.target.result;
                 document.getElementById('photo').click();
-                $rootScope.loading=false;
+
            };
        })
 
