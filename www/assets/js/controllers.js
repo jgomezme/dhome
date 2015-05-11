@@ -28,7 +28,7 @@ var map_error = {
 }
 
 
-function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdMedia, $mdBottomSheet, $state, $API, $storage){
+function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdMedia, $mdBottomSheet, $state, $API, $storage, $location){
 
        //handling device ready
 
@@ -38,6 +38,12 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
       })
 
      
+      $scope.checkLogin = function(){
+              if($storage.get('token'))
+                window.location = 'app.html';
+              else
+                $scope.nolog = true;
+      }
 
        $rootScope.$watch('photo', function(n){
            
