@@ -156,6 +156,8 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
     $scope.login = function(){  
 
+      alert('hey')
+
         if(!$scope.form)
             {
                $scope.error_login = "Todos los campos son requeridos";
@@ -237,7 +239,7 @@ function entityCtrlBase($scope, $rootScope, $stateParams){
 
 
 
-function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBottomSheet, $state){
+function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBottomSheet, $state, $stateParams){
 
    $scope.building = $storage.get('config').buildingId;
 
@@ -253,9 +255,7 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
 
     console.log($rootScope.tower, 'the tower')
     $mdBottomSheet.show({
-      templateUrl: 'views/bottom_sheet/tower.html',
-      scope : $scope,
-      preserveScope : true
+      templateUrl: 'views/bottom_sheet/tower.html'
     })
     .then(function(){ 
           
@@ -277,9 +277,7 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
    
     $rootScope.suite = $rootScope.suite || this.value;  
     $mdBottomSheet.show({
-      templateUrl: 'views/bottom_sheet/suite.html',
-      scope : $scope,
-      preserveScope : true
+      templateUrl: 'views/bottom_sheet/suite.html'
     })
     .then(function(){ 
          
@@ -369,22 +367,47 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
 
    $scope.getSuites = function(){  
 
-      $scope.values = [];
-      $scope.suites = [];
 
       var loadSuites = function(){
 
-  console.log($stateParams)
-        if($stateParams.tower)
+
+      $scope.values = [];
+      $scope.suites = [];
+
+
+        if($state.params.id)
         {
 
-          var tower = $scope.thebuilding.Towers[$scope.thebuilding.Towers.indexOf({Id:$stateParams.tower})];
+
+
+         var containsTower = function(id, towers){
+
+          console.log(towers)
+     
+              for(x in towers)
+                if(towers[x].Id === parseInt(id))
+                  return towers[x];
+                
+              
+
+              return false;
+          }
+
+        
+
+          var tower = containsTower($state.params.id, $scope.thebuilding.Towers);
 
           console.log(tower, 'id');
 
           for(x in tower.Floors) 
             for(j in tower.Floors[x].Suites)
-             $scope.values.push(tower.Floors[x].Suites[j]);     
+           if(typeof tower.Floors[x].Suites[j] === 'object' )
+              $scope.values.push(tower.Floors[x].Suites[j]);   
+            
+            
+
+            console.log($scope.values);
+
 
           return;
         }
@@ -397,6 +420,7 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
                  
 
             console.log($scope.values, $scope.suites)
+
       }
 
       if(!$scope.thebuilding)
@@ -404,6 +428,7 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
 
             if(rs)
                loadSuites();
+
           });
       else
         loadSuites();

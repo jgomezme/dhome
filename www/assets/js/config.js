@@ -154,7 +154,7 @@ angular.module('dhome')
         .state('home.tower', {
             url: "/tower/:id",
             templateUrl: "views/building/suites.html",
-            controller: mainCtrl,
+            controller: buildingCtrl,
             data : {title:'suites'}                             
         })
         .state('home.suites', {
