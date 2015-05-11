@@ -237,7 +237,7 @@ function entityCtrlBase($scope, $rootScope, $stateParams){
 
 
 
-function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBottomSheet){
+function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBottomSheet, $state){
 
    $scope.building = $storage.get('config').buildingId;
 
@@ -250,18 +250,20 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
     $scope.towerBottomSheet = function() {  
    
     $rootScope.tower = $rootScope.tower || this.value;  
+
+    console.log($rootScope.tower, 'the tower')
     $mdBottomSheet.show({
       templateUrl: 'views/bottom_sheet/tower.html',
       scope : $scope,
       preserveScope : true
     })
     .then(function(){ 
-         if(!$state.current.name.match('home'))    
+          
        delete $rootScope.tower;
 
        $mdBottomSheet.hide();
     }, function(){
-         if(!$state.current.name.match('home'))          
+        
       delete $rootScope.tower; 
       
       $mdBottomSheet.hide();
@@ -280,12 +282,12 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
       preserveScope : true
     })
     .then(function(){ 
-         if(!$state.current.name.match('home'))    
+         
        delete $rootScope.suite;
 
        $mdBottomSheet.hide();
     }, function(){
-         if(!$state.current.name.match('home'))          
+       
       delete $rootScope.suite; 
       
       $mdBottomSheet.hide();
