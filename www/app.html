@@ -12,7 +12,9 @@
   </head>
   <body layout="column" >
     <div ng-controller="mainCtrl" layout="column" layout-fill>
-
+      <div style="position:fixed;top:48%;left:48%;z-index:9999;" layout="row" layout-align="space-around" ng-show="loading">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+      </div>
     <div ng-include="'views/common/header.html'"></div>  
 
   <div layout="row" flex class="content-wrapper" ng-click="$root.insearch=false">

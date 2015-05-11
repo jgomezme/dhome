@@ -170,11 +170,13 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
               console.log(rs);
               $storage.save('config',rs);  
               $storage.save('token', rs.access_token)                     
-              window.location = "app.html";    
+              window.location = "app.html";
+              $rootScope.loading = false 
           })
           .error(function(err){
             console.log(err)
             $scope.error_login = map_error[err.error.toLowerCase()];
+              $rootScope.loading = false 
           })
 
 

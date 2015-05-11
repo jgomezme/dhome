@@ -21,14 +21,14 @@
     <div ng-controller="mainCtrl" layout="column" layout-fill>
 
 
-<div layout="row" flex class="content-wrapper" ng-click="$root.insearch=false">
+<div layout="row" flex class="content-wrapper" ng-click="$root.insearch=false" ng-cloak>
 
    
     
     <md-content layout   class="" flex style="background:transparent">
 
-         
-          <form ng-submit="login()"  hide-sm layout-align="center" style="margin:0 auto" flex="33" aria-label="login" ng-model="form" autocomplete='off'>
+          
+          <form ng-submit="login()"  hide-sm layout-align="center" style="margin:0 auto" flex="33" aria-label="login" ng-model="form" autocomplete='off' >
 
 
           <br>
@@ -38,7 +38,12 @@
           <h2 style="text-align:center;">Digital Homes</h2>
           </label>
           <br>
-          <md-content  style="padding:4rem; border-radius:1rem">
+          <md-content  style="padding:4rem; border-radius:1rem" >
+
+            <div layout="row" layout-align="space-around" ng-show="loading">
+              <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+            </div>
+            <div ng-show="!loading">
               <md-input-container flex>
 
 
@@ -63,7 +68,8 @@
               </md-button>
 
               </div>
-
+            </div>
+            
 </md-content>
               </form>
 

@@ -25,13 +25,13 @@ function storage(){
 }
 
 
-function API($http){
+function API($http,$rootScope){
 
 	  var config = window.config[window.config.env];
 	  this.baseUrl = config.apiUrlBase + config.apiBaseUri;
 	  this.url = "";
 
-	  this.login = function(id){ if(!id) this.url = config.apiUrlBase + "/token"; else this.url = this.baseUrl + "/token/" + id; return this; }
+	  this.login = function(id){ $rootScope.loading = true; if(!id) this.url = config.apiUrlBase + "/token"; else this.url = this.baseUrl + "/token/" + id; return this; }
 	  this.building = function(id){ if(!id) this.url = this.baseUrl + "/building"; else this.url = this.baseUrl + "/building/" + id; return this; }
 	  this.add = function(comp){ this.url += comp; return this;  }
 	  this.reset = function(){ this.url = ""; }
