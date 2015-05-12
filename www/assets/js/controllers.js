@@ -68,8 +68,8 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
        //handling device ready
 
-        document.addEventListener('deviceready', function(){
-         console.log(JSON.stringify(cordova.plugins))
+      document.addEventListener('deviceready', function(){
+         console.log(cordova.plugins)
          
       })
 
@@ -344,8 +344,7 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
    
     $rootScope.suite = this.value; 
 
-    console.log($rootScope.suite,'suite') 
-    $rootScope.pageTitle = 'APTO. ' + $rootScope.suite.Name || this.Name;
+    console.log($rootScope.suite,'suite')     
     $mdBottomSheet.show({
       templateUrl: 'views/bottom_sheet/suite.html'
     })

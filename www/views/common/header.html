@@ -6,7 +6,7 @@
         </md-button>
 
         <span ng-hide="$root.insearch" flex style="cursor:default" ui-sref="home" class="noselect">
-         <h2 hide-gt-sm flex >DH</h2>
+         <h2 hide-gt-sm flex >{{$root.pageTitle }}</h2>
          <h2 hide-sm flex style="text-transform:capitalize">{{$root.pageTitle || 'home'}}</h2>
           </span>
 
@@ -20,11 +20,11 @@
 			  		<span md-highlight-text="searchText">{{item.display}}</span>
 				</md-autocomplete>			
         
-        <div ng-click="$root.insearch=false" flex></div>
+        <div ng-click="$root.insearch=false"  flex></div>
         
  
 
-        <md-button class="md-icon-button menu-btn" aria-label="menu" ng-click="$root.insearch=!$root.insearch">
+        <md-button class="md-icon-button menu-btn" ng-if="nohidden" aria-label="menu" ng-click="$root.insearch=!$root.insearch">
          <ng-md-icon icon="search" style="fill:white;   top: 0;"  ></ng-md-icon>
         </md-button>
         
