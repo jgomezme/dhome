@@ -23,6 +23,42 @@ String.prototype.ellipsis = function(limit){
 
 }
 
+//compress image in frontend with canvas
+
+function resizeMe(img, max_width, max_height) {
+  
+  var canvas = document.createElement('canvas');
+
+  var width = img.width;
+  var height = img.height;
+
+
+  // calculate the width and height, constraining the proportions
+  if (width > height) {
+    if (width > max_width) {
+      //height *= max_width / width;
+      height = Math.round(height *= max_width / width);
+      width = max_width;
+    }
+  } else {
+    if (height > max_height) {
+      //width *= max_height / height;
+      width = Math.round(width *= max_height / height);
+      height = max_height;
+    }
+  }
+  
+  // resize the canvas and draw the image data into it
+  canvas.width = width;
+  canvas.height = height;
+  var ctx = canvas.getContext("2d");
+  ctx.drawImage(img, 0, 0, width, height);
+  
+  
+  return canvas.toDataURL("image/jpeg",0.7); // get the data from canvas as 70% JPG (can be also PNG, etc.)
+
+}
+
 var map_error = {
    "invalid_grant" : "Usuario o contraseña no validos."
 }
@@ -38,20 +74,20 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
       })
 
 
-         $rootScope.resetSuite = function(){
+   $rootScope.resetSuite = function(){
      delete $rootScope.suite;
- }
+    }
 
   $rootScope.resetSuiteTower = function(){
      delete $rootScope.suite;
      delete $rootScope.tower;
- }
+  }
 
 
   $rootScope.resetTower = function(){
      delete $rootScope.tower;
      delete $rootScope.toall;
- }
+  }
 
      
       $scope.checkLogin = function(){
@@ -66,25 +102,31 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
            if(!n)
                return;
 
-            $rootScope.loading = true;
-            var reader = new FileReader();
-            
+           $rootScope.loading = true;                        
            delete $rootScope.photosrc;
            
-           reader.readAsDataURL(n);
-                   
+           window.URL = window.URL || window.webkitURL;
            
-           reader.onload = function(e){          
+           var blob = window.URL.createObjectURL(n);           
+                   
+           //compress image
 
-                $rootScope.loading=false;     
+           var img = new Image();
+           img.src = blob;
 
-                $rootScope.photosrc = e.target.result;
-                document.getElementById('photo').click();
-                document.getElementById('photo').click();
+           img.onload = function(){
 
+               $rootScope.$apply(function(){
+               $rootScope.photosrc = resizeMe(img,350,350);           
+               $rootScope.loading=false; 
 
-           };
-       })
+             });
+               
+
+           }
+           
+           
+       });
 
     
         $scope.values = []; 
