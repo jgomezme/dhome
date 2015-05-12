@@ -21,14 +21,32 @@ function photo(){
 
     return {
          restrict : 'E',
+         replace : true,
          scope : {
             label : '@',
             required : '@'
          },
-         link : function(scope, element, attrs){ 
-              scope.takeimage = function(){
-                document.getElementById('iphoto').click()
-              }                                    
+         controller : function($scope, $rootScope){ 
+            
+            $scope.takeimage = function(){                
+
+                 function success(rs){
+                     console.log(rs);
+                     $rootScope.$apply(function(){
+                     $rootScope.photo = rs;
+                                                
+                     })
+                    // $rootScope.$broadcast('preview-photo', rs)
+
+                 }  
+
+                 function error(err){
+                     console.log(err);
+                 }
+
+                 navigator.camera.getPicture(success, error);       
+
+              } 
          },
          templateUrl : 'views/components/photo.html'         
     }

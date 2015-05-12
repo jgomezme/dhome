@@ -97,7 +97,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
                 $scope.nolog = true;
       }
 
-       $rootScope.$watch('photo', function(n){
+      function previewPhoto(n){
            
            if(!n)
                return;
@@ -107,7 +107,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
            
            window.URL = window.URL || window.webkitURL;
            
-           var blob = window.URL.createObjectURL(n);           
+           var blob = n.match('://')  ? n : window.URL.createObjectURL(n);         
                    
            //compress image
 
@@ -126,7 +126,12 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
            }
            
            
-       });
+       }
+
+      
+
+       $rootScope.$watch('photo', previewPhoto);
+
 
     
         $scope.values = []; 
@@ -234,6 +239,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
         $scope.form.grant_type="password";
         $scope.form.login_type="door";
    
+         console.log($scope.form)
 
           //window.location = "app.html";
           $API
@@ -249,9 +255,8 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
               $rootScope.loading = false 
           })
           .error(function(err){
-            alert(JSON.stringify(err))
             console.log(err)
-            $scope.error_login = map_error[err.error.toLowerCase()];
+              $scope.error_login = map_error[err.error.toLowerCase()];
               $rootScope.loading = false 
           })
 
