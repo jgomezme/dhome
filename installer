@@ -1,10 +1,10 @@
 #!/bin/bash
 echo 'Se intentará desinstalar la APP, revisa la pantalla del dispositivo y acepta la desinstalación'
-adb shell am start -a android.intent.action.DELETE -d package:mobi.pdf417.demo
-echo 'Compilando APP'
-sudo cordova build android 
+C:/adb shell am start -a android.intent.action.DELETE -d com.digitalhomes.app
+#echo 'Compilando APP'
+#sudo cordova build android 
 echo 'Instalando APP en el dispositivo'
-adb install -r platforms/android/ant-build/CordovaApp-debug.apk
+C:/adb install -r platforms/android/build/outputs/apk/android-debug.apk
 #echo 'Iniciando la APP'
 #adb shell am start -n com.pilotosbarranquilla.pilotos
 echo 'Listo'

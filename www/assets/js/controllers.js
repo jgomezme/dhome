@@ -37,22 +37,6 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
          
       })
 
-
-         $rootScope.resetSuite = function(){
-     delete $rootScope.suite;
- }
-
-  $rootScope.resetSuiteTower = function(){
-     delete $rootScope.suite;
-     delete $rootScope.tower;
- }
-
-
-  $rootScope.resetTower = function(){
-     delete $rootScope.tower;
-     delete $rootScope.toall;
- }
-
      
       $scope.checkLogin = function(){
               if($storage.get('token'))
@@ -65,8 +49,6 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
            
            if(!n)
                return;
-
-            $rootScope.loading = true;
             var reader = new FileReader();
             
            delete $rootScope.photosrc;
@@ -74,15 +56,8 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
            reader.readAsDataURL(n);
                    
            
-           reader.onload = function(e){          
-
-                $rootScope.loading=false;     
-
+           reader.onload = function(e){               
                 $rootScope.photosrc = e.target.result;
-                document.getElementById('photo').click();
-                document.getElementById('photo').click();
-                
-
            };
        })
 
@@ -181,7 +156,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
     $scope.login = function(){  
 
- 
+      alert('hey')
 
         if(!$scope.form)
             {
@@ -276,8 +251,7 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
 
     $scope.towerBottomSheet = function() {  
    
-    $rootScope.tower = this.value;  
-
+    $rootScope.tower = $rootScope.tower || this.value;  
 
     console.log($rootScope.tower, 'the tower')
     $mdBottomSheet.show({
@@ -285,10 +259,12 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
     })
     .then(function(){ 
           
+       delete $rootScope.tower;
 
        $mdBottomSheet.hide();
     }, function(){
-
+        
+      delete $rootScope.tower; 
       
       $mdBottomSheet.hide();
     })
@@ -299,19 +275,18 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
 
   $scope.suiteBottomSheet = function() {  
    
-    $rootScope.suite = this.value; 
-
-    console.log($rootScope.suite,'suite') 
-    $rootScope.pageTitle = 'APTO. ' + $rootScope.suite.Name || this.Name;
+    $rootScope.suite = $rootScope.suite || this.value;  
     $mdBottomSheet.show({
       templateUrl: 'views/bottom_sheet/suite.html'
     })
     .then(function(){ 
          
-      
+       delete $rootScope.suite;
+
        $mdBottomSheet.hide();
     }, function(){
        
+      delete $rootScope.suite; 
       
       $mdBottomSheet.hide();
     })
@@ -424,16 +399,12 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
 
           console.log(tower, 'id');
 
-
-
           for(x in tower.Floors) 
             for(j in tower.Floors[x].Suites)
            if(typeof tower.Floors[x].Suites[j] === 'object' )
-              $scope.values.push({tower:{Name : tower.Name, Id: tower.Id}, suite:tower.Floors[x].Suites[j]});   
+              $scope.values.push(tower.Floors[x].Suites[j]);   
             
             
-            $rootScope.pageTitle =   tower.Name;
-
 
             console.log($scope.values);
 
@@ -444,7 +415,7 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
         for(var x in $scope.thebuilding.Towers)
               for(var j in $scope.thebuilding.Towers[x].Floors)                 
                   for(var n in $scope.thebuilding.Towers[x].Floors[j].Suites)
-                   $scope.values.push({tower: {Name : $scope.thebuilding.Towers[x].Name, Id: $scope.thebuilding.Towers[x].Id}, suite : $scope.thebuilding.Towers[x].Floors[j].Suites[n]});  
+                   $scope.values.push($scope.thebuilding.Towers[x].Floors[j].Suites[n]);  
                            
                  
 
@@ -473,8 +444,6 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
 
 
 function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $storage, $location, $state) {
-
-    delete $rootScope.photo;
   
 $scope.takeimage = function(){
      document.getElementById('visit').click()
@@ -659,30 +628,6 @@ $scope.takeimage = function(){
 }
 
 
-function correspondenceCtrl($scope, $rootScope){
-
-  delete $rootScope.photo;
-
-
-
-
-
-  $scope.takeimage = function(){
-     document.getElementById('correspondence').click()
-   }
-
-
-    $scope.load = function(){
-
-    }
-
-    $scope.create = function(){
-
-    }
-
-}
-
-
 
 function citasCtrl($scope, $rootScope, $stateParams, $state, $location, $storage){
 
@@ -746,7 +691,6 @@ angular.module('dhome')
 .controller('mainCtrl', mainCtrl)
 .controller('entityCtrlBase', entityCtrlBase)
 .controller('buildingCtrl', buildingCtrl)
-.controller('correspondenceCtrl', correspondenceCtrl)
 ;
 
 
