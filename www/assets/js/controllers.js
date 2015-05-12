@@ -81,7 +81,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
                 $rootScope.photosrc = e.target.result;
                 document.getElementById('photo').click();
                 document.getElementById('photo').click();
-                
+
 
            };
        })
@@ -181,7 +181,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
     $scope.login = function(){  
 
- 
+      'use strict'; 
 
         if(!$scope.form)
             {
@@ -196,10 +196,11 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
           //window.location = "app.html";
           $API
           .login()          
-          .post("login_type=door&grant_type=password&username="+$scope.form.username+'&password='+$scope.form.password, {
+          .post("login_type=door&grant_type=password&username="+$scope.form.username+"&password="+$scope.form.password, {
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             })
           .success(function(rs){
+            alert('hola')
               console.log(rs);
               $storage.save('config',rs);  
               $storage.save('token', rs.access_token)                     
@@ -207,6 +208,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
               $rootScope.loading = false 
           })
           .error(function(err){
+            alert(JSON.stringify(err))
             console.log(err)
             $scope.error_login = map_error[err.error.toLowerCase()];
               $rootScope.loading = false 
@@ -264,7 +266,7 @@ function entityCtrlBase($scope, $rootScope, $stateParams){
 
 
 
-function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBottomSheet, $state, $stateParams){
+function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBottomSheet, $state){
 
    $scope.building = $storage.get('config').buildingId;
 
@@ -651,7 +653,7 @@ $scope.takeimage = function(){
                           "Cancelled: " + result.cancelled});
       }, 
       function (error) {
-          $rootScope.alerta({title:"Error",content:"Scanning failed: " + error});
+          console.log(error)
       }
    );
      }
