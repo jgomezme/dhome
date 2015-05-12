@@ -200,7 +200,6 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             })
           .success(function(rs){
-            alert('hola')
               console.log(rs);
               $storage.save('config',rs);  
               $storage.save('token', rs.access_token)                     
