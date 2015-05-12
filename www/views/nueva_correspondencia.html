@@ -6,25 +6,9 @@
             <h4>Registrar Correspondencia {{$root.suite && !$root.toall ? '(APTO. ' + $root.suite.suite.Name + ')' : ''}} {{$root.tower && !$root.toall ? '(' + $root.tower.Name + ')': ''}} {{$root.toall ? '(' + $root.tower.Name + ')': ''}}</h4>
             <br>
             <form ng-model="form">
-                <md-input-container id="photo" flex>
-                    <label>Fotografía Correspondencia *</label>
-                    <label>
-                        <input name="photo" style="display:none !important" file-model="$root.photo" type="file"  accept="image/*;capture=camera" id="correspondence">
-                    </label>
-                    <md-button layout="row" class="md-fab md-primary" ng-click="takeimage()">
-                        <ng-md-icon icon="photo_camera" style="fill:white; top:1px"></ng-md-icon>
-                    </md-button>
-                    <img width="280" src="{{$root.photosrc}}" ng-if="$root.photosrc" alt="$root.photosrc">
-                </md-input-container>
-
-            
-
-                <md-content layout="row">
-                    <div>
-                        <img ng-if="form.photo" ng-src="form.photo"></div>
-    </div>
-    </md-content>
-<md-input-container flex>
+                <md-photo-capture label="Foto de la correspondecia" required=true></md-photo-capture>            
+              
+      <md-input-container flex>
                     <md-select ng-required ng-model="form.torre" ng-if='!$root.suite' ng-hide="$root.toall"  placeholder="Torre *" flex>
                         <md-option ng-repeat="value in [1,2,3,4,5,6,7,8,9]">{{value}}</md-option>
                     </md-select>

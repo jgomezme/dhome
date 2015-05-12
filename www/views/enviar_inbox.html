@@ -25,15 +25,7 @@
                     <textarea ng-required ng-model="form.mensaje" columns="1" md-maxlength="150"></textarea>
                 </md-input-container>
 
-                <md-input-container flex>
-                    <label>Foto/Achivo *</label>
-                    <label>
-                        <input name="photo" required style="display:none !important" ng-model="form.photo" type="file" accept="image/*;capture=camera" id="visit">
-                    </label>
-                    <md-button layout="row" class="md-fab md-primary" ng-click="takeimage()">
-                        <ng-md-icon icon="photo_camera" style="fill:white; top:1px"></ng-md-icon>
-                    </md-button>
-                </md-input-container>
+                <md-photo-capture label="Imagen" required=true></md-photo-capture>
                 
                 <md-content layout="row">
                     <div>

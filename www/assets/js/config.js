@@ -126,7 +126,7 @@ angular.module('dhome')
             url: "/inboxs",
             templateUrl: "views/inboxs.html",
             controller: visitasCtrl,
-            data : {title:'inboxs'}            
+            data : {title:'mensajes'}            
         })      
          .state('correspondencias', {
             url: "/correspondencias",
@@ -144,13 +144,13 @@ angular.module('dhome')
             url: "/home",
             templateUrl: "views/building.html",
             controller: buildingCtrl,
-            data : {title:'home'}                             
+            data : {title: JSON.parse(window.localStorage.config).buildingName }                             
         })
         .state('home.towers', {
             url: "/towers",
             templateUrl: "views/building/towers.html",
             controller: buildingCtrl,
-            data : {title:'torres'}                             
+            data : {title: JSON.parse(window.localStorage.config).buildingName }                             
         })
         .state('home.tower', {
             url: "/tower/:id",
