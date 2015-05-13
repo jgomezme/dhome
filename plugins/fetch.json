@@ -1,0 +1,22 @@
+{
+    "com.phonegap.plugins.barcodescanner": {
+        "source": {
+            "type": "registry",
+            "id": "com.phonegap.plugins.barcodescanner"
+        }
+    },
+    "org.apache.cordova.statusbar": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.statusbar"
+        }
+    },
+    "org.apache.cordova.splashscreen": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.splashscreen"
+        },
+        "is_top_level": true,
+        "variables": {}
+    }
+}

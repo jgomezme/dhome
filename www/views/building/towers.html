@@ -1,0 +1,18 @@
+<div layout="row" flex   style="overflow-x:hidden !important">
+     <md-list ng-init="getTowers()" flex>
+       <md-list-item ng-if="values.length == 0 || !values">
+         <p><br>Vaya, parece que no hay torres disponibles.</p>
+       </md-list-item>       
+           <md-list-item class="md-3-line"  ng-repeat="value in values">
+          <h3 style='' ui-sref="home.tower({id:{{value.Id}}})" flex>{{value.Name}}</h3>
+            <div layout="column" >
+            <div layout="row" >
+      <md-button  class="md-icon-button" aria-label="more" ng-click="towerBottomSheet($ev)"  style="position: relative;
+left: 25px;">
+          <md-icon md-svg-icon="assets/icons/more_vert.svg"></md-icon>    
+      </md-button>
+      </div>
+            </div>
+        </md-list-item>
+     </md-list>
+</div>

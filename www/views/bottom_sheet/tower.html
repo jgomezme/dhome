@@ -1,0 +1,32 @@
+<md-bottom-sheet class="md-list md-has-header">
+  <md-subheader><h2 style="text-transform:capitalize">{{$root.tower.Name}}</h2></md-subheader>
+  <md-list>
+    
+    <md-list-item >
+      <md-button class="md-list-item-content" ui-sref="home.tower({id:{{$root.tower.Id}}})">
+        <ng-md-icon icon="domain" style="fill:gray" ></ng-md-icon>        
+        <span class="md-inline-list-icon-label">Ver suites</span>
+      </md-button>
+    </md-list-item>
+
+    <md-list-item >
+      <md-button class="md-list-item-content" ng-click="$root.toall=true" ui-sref="nueva-correspondencia">
+        <ng-md-icon icon="archive" style="fill:gray" ></ng-md-icon>        
+        <span class="md-inline-list-icon-label">Registrar correspondencia a toda la torre</span>
+      </md-button>
+    </md-list-item>
+
+
+    <md-list-item >
+      <md-button class="md-list-item-content" ng-click="$root.toall=true" ui-sref="enviar-inbox">
+        <ng-md-icon icon="mail" style="fill:gray" ></ng-md-icon>        
+        <span class="md-inline-list-icon-label">Enviar mensaje a toda la torre</span>
+      </md-button>
+    </md-list-item>
+
+
+
+
+<br>
+  </md-list>
+</md-bottom-sheet>

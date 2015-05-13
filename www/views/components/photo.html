@@ -1,0 +1,24 @@
+  <md-input-container {{id ? 'id='+id : '' }} flex>
+                                
+                <div layout="row">
+                    <label >{{label || 'Foto'}}</label>
+                </div>
+                <br>
+                <br>
+
+                    <div layout="row" ng-if="$root.photosrc">                    
+                    <img width="280" ng-src="{{$root.photosrc}}"  alt="{{label}}">
+                   <br>
+
+                    </div>
+
+
+                        <input  type="file" style="display:none" accept="image/*;capture=camera"  id="iphoto" file-model="$root.photo">
+
+                       <div layout="row">             
+                        <md-button  class="md-fab md-primary" ng-click="takeimage()">
+                        <ng-md-icon icon="photo_camera" style="fill:white; top:1px"></ng-md-icon>
+                        </md-button>
+                        </div>
+
+</md-input-container>

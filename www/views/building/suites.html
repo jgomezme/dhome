@@ -1,0 +1,25 @@
+<div layout="row" flex ng-init="getSuites()" style="overflow-x:hidden !important">
+     <md-list flex>
+       <md-list-item ng-if="values.length == 0 || !values">
+         <p><br>Vaya, parece que no hay Aptos. disponibles.</p>
+       </md-list-item>
+
+
+        <md-list-item ng-click="suiteBottomSheet($ev)" class="md-3-line" aria-label="suite" ng-repeat="value in values track by $index">
+          <h3>APTO. {{value.suite.Name}}</h3>
+          <div layout="column" flex>
+          <div layout="row">
+      
+           </div>
+          </div>
+            <div layout="column" >
+            <div layout="row" >
+      <md-button  class="md-icon-button"   style="position: relative;
+left: 25px;">
+          <md-icon md-svg-icon="assets/icons/more_vert.svg"></md-icon>    
+      </md-button>
+      </div>
+            </div>
+        </md-list-item>
+     </md-list>
+</div>
