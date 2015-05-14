@@ -1,6 +1,6 @@
 
 
-<md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right" md-is-locked-open="$mdMedia('gt-sm')">
+<md-sidenav class="md-sidenav-right" md-component-id="right" md-is-locked-open="$mdMedia('gt-sm')">
     <md-toolbar hide-gt-sm class="md-theme-light md-whiteframe-glow-z2">
         <h1 class="md-toolbar-tools">Opciones</h1>
     </md-toolbar>
@@ -8,33 +8,11 @@
         <md-list flex>
             <md-item layout="row" flex>
                 <md-item-content flex class="docs-menu">
-                <div class="menu-toggle">
-                <ul class="docs-menu">
-                  <li>
-                    <md-button class="md-button-toggle md-button md-default-theme docs-menu" ui-sref="home" ng-click="Home.show  = Home.show ? false: true" style="width:100%;" aria-controls="docs-menu-Demos" aria-expanded="true" class="docs-menu">
+                    <md-button class="md-button-toggle md-button md-default-theme docs-menu" ui-sref="home"  aria-expanded="true" class="docs-menu">
                       <div flex layout="row" > 
                         Home
-                        <span flex=""></span>
-                        <span aria-hidden="true" class="md-toggle-icon" ng-class="{'toggled' : Home.show}">
-                          <md-icon md-svg-src="md-toggle-arrow" class="ng-isolate-scope md-default-theme" style="height:40px;"></md-icon>
-                        </span>
                       </div>
-                      <div class="md-ripple-container"></div>
                     </md-button>                    
-                  </li>
-                </ul>
-                <ul ng-show="Home.show" id="docs-menu-Demos" class="menu-toggle-list">
-                  <li>
-                      <menu-link>
-                        <md-button class="md-button md-button-toggle md-default-theme docs-menu" ui-sref="home" ng-class="{'active' : Home.selected}" ng-href="#/demo/material.components.autocomplete" ng-click=" Home.selected = true;" href="#/demo/material.components.autocomplete">
-                          <span>Sub Menu
-                          </span>
-                        <div class="md-ripple-container"></div>
-                      </md-button>
-                    </menu-link>
-                  </li><!-- end ngRepeat: page in section.pages --><!-- end ngRepeat: page in section.pages -->
-                </ul>                  
-                </div>
                 </md-item-content>
             </md-item>
             <md-item layout="row" flex>
@@ -42,7 +20,7 @@
                 <div class="menu-toggle">
                 <ul class="docs-menu">
                   <li>
-                    <md-button class="md-button-toggle md-button md-default-theme docs-menu" ui-sref="home" ng-click="Home.show  = Home.show ? false: true" style="width:100%;" aria-controls="docs-menu-Demos" aria-expanded="true" class="docs-menu">
+                    <md-button class="md-button-toggle md-button md-default-theme docs-menu"  ng-click="Home.show  = Home.show ? false: true" style="width:100%;" aria-controls="docs-menu-Demos" aria-expanded="true" class="docs-menu">
                       <div flex layout="row" > 
                         Visitas
                         <span flex=""></span>
@@ -55,15 +33,7 @@
                   </li>
                 </ul>
                 <ul ng-show="Home.show" id="docs-menu-Demos" class="menu-toggle-list">
-                  <li>
-                      <menu-link>
-                        <md-button class="md-button md-button-toggle md-default-theme docs-menu" ui-sref="home" ng-class="{'active' : Home.selected}">
-                          <span>Todas
-                          </span>
-                        <div class="md-ripple-container"></div>
-                      </md-button>
-                    </menu-link>
-                  </li>
+               
                     <li>
                       <menu-link>
                         <md-button class="md-button md-button-toggle md-default-theme docs-menu" ui-sref="home" ng-class="{'active' : Home.selected}">
@@ -77,6 +47,16 @@
                       <menu-link>
                         <md-button class="md-button md-button-toggle md-default-theme docs-menu" ui-sref="home" ng-class="{'active' : Home.selected}">
                           <span>Aprobadas
+                          </span>
+                        <div class="md-ripple-container"></div>
+                      </md-button>
+                    </menu-link>
+                  </li>
+
+                     <li>
+                      <menu-link>
+                        <md-button class="md-button md-button-toggle md-default-theme docs-menu" ui-sref="visitas" ng-class="{'active' : Home.selected}">
+                          <span>Todas
                           </span>
                         <div class="md-ripple-container"></div>
                       </md-button>
@@ -107,7 +87,7 @@
                </md-button>
                </md-item-content> -->
             </md-item>
-            <md-item layout="row" flex>
+           <!-- <md-item layout="row" flex>
 
 
                 <md-item-content flex>
@@ -118,7 +98,7 @@
                </span>
                     </md-button>
                 </md-item-content>
-            </md-item>
+            </md-item>-->
             <md-item layout="row" flex>
 
 
