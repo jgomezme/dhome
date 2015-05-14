@@ -1,6 +1,4 @@
 // controllers 
-<<<<<<< HEAD
-<<<<<<< HEAD
 function detalleVisitaController($scope, $stateParams, $http){
     var _suiteId = $stateParams.id;
 
@@ -28,12 +26,6 @@ function detalleCorrespondenciaController($scope, $stateParams, $http){
 function dashboardController($scope){
 
 }
-=======
-
->>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
-=======
-
->>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
 
 String.prototype.ellipsis = function(limit){
 
@@ -56,12 +48,6 @@ String.prototype.ellipsis = function(limit){
   return st;
 
 }
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
 //compress image in frontend with canvas
 
 function resizeMe(img, max_width, max_height) {
@@ -102,11 +88,6 @@ var map_error = {
    "invalid_grant" : "Usuario o contraseña no validos."
 }
 
-
-<<<<<<< HEAD
->>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
-=======
->>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
 function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdMedia, $mdBottomSheet, $state, $API, $storage, $location){
 
        //handling device ready
@@ -302,9 +283,6 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
               $scope.error_login = map_error[err.error.toLowerCase()];
               $rootScope.loading = false 
           })
-
-
-
     }
 
     $scope.logout = function(){
@@ -316,10 +294,6 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
 
 }
-
-
-
-  
 
 function entityCtrlBase($scope, $rootScope, $stateParams){
 
@@ -348,12 +322,7 @@ function entityCtrlBase($scope, $rootScope, $stateParams){
 
 
    }
-
-
-
 }
-
-
 
 function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBottomSheet, $state){
 
@@ -411,48 +380,18 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
 
 
   $scope.loadView = function(){    
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
         
->>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
-=======
-
-        
->>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
         if($scope.thebuilding.Towers.length > 0)
             window.location = "#/home/towers";
         else
             window.location = "#/home/suites";
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
-=======
-
->>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
   }
 
 
    $scope.load = function(callback){
-<<<<<<< HEAD
-<<<<<<< HEAD
-    console.log($scope.building);
-
-=======
-=======
->>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
-
 
     console.log($scope.building);
 
-
-<<<<<<< HEAD
->>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
-=======
->>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
        $API
        .building($scope.building)       
        .get()       
@@ -478,16 +417,6 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
 
    }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
-=======
-
-
->>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
    $scope.getTowers = function(){
     
 
@@ -585,32 +514,11 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
           });
       else
         loadSuites();
-<<<<<<< HEAD
-<<<<<<< HEAD
+   }
        
    }
 
-=======
-=======
->>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
-
-
-       
-   }
-
-
-<<<<<<< HEAD
->>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
-=======
->>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
-}
-
-
-
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-function visitasCtrl($scope, $q, $rootScope, $mdBottomSheet, $stateParams, $api, $storage, $location, $state, $http) {
+/*function visitasCtrl($scope, $q, $rootScope, $mdBottomSheet, $stateParams, $api, $storage, $location, $state, $http) {
 
     $scope.centerBottomSheet = function() {  
        
@@ -644,40 +552,13 @@ function visitasCtrl($scope, $q, $rootScope, $mdBottomSheet, $stateParams, $api,
 
         return defer.promise;
    }
-=======
-=======
->>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
+
+}*/
+
 function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $storage, $location, $state) {
 
     delete $rootScope.photo;
   
-$scope.takeimage = function(){
-     document.getElementById('visit').click()
-   }
-
-
-
-        $scope.photoChanged = function() {
-          
-          var oFReader = new FileReader();
-
-          console.log($scope.photo, 'photo');
-          return;
-          
-
-           angular.element(this).scope().fileChanged(this);
-
-           console.log(this)
-           
-           oFReader.readAsDataURL(document.getElementById('visit').files[0]);
-
-
-           oFReader.onload = function (oFREvent) {
-            alert('hey')
-             $scope.previewImage = oFREvent.target.result;
-           };
-
-        };
 
   $scope.centerBottomSheet = function() {  
    
@@ -830,21 +711,12 @@ $scope.takeimage = function(){
       }
    );
      }
-
-<<<<<<< HEAD
->>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
-=======
->>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
 }
 
 
 function correspondenceCtrl($scope, $rootScope){
 
   delete $rootScope.photo;
-
-
-
-
 
   $scope.takeimage = function(){
      document.getElementById('correspondence').click()
@@ -861,90 +733,12 @@ function correspondenceCtrl($scope, $rootScope){
 
 }
 
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
-
-function citasCtrl($scope, $rootScope, $stateParams, $state, $location, $storage){
-
-   $scope.load = function(id){
-
-      $scope.values = $storage.get('citas') || [];
-
-   }
-
-   $scope.create = function(data){
-
-    
-
-      var data = data || $scope.form;
-
-      var citas = $storage.get('citas') || [];
-
-      data.status = 'pending';
-      data.center = $rootScope.center || data.center;
-
-      citas.push(data);
-
-      console.log(citas)
-
-      $storage.save('citas',citas);
-
-      $rootScope.alerta('Nueva Cita', 'Se ha creado una nueva cita.')
-      .then(function(){
-
-      $location.path('citas').replace();
-        
-
-      });
-
-   }
-
-   $scope.update = function(id){
-
-      var id = id || $scope.id;
-
-
-   }
-
-   $scope.delete = function(id){
-
-      var id = id || $scope.id;
-
-
-   }
-
-
-    $scope.centerCita = function(){
-      $scope.center = $rootScope.center;
-   }
-
-
-}
-
-
-<<<<<<< HEAD
->>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
-=======
->>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
 angular.module('dhome')
 .controller('mainCtrl', mainCtrl)
 .controller('entityCtrlBase', entityCtrlBase)
 .controller('buildingCtrl', buildingCtrl)
 .controller('correspondenceCtrl', correspondenceCtrl)
-<<<<<<< HEAD
-<<<<<<< HEAD
 .controller('dashboardController', dashboardController)
 .controller('detalleVisitaController', detalleVisitaController)
 .controller('detalleCorrespondenciaController', detalleCorrespondenciaController)
-=======
->>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
-=======
->>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
 ;
-
-
-
