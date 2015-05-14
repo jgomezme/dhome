@@ -35,12 +35,15 @@ function API($http,$rootScope){
 	  this.building = function(id){ if(!id) this.url = this.baseUrl + "/building"; else this.url = this.baseUrl + "/building/" + id; return this; }
 	  this.visit = function(id){ if(!id) this.url = this.baseUrl + "/visitis"; else this.url = this.baseUrl + "/visits/" + id; return this; }
 	  this.visitsall = function(id){ this.url = this.baseUrl + "/visitis/bybuilding/" + id; return this; }
-	  this.correspondencesall = function(id){ this.url = this.baseUrl + "api/correspondence?BuildingId=" + id; return this; }
+	  this.correspondencesall = function(id){ this.url = this.baseUrl + "correspondence?BuildingId=" + id; return this; }
+	  this.user = function(id){ this.url = this.baseUrl + "/account/userinfo"; return this; }
+
+
 	  this.add = function(comp){ this.url += comp; return this;  }
 	  this.reset = function(){ this.url = ""; }
 
 	  this.get = function(){ var url = this.url; this.reset(); return $http.get(url); }
-	  this.post = function(data, header){ var url = this.url; this.reset(); return $http.post(url, data || {}, header || {}); }
+	  this.post = function(data, header){ var url = this.url; this.reset(); return $http.post(url, data || {}); }
 	  this.put = function(data){ var url = this.url; this.reset(); return $http.put(url, data || {}); }	  
 	  this.delete = function(){ var url = this.url; this.reset(); return $http.delete(url); }
 	  

@@ -95,8 +95,7 @@ var map_error = {
 function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdMedia, $mdBottomSheet, $state, $API, $storage, $location){
 
        //handling device ready
-
-       $scope.username = "Oscar Schindler";
+       
 
       document.addEventListener('deviceready', function(){
          console.log(cordova.plugins)
@@ -280,7 +279,8 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
           .success(function(rs){
               console.log(rs);
               $storage.save('config',rs);  
-              $storage.save('token', rs.access_token)                     
+              $storage.save('token', rs.access_token)     
+              $scope.loged=true;                
               window.location = "app.html";
               $rootScope.loading = false 
           })
@@ -298,6 +298,16 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
          window.location.reload();
     }
+
+
+    if(!true)
+      $API
+       .user()
+       .get()
+       .success(function(rs){
+           $rootScope.user = rs;
+           $rootScope.username = rs.FisrtName + ' ' + rs.LastName;
+       });
 
 
 }

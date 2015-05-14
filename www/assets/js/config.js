@@ -48,6 +48,7 @@ angular.module('dhome')
                 if (!window.localStorage.token)
                     window.location = "index.html";
 
+
                 $httpProvider.defaults.headers.common['Authorization'] = 'Bearer ' + window.localStorage.token; // common
 
                 for (x in config.data) {
@@ -249,7 +250,7 @@ angular.module('dhome')
             $rootScope.back = false;
     }
 
-
+    $rootScope.loading = "Cargando...";
 
 })
 ;
