@@ -1,4 +1,31 @@
 // controllers 
+function detalleVisitaController($scope, $stateParams, $http){
+    var _suiteId = $stateParams.id;
+
+    $scope.load = function(){
+        $http.get("http://dhmysqlserver.cloudapp.net/api/visitits?SuiteId=" + suiteId).success(function(data){
+            if(data){
+                $scope.visitas = data || [];
+            }
+        })
+    }
+}
+
+function detalleCorrespondenciaController($scope, $stateParams, $http){
+    var _correspondencia = $stateParams.id;
+    $scope.load = function(){
+        $http.get("http://dhmysqlserver.cloudapp.net/api/Correspondence?SuiteId=" + _correspondencia).success(function(data){
+            if(data){
+                $scope.correspondencias = data || [];
+            }
+        })
+    }
+}
+
+
+function dashboardController($scope){
+
+}
 
 
 String.prototype.ellipsis = function(limit){
@@ -260,8 +287,6 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
               $rootScope.loading = false 
           })
 
-
-
     }
 
     $scope.logout = function(){
@@ -274,9 +299,6 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
 }
 
-
-
-  
 
 function entityCtrlBase($scope, $rootScope, $stateParams){
 
@@ -306,10 +328,7 @@ function entityCtrlBase($scope, $rootScope, $stateParams){
 
    }
 
-
-
 }
-
 
 
 function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBottomSheet, $state){
@@ -380,10 +399,6 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
 
    $scope.load = function(callback){
 
-
-    console.log($scope.building);
-
-
        $API
        .building($scope.building)       
        .get()       
@@ -408,7 +423,6 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
        })
 
    }
-
 
 
    $scope.getTowers = function(){
@@ -510,6 +524,7 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
         loadSuites();
 
 
+
        
    }
 
@@ -518,38 +533,11 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
 
 
 
-
 function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $storage, $location, $state) {
 
     delete $rootScope.photo;
   
-$scope.takeimage = function(){
-     document.getElementById('visit').click()
-   }
 
-
-
-        $scope.photoChanged = function() {
-          
-          var oFReader = new FileReader();
-
-          console.log($scope.photo, 'photo');
-          return;
-          
-
-           angular.element(this).scope().fileChanged(this);
-
-           console.log(this)
-           
-           oFReader.readAsDataURL(document.getElementById('visit').files[0]);
-
-
-           oFReader.onload = function (oFREvent) {
-            alert('hey')
-             $scope.previewImage = oFREvent.target.result;
-           };
-
-        };
 
   $scope.centerBottomSheet = function() {  
    
@@ -711,9 +699,6 @@ function correspondenceCtrl($scope, $rootScope){
   delete $rootScope.photo;
 
 
-
-
-
   $scope.takeimage = function(){
      document.getElementById('correspondence').click()
    }
@@ -730,71 +715,13 @@ function correspondenceCtrl($scope, $rootScope){
 }
 
 
-
-function citasCtrl($scope, $rootScope, $stateParams, $state, $location, $storage){
-
-   $scope.load = function(id){
-
-      $scope.values = $storage.get('citas') || [];
-
-   }
-
-   $scope.create = function(data){
-
-    
-
-      var data = data || $scope.form;
-
-      var citas = $storage.get('citas') || [];
-
-      data.status = 'pending';
-      data.center = $rootScope.center || data.center;
-
-      citas.push(data);
-
-      console.log(citas)
-
-      $storage.save('citas',citas);
-
-      $rootScope.alerta('Nueva Cita', 'Se ha creado una nueva cita.')
-      .then(function(){
-
-      $location.path('citas').replace();
-        
-
-      });
-
-   }
-
-   $scope.update = function(id){
-
-      var id = id || $scope.id;
-
-
-   }
-
-   $scope.delete = function(id){
-
-      var id = id || $scope.id;
-
-
-   }
-
-
-    $scope.centerCita = function(){
-      $scope.center = $rootScope.center;
-   }
-
-
-}
-
-
 angular.module('dhome')
 .controller('mainCtrl', mainCtrl)
 .controller('entityCtrlBase', entityCtrlBase)
 .controller('buildingCtrl', buildingCtrl)
 .controller('correspondenceCtrl', correspondenceCtrl)
+.controller('dashboardController', dashboardController)
+.controller('detalleVisitaController', detalleVisitaController)
+.controller('detalleCorrespondenciaController', detalleCorrespondenciaController)
 ;
-
-
 

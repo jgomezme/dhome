@@ -2,7 +2,8 @@
 angular.module('dhome')
 .config(function($stateProvider, $urlRouterProvider, $httpProvider, $mdThemingProvider) {
 
-    // theming
+
+
 
     $mdThemingProvider.definePalette('dhomePalette', {
         '50': 'ffebee',
@@ -26,8 +27,10 @@ angular.module('dhome')
         ],
         'contrastLightColors': undefined
     });
-    $mdThemingProvider.theme('default')
-        .primaryPalette('dhomePalette')
+
+    $mdThemingProvider
+    .theme('default')
+    .primaryPalette('dhomePalette');
 
 
     $httpProvider.interceptors.push(function($injector) {
@@ -89,14 +92,30 @@ angular.module('dhome')
     });
 
 
-
-
     $stateProvider
         .state('visitas', {
             url: "/visitas",
             templateUrl: "views/visitas.html",
             controller: visitasCtrl,
             data : {title:'visitas'}
+        })
+        .state('detalle_visitas', {
+            url: "/detalle_visita/:id",
+            templateUrl: "views/visitas.html",
+            controller: detalleVisitaController,
+            data : {title:'Detalle de Visita'}
+        })
+        .state('detalle_correspondencia', {
+            url: "/detalle_correspondencia/:id",
+            templateUrl: "views/visitas.html",
+            controller: detalleCorrespondenciaController,
+            data : {title:'Detalle Correspondecia'}
+        })
+        .state('dashboard', {
+            url: "/dashboard",
+            templateUrl: "views/dashboard.html",
+            controller: dashboardController,
+            data : {title:'Dashboard'}                             
         })
         .state('nueva-visita', {
             url: "/nueva-visita",
@@ -144,13 +163,13 @@ angular.module('dhome')
             url: "/home",
             templateUrl: "views/building.html",
             controller: buildingCtrl,
-            data : {title: JSON.parse(window.localStorage.config).buildingName }                             
+            data : {title: '' }                             
         })
         .state('home.towers', {
             url: "/towers",
             templateUrl: "views/building/towers.html",
             controller: buildingCtrl,
-            data : {title: JSON.parse(window.localStorage.config).buildingName }                             
+            data : {title: '' }                             
         })
         .state('home.tower', {
             url: "/tower/:id",
@@ -165,13 +184,15 @@ angular.module('dhome')
             data : {title:'apartamentos'}                             
         })
 
-        ;
+
+    $urlRouterProvider.otherwise("/dashboard"); //aqui va?
 
 
-    $urlRouterProvider.otherwise("/home");
 
 })
-.run(function($rootScope, $mdSidenav, $mdBottomSheet, $state) {
+
+.run(function($rootScope, $mdSidenav, $mdBottomSheet, $state, $timeout, $mdUtil, $log) {
+
 
     $rootScope.$on('$stateChangeStart', 
         function(event, toState, toParams, fromState, fromParams){ 
@@ -183,15 +204,29 @@ angular.module('dhome')
 
             console.log($state);
 
-
             $rootScope.state = $state.current.name;
+    /**
+     * Build handler to open/close a SideNav; when animation finishes
+     * report completion in console
+     */
+    function buildToggler(navID) {
+      var debounceFn =  $mdUtil.debounce(function(){
+            $mdSidenav(navID)
+              .toggle()
+              .then(function () {
+                $log.debug("toggle " + navID + " is done");
+              });
+          },300);
 
+      return debounceFn;
+    }
 
-            $mdBottomSheet.hide();
-            $mdSidenav("right").close();
+        //$mdBottomSheet.hide();
+        $mdSidenav("right").close();
+        $rootScope.backcounter = 0;
 
+         })
 
-    $rootScope.backcounter = 0;
 
     $rootScope.$on('$stateChangeSuccess',
         function(event, toState, toParams, fromState, fromParams) {
@@ -207,7 +242,6 @@ angular.module('dhome')
         });
 
 
-
     $rootScope.goback = function() {
         window.history.back();
         $rootScope.backcounter--;
@@ -218,6 +252,5 @@ angular.module('dhome')
 
 
 })
-
-  })
 ;
+
