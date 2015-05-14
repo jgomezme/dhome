@@ -1,13 +1,11 @@
 // controllers 
-function detalleVisitaController($scope, $stateParams, $http){
-    var _suiteId = $stateParams.id;
-
+function detalleVisitaController($scope,$rootScope, $stateParams, $http, $API){
     $scope.load = function(){
-        $http.get("http://dhmysqlserver.cloudapp.net/api/visitits?SuiteId=" + suiteId).success(function(data){
-            if(data){
-                $scope.visitas = data || [];
-            }
-        })
+        $API
+        .visit($stateParams.id)
+        .success(function(visitas){
+            $scope.visitas = visitas.data || [];
+        });
     }
 }
 
@@ -575,13 +573,10 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
             return;
           }
 
-
-
         $API
         .visitsall()
        .get()
        .success(function(rs){
-           console.log(rs);
            $scope.values = rs.data;
 
        });
