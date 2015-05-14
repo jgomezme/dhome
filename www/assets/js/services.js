@@ -35,7 +35,7 @@ function API($http,$rootScope){
 	  this.building = function(id){ if(!id) this.url = this.baseUrl + "/building"; else this.url = this.baseUrl + "/building/" + id; return this; }
 	  this.visit = function(id){ if(!id) this.url = this.baseUrl + "/visitis"; else this.url = this.baseUrl + "/visits/" + id; return this; }
 	  this.visitsall = function(id){ this.url = this.baseUrl + "/visitis/bybuilding/" + id; return this; }
-	  this.correspondencesall = function(id){ this.url = this.baseUrl + "correspondence?BuildingId=" + id; return this; }
+	  this.correspondencesall = function(id){ this.url = this.baseUrl + "/correspondence?BuildingId=" + id; return this; }
 	  this.user = function(id){ this.url = this.baseUrl + "/account/userinfo"; return this; }
 
 

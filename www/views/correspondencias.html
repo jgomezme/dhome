@@ -7,7 +7,7 @@
        </md-lis-item>   
      
      
-     <md-list-item class="md-3-line"   ng-repeat="value in values track by $index | filter:$root.search" aria-label="swipe">
+     <md-list-item class="md-3-line"   ng-repeat="value in correspondences track by $index | filter:$root.search" aria-label="swipe">
 
 
       <img  ng-src="{{ value.image || 'assets/img/guest.png' }}" class="md-avatar" ng-click="goToProfile()" aria-label="profile">
