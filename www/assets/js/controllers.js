@@ -7,6 +7,7 @@ function detalleVisitaController($scope,$rootScope, $stateParams, $http, $API){
             $scope.visitas = visitas.data || [];
         });
     }
+
 }
 
 function detalleCorrespondenciaController($scope, $stateParams, $http){
@@ -92,6 +93,8 @@ var map_error = {
 function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdMedia, $mdBottomSheet, $state, $API, $storage, $location){
 
        //handling device ready
+
+       $scope.username = "Oscar Schindler";
 
       document.addEventListener('deviceready', function(){
          console.log(cordova.plugins)
@@ -387,7 +390,7 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
   $scope.loadView = function(){    
 
         
-        if($scope.thebuilding.Towers.length > 0)
+        if($scope.thebuilding.Towers.length > 1)
             window.location = "#/home/towers";
         else
             window.location = "#/home/suites";
@@ -531,7 +534,7 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
 
 
 
-function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $storage, $location, $state) {
+function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $storage, $location, $state, $API) {
 
     delete $rootScope.photo;
   
@@ -574,12 +577,21 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
           }
 
         $API
-        .visitsall()
+       .visitsall(1)
        .get()
        .success(function(rs){
-           $scope.values = rs.data;
-
+           console.log(rs);
+           $scope.values = rs;
        });
+
+   }
+
+
+   $scope.add = function(){
+
+      $API
+      .file()
+      .post({file})
 
    }
 
