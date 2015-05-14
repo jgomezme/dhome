@@ -1,5 +1,39 @@
 // controllers 
+<<<<<<< HEAD
+<<<<<<< HEAD
+function detalleVisitaController($scope, $stateParams, $http){
+    var _suiteId = $stateParams.id;
 
+    $scope.load = function(){
+        $http.get("http://dhmysqlserver.cloudapp.net/api/visitits?SuiteId=" + suiteId).success(function(data){
+            if(data){
+                $scope.visitas = data || [];
+            }
+        })
+    }
+}
+
+function detalleCorrespondenciaController($scope, $stateParams, $http){
+    var _correspondencia = $stateParams.id;
+    $scope.load = function(){
+        $http.get("http://dhmysqlserver.cloudapp.net/api/Correspondence?SuiteId=" + _correspondencia).success(function(data){
+            if(data){
+                $scope.correspondencias = data || [];
+            }
+        })
+    }
+}
+
+
+function dashboardController($scope){
+
+}
+=======
+
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
+=======
+
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
 
 String.prototype.ellipsis = function(limit){
 
@@ -23,6 +57,11 @@ String.prototype.ellipsis = function(limit){
 
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
 //compress image in frontend with canvas
 
 function resizeMe(img, max_width, max_height) {
@@ -64,6 +103,10 @@ var map_error = {
 }
 
 
+<<<<<<< HEAD
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
+=======
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
 function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdMedia, $mdBottomSheet, $state, $API, $storage, $location){
 
        //handling device ready
@@ -368,22 +411,48 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
 
 
   $scope.loadView = function(){    
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
         
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
+=======
+
+        
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
         if($scope.thebuilding.Towers.length > 0)
             window.location = "#/home/towers";
         else
             window.location = "#/home/suites";
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
+=======
+
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
   }
 
 
    $scope.load = function(callback){
+<<<<<<< HEAD
+<<<<<<< HEAD
+    console.log($scope.building);
+
+=======
+=======
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
 
 
     console.log($scope.building);
 
 
+<<<<<<< HEAD
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
+=======
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
        $API
        .building($scope.building)       
        .get()       
@@ -409,8 +478,16 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
 
    }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
+=======
+
+
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
    $scope.getTowers = function(){
     
 
@@ -508,17 +585,68 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
           });
       else
         loadSuites();
+<<<<<<< HEAD
+<<<<<<< HEAD
+       
+   }
+
+=======
+=======
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
 
 
        
    }
 
 
+<<<<<<< HEAD
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
+=======
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
 }
 
 
 
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+function visitasCtrl($scope, $q, $rootScope, $mdBottomSheet, $stateParams, $api, $storage, $location, $state, $http) {
+
+    $scope.centerBottomSheet = function() {  
+       
+        $rootScope.center = $rootScope.center || this.value;  
+            $mdBottomSheet.show({
+                  templateUrl: 'views/bottom_sheet/center.html',
+                  scope : $scope,
+                  preserveScope : true
+            })
+        .then(function(){ 
+                if(!$state.current.name.match('profile'))    
+                    delete $rootScope.center;
+
+                $mdBottomSheet.hide();
+        }, function(){
+                if(!$state.current.name.match('profile'))          
+                    delete $rootScope.center; 
+          
+                $mdBottomSheet.hide();
+        })
+        ;
+    };
+
+
+   $scope.load = function(){
+        var defer = $q.defer();;
+        
+        $http.get("http://dhmysqlserver.cloudapp.net:82/api/Visits/ByBuilding/" + $storage.get('config').buildingId + "?page=1&pageSize=10").success(function(visits){
+            defer.resolve(visits);
+        });
+
+        return defer.promise;
+   }
+=======
+=======
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
 function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $storage, $location, $state) {
 
     delete $rootScope.photo;
@@ -703,6 +831,10 @@ $scope.takeimage = function(){
    );
      }
 
+<<<<<<< HEAD
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
+=======
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
 }
 
 
@@ -730,6 +862,11 @@ function correspondenceCtrl($scope, $rootScope){
 }
 
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
 
 function citasCtrl($scope, $rootScope, $stateParams, $state, $location, $storage){
 
@@ -789,11 +926,24 @@ function citasCtrl($scope, $rootScope, $stateParams, $state, $location, $storage
 }
 
 
+<<<<<<< HEAD
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
+=======
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
 angular.module('dhome')
 .controller('mainCtrl', mainCtrl)
 .controller('entityCtrlBase', entityCtrlBase)
 .controller('buildingCtrl', buildingCtrl)
 .controller('correspondenceCtrl', correspondenceCtrl)
+<<<<<<< HEAD
+<<<<<<< HEAD
+.controller('dashboardController', dashboardController)
+.controller('detalleVisitaController', detalleVisitaController)
+.controller('detalleCorrespondenciaController', detalleCorrespondenciaController)
+=======
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
+=======
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
 ;
 
 

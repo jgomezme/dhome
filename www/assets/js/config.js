@@ -46,7 +46,15 @@ angular.module('dhome')
                     window.location = "index.html";
 
                 $httpProvider.defaults.headers.common['Authorization'] = 'Bearer ' + window.localStorage.token; // common
+<<<<<<< HEAD
+<<<<<<< HEAD
+                
+=======
 
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
+=======
+
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
                 for (x in config.data) {
                     if (typeof config.data[x] === 'boolean') {
                         config.data[x] += '';
@@ -89,8 +97,16 @@ angular.module('dhome')
     });
 
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
+=======
+
+
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
     $stateProvider
         .state('visitas', {
             url: "/visitas",
@@ -98,6 +114,30 @@ angular.module('dhome')
             controller: visitasCtrl,
             data : {title:'visitas'}
         })
+<<<<<<< HEAD
+<<<<<<< HEAD
+        .state('detalle_visitas', {
+            url: "/detalle_visita/:id",
+            templateUrl: "views/visitas.html",
+            controller: detalleVisitaController,
+            data : {title:'Detalle de Visita'}
+        })
+        .state('detalle_correspondencia', {
+            url: "/detalle_correspondencia/:id",
+            templateUrl: "views/visitas.html",
+            controller: detalleCorrespondenciaController,
+            data : {title:'Detalle Correspondecia'}
+        })
+        .state('dashboard', {
+            url: "/dashboard",
+            templateUrl: "views/dashboard.html",
+            controller: dashboardController,
+            data : {title:'Dashboard'}                             
+        })
+=======
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
+=======
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
         .state('nueva-visita', {
             url: "/nueva-visita",
             templateUrl: "views/nueva_visita.html",
@@ -164,6 +204,18 @@ angular.module('dhome')
             controller: buildingCtrl,
             data : {title:'apartamentos'}                             
         })
+<<<<<<< HEAD
+<<<<<<< HEAD
+        ;
+
+
+    $urlRouterProvider.otherwise("/dashboard");
+
+})
+.run(function($rootScope, $mdSidenav, $mdBottomSheet, $state, $timeout, $mdUtil, $log) {
+=======
+=======
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
 
         ;
 
@@ -172,6 +224,10 @@ angular.module('dhome')
 
 })
 .run(function($rootScope, $mdSidenav, $mdBottomSheet, $state) {
+<<<<<<< HEAD
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
+=======
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
 
     $rootScope.$on('$stateChangeStart', 
         function(event, toState, toParams, fromState, fromParams){ 
@@ -185,7 +241,29 @@ angular.module('dhome')
 
 
             $rootScope.state = $state.current.name;
+<<<<<<< HEAD
+<<<<<<< HEAD
+    /**
+     * Build handler to open/close a SideNav; when animation finishes
+     * report completion in console
+     */
+    function buildToggler(navID) {
+      var debounceFn =  $mdUtil.debounce(function(){
+            $mdSidenav(navID)
+              .toggle()
+              .then(function () {
+                $log.debug("toggle " + navID + " is done");
+              });
+          },300);
 
+      return debounceFn;
+    }
+=======
+
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
+=======
+
+>>>>>>> 084810180c195183453ca12fa4e1c866c2b3deb5
 
             $mdBottomSheet.hide();
             $mdSidenav("right").close();
