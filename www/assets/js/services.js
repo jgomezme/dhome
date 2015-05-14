@@ -33,6 +33,8 @@ function API($http,$rootScope){
 
 	  this.login = function(id){ $rootScope.loading = true; if(!id) this.url = config.apiUrlBase + "/token"; else this.url = this.baseUrl + "/token/" + id; return this; }
 	  this.building = function(id){ if(!id) this.url = this.baseUrl + "/building"; else this.url = this.baseUrl + "/building/" + id; return this; }
+	  this.visit = function(id){ if(!id) this.url = this.baseUrl + "/visitis"; else this.url = this.baseUrl + "/visits/" + id; return this; }
+	  this.visitsall = function(id){ this.url = this.baseUrl + "/visitis/bybuilding/" + id; return this; }
 	  this.add = function(comp){ this.url += comp; return this;  }
 	  this.reset = function(){ this.url = ""; }
 
