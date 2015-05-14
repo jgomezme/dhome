@@ -370,6 +370,32 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
 
   };
 
+ $scope.iniSel = function(){
+     $scope.selected = new Array();
+ }
+
+
+  $scope.selectAll = function(){
+
+    $scope.selected = [];
+
+     for(x in $scope.values)
+         { 
+          $scope.values[x].checked=true;
+          $scope.selected.push($scope.values[x])
+         }
+        $rootScope.toall=true;
+
+  }
+
+
+  $scope.delSelected = function(){
+      for(x in $scope.values)
+          $scope.values[x].checked=false;
+
+      $scope.selected = new Array();
+  }
+
 
   $scope.suiteBottomSheet = function() {  
    

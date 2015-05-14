@@ -1,3 +1,9 @@
+
+  <div layout="row">
+  <md-button style="" ng-if="!selected" ng-click="iniSel()" flex>Seleccionar varios</md-button>
+  <md-button style="" ng-if="selected && selected.length == 0" ng-click="selectAll()" flex>Seleccionar todos</md-button>
+  <md-button style="" ng-if="selected.length > 0" ng-click="delSelected()" flex>Eliminar Selección ({{selected.length}})</md-button>
+  </div>
 <div layout="row" flex ng-init="getSuites()" style="overflow-x:hidden !important">
      <md-list flex>
        <md-list-item ng-if="values.length == 0 || !values">
@@ -5,16 +11,19 @@
        </md-list-item>
 
 
-        <md-list-item ng-click="suiteBottomSheet($ev)" class="md-3-line" aria-label="suite" ng-repeat="value in values track by $index">
+        <md-list-item  aria-label="item"  class="md-3-line" aria-label="suite" ng-repeat="value in values | filter:search || '' track by $index">
+        <div  flex>
           <h3 style="font-weight:normal" flex>APTO. {{value.suite.Name}}</h3>
-          <div layout="column" flex>
-          <div layout="row">
-      
-           </div>
+
           </div>
-            <div layout="column" >
+            <div>
             <div layout="row" >
-      <md-button  class="md-icon-button"   style="position: relative;
+            <md-button  class="md-icon-button" ng-if="selected"   style="position: relative;
+left: 50px; outline:none" >
+          <ng-md-icon icon="radio_button_off" aria-label="check" ng-click="this.value.checked=true;selected.push(this.value)" style="outline:none; top:0; fill:gray" ng-if="!this.value.checked"></ng-md-icon> 
+          <ng-md-icon icon="check_circle" aria-label="uncheck" ng-click="this.value.checked=!this.value.checked; selected.splice(selected.indexOf(this.value),1)" style="outline:none; top:0; fill:rgb(0, 129, 255)" ng-if="this.value.checked"></ng-md-icon>   
+      </md-button>
+      <md-button  class="md-icon-button"  ng-click="suiteBottomSheet()" style="position: relative;
 left: 25px;">
           <md-icon md-svg-icon="assets/icons/more_vert.svg"></md-icon>    
       </md-button>
