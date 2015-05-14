@@ -577,8 +577,8 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
 
 
 
-        $api
-       .centers()
+        $API
+        .visitsall()
        .get()
        .success(function(rs){
            console.log(rs);
@@ -588,93 +588,6 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
 
    }
 
-   $scope.favorite = function(){
-
-       var favorites = $storage.get('favorites') || [];
-       favorites.push($rootScope.center || this.value);
-
-       $storage.save('favorites',favorites);       
-
-       $mdBottomSheet.hide()
-       .then(function(){        
-
-           $rootScope.alerta({title:'Nuevo Visitante Frecuente',content:'Se añadió ' + ($rootScope.center.name || this.value.name ) + ' a visitantes frecuentes.'})
-
-       });
-
-   }
-
-
-   $scope.unfavorite = function(){
-
-       var favorites = $storage.get('favorites') || [];
-
-       console.log(favorites,'get');
-
-       favorites.splice(favorites.indexOf($rootScope.center || this.value),1);
-
-       if(favorites.length > 0)
-       $storage.save('favorites', favorites);
-       else
-       $storage.delete('favorites')
-
-     if($rootScope.center)
-       $scope.load({favorites:true})
-    else
-      $scope.load();
-
-       $mdBottomSheet.hide()
-       .then(function(){        
-
-           $rootScope.alerta({title:'Favorito Eliminado',content:'Se quitó ' + ($rootScope.center.name || this.value.name ) + ' de tus favoritos.'})
-
-       });
-     ;
-
-       
-   }
-
-
-   $scope.call = function(){
-             if(!$rootScope.center)
-       window.location  = '#/centers';
-             console.log($rootScope.center)
-             $scope.center = $rootScope.center;
-
-   }
-
-
-   $scope.isfavorite = function(){
-
-        var myfavorites = $storage.get('favorites') || [];  
-
-      console.log(myfavorites.indexOf(this.value));
-
-         return myfavorites.indexOf(this.value) != -1;
-
-   }
-
-   $scope.goToProfile = function(){
-
-        $rootScope.center = this.value;
-
-        window.location = '#/profile';
-
-   }
-
-   $scope.loadProfile = function(){
-
-     if(!$rootScope.center)
-       window.location = '#/centers';
-
-       $scope.center = $rootScope.center;
-
-   }
-
-   $scope.loadCenterMap = function(){     
-      $gmap.load();
-   }
-   
    
    $scope.scanId = function(){
        
