@@ -184,7 +184,7 @@ angular.module('dhome')
         })
 
 
-    $urlRouterProvider.otherwise("/dashboard"); //aqui va?
+    $urlRouterProvider.otherwise("/home"); //aqui va?
 
 
 

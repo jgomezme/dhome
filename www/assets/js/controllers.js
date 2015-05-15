@@ -624,7 +624,7 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
 
       $API
       .file()
-      .post({file})
+      .post(file)
 
    }
 

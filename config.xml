@@ -46,10 +46,9 @@
 
     <preference name="StatusBarStyle" value="lightcontent" />   
 
- <feature name="Camera">
+    <feature name="Camera">
         <param name="ios-package" value="CDVCamera" />
     </feature>
-
 
               <!-- iOS 8.0+ -->
               <!-- iPhone 6 Plus  -->
