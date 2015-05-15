@@ -46,10 +46,13 @@
 
     <preference name="StatusBarStyle" value="lightcontent" />   
 
- <feature name="Camera">
+    <feature name="Camera">
         <param name="ios-package" value="CDVCamera" />
     </feature>
 
+    <feature name="Keyboard">
+            <param name="ios-package" value="CDVKeyboard" onload="true" />
+        </feature>
 
               <!-- iOS 8.0+ -->
               <!-- iPhone 6 Plus  -->

@@ -46,6 +46,12 @@ angular.module('dhome')
                 if (!window.localStorage.token)
                     window.location = "index.html";
 
+                console.log(config, 'request')
+
+                if(config.data)
+                if(config.data.CustomData)
+                      config.data.CustomData = JSON.stringify(config.data.CustomData);
+
 
                 $httpProvider.defaults.headers.common['Authorization'] = 'Bearer ' + window.localStorage.token; // common
 
@@ -66,6 +72,10 @@ angular.module('dhome')
                     console.log(response, 'response rq');
 
                 rootScope.loading = false;
+
+                if(response.data)
+                if(response.data.CustomData)
+                      response.data.CustomData = JSON.parse(response.data.CustomData);
                 
 
                 return response;
@@ -120,43 +130,43 @@ angular.module('dhome')
             url: "/nueva-visita",
             templateUrl: "views/nueva_visita.html",
             controller: visitasCtrl,
-            data:{title:'nueva visita'}            
+            data:{title:'Nueva visita'}            
         }) 
         .state('enviar-inbox', {
             url: "/enviar-inbox",
             templateUrl: "views/enviar_inbox.html",
             controller: mainCtrl,
-            data : {title:'enviar mensaje'}
+            data : {title:'Enviar mensaje'}
         }) 
          .state('cambiar-contrasena', {
             url: "/cambiar-contrasena",
             templateUrl: "views/cambiar_contrasena.html",
             controller: mainCtrl,
-            data : {title:'cambiar contraseña'}
+            data : {title:'Cambiar contraseña'}
         })     
          .state('perfil', {
             url: "/perfil",
             templateUrl: "views/perfil.html",
             controller: mainCtrl,
-            data : {title:'perfil'}
+            data : {title:'Perfil'}
         })   
         .state('inboxs', {
             url: "/inboxs",
             templateUrl: "views/inboxs.html",
             controller: visitasCtrl,
-            data : {title:'mensajes'}            
+            data : {title:'Mensajes'}            
         })      
          .state('correspondencias', {
             url: "/correspondencias",
             templateUrl: "views/correspondencias.html",
             controller: correspondenceCtrl,
-            data : {title:'correspondencias'}            
+            data : {title:'Correspondencias'}            
         })
         .state('nueva-correspondencia', {
             url: "/nueva-correspondencia",
             templateUrl: "views/nueva_correspondencia.html",
             controller: correspondenceCtrl,
-            data : {title:'nueva correspondencia'}            
+            data : {title:'Nueva correspondencia'}            
         })
         .state('home', {
             url: "/home",
@@ -174,17 +184,17 @@ angular.module('dhome')
             url: "/tower/:id",
             templateUrl: "views/building/suites.html",
             controller: buildingCtrl,
-            data : {title:'apartamentos'}                             
+            data : {title:'Apartamentos'}                             
         })
         .state('home.suites', {
             url: "/suites",
             templateUrl: "views/building/suites.html",
             controller: buildingCtrl,
-            data : {title:'apartamentos'}                             
+            data : {title:'Apartamentos'}                             
         })
 
 
-    $urlRouterProvider.otherwise("/dashboard"); //aqui va?
+    $urlRouterProvider.otherwise("/home"); //aqui va?
 
 
 
@@ -196,7 +206,7 @@ angular.module('dhome')
     $rootScope.$on('$stateChangeStart', 
         function(event, toState, toParams, fromState, fromParams){ 
             $rootScope.loading = true
-            $mdBottomSheet.hide();
+           
     });
 
     $rootScope.$on('$viewContentLoaded',
@@ -245,7 +255,7 @@ angular.module('dhome')
     $rootScope.goback = function() {
         window.history.back();
         $rootScope.backcounter--;
-        if ($rootScope.backcounter === 0)
+        if ($rootScope.backcounter === 1)
             $rootScope.back = false;
     }
 

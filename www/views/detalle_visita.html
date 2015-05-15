@@ -1,16 +1,18 @@
-<md-content layout-padding ng-init="load()">
+<md-content ng-cloak layout-padding ng-init="load()">
 	<md-content>
-		<h3>APTO (TORRE )</h3>
+		<h3>APTO {{current_visit.CustomData.suite}} ({{current_visit.CustomData.tower}})</h3>
 	<md-content>
 	<md-input-container flex="">
 		<h4>Para el Residente</h4>
-		<span>{{current_visit.residente || rootScope.nothing }}</span>
-		<h4>Visitante</h4>
-		<span>{{current_visit.VisitName || rootScope.nothing}}</span>
-		<h4>No. Documento Visitante</h4>
-		<span>{{current_visit.VisitIdentification || rootScope.nothing}}</span>
-		<h4>Observaciòn o Motivo de Visita</h4>
-		<span >{{current_visit.Reason || rootScope.nothing}}</span>
+		<span>{{current_visit.LookingFor || $root.nothing }}</span>
+	    <h4>No. Documento Visitante</h4>
+		<span>{{current_visit.VisitIdentification || $root.nothing}}</span>
+		<h4>Nombre del Visitante</h4>
+		<span>{{current_visit.VisitName || $root.nothing}}</span>
+	    <h4>No. Matricula Vehiculo Visitante</h4>
+		<span>{{current_visit.CustomData.matricula || $root.nothing}}</span>
+		<h4>Observación o Motivo de Visita</h4>
+		<span >{{current_visit.Reason || $root.nothing}}</span>
 		<h4>Foto del Visitante<h4>
 	</md-input-container>
 </md-content>

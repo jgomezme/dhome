@@ -52,7 +52,22 @@ function photo(){
     }
 }
 
+
+function search(){
+    return {
+          restrict : 'E',
+          replace : true,
+          link : function(scope){
+              scope.$parent.search = scope.search;
+          },
+          template : '  <div layout="row" style="  padding: 10px 10px; background: #ebebeb;"> <input ng-model="search" placeholder="Buscar" style="padding:3px; border-radius:3px; border:1px solid #ccc" flex> &nbsp;<ng-md-icon icon="search" style="fill:gray"></ng-md-icon> </div>'
+    }
+}
+
+
 angular.module('dhome')
 .directive('fileModel', fileModel)
 .directive('mdPhotoCapture', photo)
+.directive('ngMdSearch', search)
+
 ;

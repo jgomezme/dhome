@@ -1,12 +1,24 @@
-<md-list ng-init="load()" style="position:relative" layout-padding>
-<div ng-if="values">
-    <md-lis-item ng-if="values.length == 0">
-          <p>Vaya, parece que no tienes visitas por el momento.</p>
-    </md-lis-item>   
+
+<!-- visitas -->
+<ng-md-search></ng-md-search>
+     <md-list ng-init="load()" style="position:relative" layout-padding>
+
+  <div ng-if="values">
+  <md-lis-item ng-if="values.length == 0">
+
+        <p>Vaya, parece que no tienes visitas por el momento.</p>
+       </md-lis-item>   
 </div>
-<md-list-item class="md-3-line"   ng-repeat="value in values track by $index | filter:$root.search" aria-label="swipe">
-    <img  ng-src="{{ value.image || 'assets/img/guest.png' }}" class="md-avatar" ng-click="goToProfile()" aria-label="profile">
-    <div class="md-list-item-text" flex  aria-label="profile" ng-click="goToProfile()">
+     
+     
+     <md-list-item class="md-3-line"   ng-repeat="value in values | filter:search || '' | orderBy : '-VisitDate' track by $index" aria-label="swipe">
+
+
+      <img  ng-src="{{ value.image || 'assets/img/guest.png' }}" class="md-avatar" ng-click="goToProfile()" aria-label="profile">
+      
+      <div class="md-list-item-text" flex  aria-label="profile" ng-click='true' ui-sref="detalle_visitas({id:this.value.Id})">
+          
+
           <h3>{{ value.VisitName }}</h3>          
           <p class="p-aligned">{{ value.Reason.ellipsis()}}</p>          
     </div>

@@ -3,7 +3,7 @@
     <meta charset="utf-8">
      <meta name="HandheldFriendly" content="True">
      <meta name="MobileOptimized" content="320">
-     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/> 
+      <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi"/>
      <meta http-equiv="cleartype" content="on">
     <link rel="stylesheet" href="assets/libs/angular-material/angular-material.css">
     <link rel="stylesheet" href="assets/font/custom/style.css">
@@ -12,7 +12,8 @@
 
     <style type="text/css">
     html, body{
-      background: url(assets/img/bg-1.png);
+      background: url(assets/img/bg-2.jpg) no-repeat;
+      background-size: cover;
       /**/
     }
     </style> 
@@ -36,10 +37,11 @@
           <br>
           <br>
           <label>
-          <h2 style="text-align:center;">Digital Homes</h2>
+          <h2 style="text-align:center;color: white;
+  text-shadow: 1px 1px black;">Digital Homes</h2>
           </label>
           <br>
-          <md-content  style="padding:4rem; border-radius:1rem" >
+          <md-content  style="padding:4rem; border-radius:1rem;   background-color: rgba(255, 255, 255, 0.83);" >
 
             <div layout="row" layout-align="space-around" ng-show="loading">
               <md-progress-circular md-mode="indeterminate"></md-progress-circular>
@@ -78,11 +80,12 @@
           <br>
           <br>
           <br>
-          <label>
-          <h2 style="text-align:center;">Digital Homes</h2>
+            <label>
+          <h2 style="text-align:center;color: white;
+  text-shadow: 1px 1px black;">Digital Homes</h2>
           </label>
           <br>
-          <md-content  style="padding:4rem; border-radius:1rem">
+          <md-content  style="padding:4rem; border-radius:1rem;   background-color: rgba(255, 255, 255, 0.83);" >
             <div layout="row" layout-align="space-around" ng-show="loading">
               <md-progress-circular md-mode="indeterminate"></md-progress-circular>
             </div>
@@ -127,9 +130,9 @@
   </div>
     <!-- Angular Material Dependencies -->
     <script src="assets/libs/angular/angular.min.js"></script>
-    <script src="assets/libs/angular-animate/angular-animate.min.js"></script>
     <script src="assets/libs/ui-router/release/angular-ui-router.min.js"></script>    
     <script src="assets/libs/angular-aria/angular-aria.min.js"></script>
+    <script src="assets/libs/angular-animate/angular-animate.min.js"></script>
     <script src="assets/libs/angular-material/angular-material.js"></script>
     <script src="assets/libs/angular-material-icons/angular-material-icons.min.js"></script>
     <script src='assets/libs/lodash/dist/lodash.min.js'></script>
