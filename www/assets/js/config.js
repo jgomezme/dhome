@@ -130,43 +130,43 @@ angular.module('dhome')
             url: "/nueva-visita",
             templateUrl: "views/nueva_visita.html",
             controller: visitasCtrl,
-            data:{title:'nueva visita'}            
+            data:{title:'Nueva visita'}            
         }) 
         .state('enviar-inbox', {
             url: "/enviar-inbox",
             templateUrl: "views/enviar_inbox.html",
             controller: mainCtrl,
-            data : {title:'enviar mensaje'}
+            data : {title:'Enviar mensaje'}
         }) 
          .state('cambiar-contrasena', {
             url: "/cambiar-contrasena",
             templateUrl: "views/cambiar_contrasena.html",
             controller: mainCtrl,
-            data : {title:'cambiar contraseña'}
+            data : {title:'Cambiar contraseña'}
         })     
          .state('perfil', {
             url: "/perfil",
             templateUrl: "views/perfil.html",
             controller: mainCtrl,
-            data : {title:'perfil'}
+            data : {title:'Perfil'}
         })   
         .state('inboxs', {
             url: "/inboxs",
             templateUrl: "views/inboxs.html",
             controller: visitasCtrl,
-            data : {title:'mensajes'}            
+            data : {title:'Mensajes'}            
         })      
          .state('correspondencias', {
             url: "/correspondencias",
             templateUrl: "views/correspondencias.html",
             controller: correspondenceCtrl,
-            data : {title:'correspondencias'}            
+            data : {title:'Correspondencias'}            
         })
         .state('nueva-correspondencia', {
             url: "/nueva-correspondencia",
             templateUrl: "views/nueva_correspondencia.html",
             controller: correspondenceCtrl,
-            data : {title:'nueva correspondencia'}            
+            data : {title:'Nueva correspondencia'}            
         })
         .state('home', {
             url: "/home",
@@ -184,13 +184,13 @@ angular.module('dhome')
             url: "/tower/:id",
             templateUrl: "views/building/suites.html",
             controller: buildingCtrl,
-            data : {title:'apartamentos'}                             
+            data : {title:'Apartamentos'}                             
         })
         .state('home.suites', {
             url: "/suites",
             templateUrl: "views/building/suites.html",
             controller: buildingCtrl,
-            data : {title:'apartamentos'}                             
+            data : {title:'Apartamentos'}                             
         })
 
 
