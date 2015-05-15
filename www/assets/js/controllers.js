@@ -567,7 +567,7 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
 
             console.log($scope.values);
 
-     lookAtSel()
+
 
           return;
         }
@@ -579,8 +579,6 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
                            
                  
             console.log($scope.values, $scope.suites)
-
-           lookAtSel()
 
       }
 

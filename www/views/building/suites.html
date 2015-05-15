@@ -1,15 +1,15 @@
 
-  <div layout="row" style="  border-bottom: 1px solid #ebebeb;">
-  <md-button style="" ng-if="!$root.selected" ng-click="iniSel()" flex>Seleccionar varios</md-button>
-  <md-button style="" ng-if="$root.selected && $root.selected.length == 0" ng-click="selectAll()" flex>Seleccionar todos</md-button>
-  <md-button style="" ng-if="$root.selected.length > 0" ng-click="delSelected()" flex>Eliminar Selección ({{selected.length}})</md-button>
+  <div layout="row" >
+  <md-button style="" class="md-raised subtlebtn" ng-if="!$root.selected" ng-click="iniSel()" flex>Seleccionar varios</md-button>
+  <md-button style="" class="md-raised subtlebtn" ng-if="$root.selected && $root.selected.length == 0" ng-click="selectAll()" flex>Seleccionar todos</md-button>
+  <md-button style="" class="md-raised subtlebtn" ng-if="$root.selected.length > 0" ng-click="delSelected()" flex>Eliminar Selección ({{selected.length}})</md-button>
   </div>
 
 <div layout="row" flex ng-init="getSuites()" style="overflow-x:hidden !important">
 
      <md-list flex >
-       <md-list-item ng-if="values.length == 0 || !values">
-         <p><br>Vaya, parece que no hay Aptos. disponibles.</p>
+       <md-list-item ng-if="values && values.length == 0 || !values">
+         <p><br>Parece que no hay Aptos. disponibles.</p>
        </md-list-item>
 
 

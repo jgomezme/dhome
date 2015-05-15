@@ -205,7 +205,9 @@ angular.module('dhome')
 
     $rootScope.$on('$stateChangeStart', 
         function(event, toState, toParams, fromState, fromParams){ 
-            $rootScope.loading = true
+            $rootScope.loading = true;
+
+            alert(toState)
            
     });
 
@@ -215,6 +217,8 @@ angular.module('dhome')
             console.log($state);
 
             $rootScope.state = $state.current.name;
+            alert(toState)
+            
     /**
      * Build handler to open/close a SideNav; when animation finishes
      * report completion in console

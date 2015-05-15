@@ -2,8 +2,8 @@
 <ng-md-search></ng-md-search>
      <md-list ng-init="load()" style="position:relative" layout-padding>
 
-      <md-lis-item ng-if="correspondences.length == 0">
-        <p>Vaya, parece que no tienes correspondencias por el momento.</p>
+      <md-lis-item ng-if="values && correspondences.length == 0">
+        <p>Parece que no tienes correspondencias por el momento.</p>
       </md-lis-item>   
      
 
