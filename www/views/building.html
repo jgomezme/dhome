@@ -13,7 +13,10 @@
 </md-toolbar>
 </div>
 <br>
-
+  <div layout="row" style="  padding: 10px 10px;
+  background: #ebebeb;">
+  <input ng-model="search" style="padding:3px; border-radius:3px;" flex> &nbsp;<ng-md-icon icon="search" style="fill:gray"></ng-md-icon>
+  </div>
 <div ng-if="!$root.loading">
 <div ui-view></div>
 </div>

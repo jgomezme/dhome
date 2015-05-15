@@ -3,8 +3,6 @@ angular.module('dhome')
 .config(function($stateProvider, $urlRouterProvider, $httpProvider, $mdThemingProvider) {
 
 
-
-
     $mdThemingProvider.definePalette('dhomePalette', {
         '50': 'ffebee',
         '100': '287D7D',
