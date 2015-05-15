@@ -79,6 +79,7 @@ angular.module('dhome')
                 
 
                 return response;
+
             },
             'responseError': function(err) { //usamos los interceptors para manipular los errores
 
@@ -106,7 +107,37 @@ angular.module('dhome')
             url: "/visitas",
             templateUrl: "views/visitas.html",
             controller: visitasCtrl,
-            data : {title:'visitas'}
+            data : {title:'Visitas'}
+        })
+        .state('visitas.pendientes', {
+            url: "/pendientes",
+            templateUrl: "views/visitas/pendientes.html",
+            controller: visitasCtrl,
+            data : {title:'Visitas Pendientes'}
+        })
+        .state('visitas.prealertadas', {
+            url: "/prealertadas",
+            templateUrl: "views/visitas/prealertadas.html",
+            controller: visitasCtrl,
+            data : {title:'Visitas Prealertadas'}
+        })
+        .state('visitas.rechazadas', {
+            url: "/rechazadas",
+            templateUrl: "views/visitas/rechazadas.html",
+            controller: visitasCtrl,
+            data : {title:'Visitas Rechazadas'}
+        })
+        .state('visitas.aprobadas', {
+            url: "/aprobadas",
+            templateUrl: "views/visitas/aprobadas.html",
+            controller: visitasCtrl,
+            data : {title:'Visitas Aprobadas'}
+        })
+        .state('visitas.historial', {
+            url: "/historial",
+            templateUrl: "views/visitas/historial.html",
+            controller: visitasCtrl,
+            data : {title:'Historial Visitas'}
         })
         .state('detalle_visitas', {
             url: "/detalle_visita/:id",
@@ -115,7 +146,7 @@ angular.module('dhome')
             data : {title:'Detalle de Visita'}
         })
         .state('detalle_correspondencia', {
-            url: "/detalle_correspondencia/:id",
+            url: "/detalle_correspondencia/{value}",
             templateUrl: "views/detalle_correspondencia.html",
             controller: detalleCorrespondenciaController,
             data : {title:'Detalle Correspondecia'}
@@ -207,7 +238,6 @@ angular.module('dhome')
         function(event, toState, toParams, fromState, fromParams){ 
             $rootScope.loading = true;
 
-            alert(toState)
            
     });
 
@@ -217,8 +247,8 @@ angular.module('dhome')
             console.log($state);
 
             $rootScope.state = $state.current.name;
-            alert(toState)
-            
+  
+
     /**
      * Build handler to open/close a SideNav; when animation finishes
      * report completion in console

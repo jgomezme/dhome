@@ -4,13 +4,13 @@
     <md-list-item >
       <md-button class="md-list-item-content" >
         <ng-md-icon icon="layers" style="fill:gray" ></ng-md-icon>        
-        <span class="md-inline-list-icon-label" ui-sref="detalle_correspondencia({id:$root.correspondence.Id})" href="#/detalle_correspondencia" >Ver detalles</span>
+        <span class="md-inline-list-icon-label" ui-sref="detalle_correspondencia({value:{To:'Javier'}})" href="#/detalle_correspondencia" >Ver detalles</span>
       </md-button>
     </md-list-item>
-    <md-list-item ng-hide="$root.state == 'favorites'">
-      <md-button class="md-list-item-content" ng-click="favorite()">
+    <md-list-item>
+      <md-button class="md-list-item-content" >
         <ng-md-icon icon="favorite" style="fill:gray" ></ng-md-icon>        
-        <span class="md-inline-list-icon-label">Marcar como visita frecuente</span>
+        <span class="md-inline-list-icon-label">Entregar correspondencia</span>
       </md-button>
     </md-list-item>
 <br>

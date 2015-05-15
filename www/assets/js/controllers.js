@@ -108,7 +108,8 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
       })
 
 
-
+  $scope.Home = {};
+  $scope.Home.show = true;
 
   $rootScope.nothing="No asignado"
 
@@ -605,6 +606,11 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
 function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $storage, $location, $state, $API) {
 
     delete $rootScope.photo;
+
+    $scope.pendientes = function(item){
+      alert(item.State);
+        return item.State === 'asa';
+    }
   
  $mdBottomSheet.hide();
 
@@ -713,7 +719,7 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet){
     $rootScope.correspondence = val;
 
     $mdBottomSheet.show({
-      templateUrl: 'views/bottom_sheet/correspondenceBottom_sheet.html'
+      templateUrl: 'views/bottom_sheet/correspondence.html'
     })
     .then(function(){ 
        $mdBottomSheet.hide();

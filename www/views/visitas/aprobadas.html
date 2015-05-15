@@ -6,12 +6,12 @@
   <div ng-if="values">
   <md-lis-item ng-if="values && values.length == 0">
 
-        <p>Parece que no tienes visitas pendientes por el momento.</p>
+        <p>Parece que no tienes visitas APROBADAS por el momento.</p>
        </md-lis-item>   
 </div>
      
      
-     <md-list-item class="md-3-line"   ng-repeat="value in values | filter:search || '' | orderBy : '-VisitDate' track by $index" aria-label="swipe">
+     <md-list-item class="md-3-line"   ng-repeat="value in values | filter:{State:'Autorizada'} | filter:search || ''  | orderBy : '-VisitDate' track by $index" aria-label="swipe">
 
 
       <img  ng-src="{{ value.image || 'assets/img/guest.png' }}" class="md-avatar" ng-click="goToProfile()" aria-label="profile">
