@@ -19,12 +19,7 @@ function detalleCorrespondenciaController($scope, $stateParams, $API, $mdBottomS
   $mdBottomSheet.hide(); 
   
   $scope.load = function(){
-      $API
-      .correspondence($storage.get('config').buildingId)
-      .get()
-      .success(function(correspondences){
-        $scope.values = correspondences || [];
-      }); 
+    console.log($stateParams);
   }
 }
 
