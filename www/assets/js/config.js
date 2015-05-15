@@ -116,7 +116,7 @@ angular.module('dhome')
         })
         .state('detalle_correspondencia', {
             url: "/detalle_correspondencia/:id",
-            templateUrl: "views/detalle_correspondecia.html",
+            templateUrl: "views/detalle_correspondencia.html",
             controller: detalleCorrespondenciaController,
             data : {title:'Detalle Correspondecia'}
         })
