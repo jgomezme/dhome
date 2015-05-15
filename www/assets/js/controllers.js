@@ -11,11 +11,20 @@ function detalleVisitaController($scope,$rootScope, $stateParams, $http, $API, $
         });
     }
 
+
+
 }
 
-function detalleCorrespondenciaController($scope, $stateParams, $API, $mdBottomSheet){
+function detalleCorrespondenciaController($scope, $stateParams, $API, $mdBottomSheet, $storage){
+  $mdBottomSheet.hide(); 
+  
   $scope.load = function(){
-
+      $API
+      .correspondence($storage.get('config').buildingId)
+      .get()
+      .success(function(correspondences){
+        $scope.values = correspondences || [];
+      }); 
   }
 }
 
@@ -698,9 +707,24 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
 }
 
 
-function correspondenceCtrl($scope, $rootScope, $API, $storage){
+function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet){
 
   delete $rootScope.photo;
+
+  $scope.centerBottomSheet = function(val) {
+    $rootScope.correspondence = val;
+
+    $mdBottomSheet.show({
+      templateUrl: 'views/bottom_sheet/correspondenceBottom_sheet.html'
+    })
+    .then(function(){ 
+       $mdBottomSheet.hide();
+    }, function(){
+      $mdBottomSheet.hide();
+    })
+    ;
+
+  };
 
 
   $scope.takeimage = function(){
