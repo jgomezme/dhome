@@ -1,0 +1,17 @@
+<md-content layout-padding ng-init="load()">
+	<md-content>
+		<h3>APTO (TORRE )</h3>
+	<md-content>
+	<md-input-container flex="">
+		<h4>Para el Residente</h4>
+		<span>{{current_visit.residente || rootScope.nothing }}</span>
+		<h4>Visitante</h4>
+		<span>{{current_visit.VisitName || rootScope.nothing}}</span>
+		<h4>No. Documento Visitante</h4>
+		<span>{{current_visit.VisitIdentification || rootScope.nothing}}</span>
+		<h4>Observaciòn o Motivo de Visita</h4>
+		<span >{{current_visit.Reason || rootScope.nothing}}</span>
+		<h4>Foto del Visitante<h4>
+	</md-input-container>
+</md-content>
+

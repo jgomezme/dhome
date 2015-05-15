@@ -100,13 +100,13 @@ angular.module('dhome')
         })
         .state('detalle_visitas', {
             url: "/detalle_visita/:id",
-            templateUrl: "views/visitas.html",
+            templateUrl: "views/detalle_visita.html",
             controller: detalleVisitaController,
             data : {title:'Detalle de Visita'}
         })
         .state('detalle_correspondencia', {
             url: "/detalle_correspondencia/:id",
-            templateUrl: "views/visitas.html",
+            templateUrl: "views/detalle_correspondecia.html",
             controller: detalleCorrespondenciaController,
             data : {title:'Detalle Correspondecia'}
         })
@@ -114,7 +114,7 @@ angular.module('dhome')
             url: "/dashboard",
             templateUrl: "views/dashboard.html",
             controller: dashboardController,
-            data : {title:'Dashboard'}                             
+            data : {title:'Inicio'}                             
         })
         .state('nueva-visita', {
             url: "/nueva-visita",
@@ -196,6 +196,7 @@ angular.module('dhome')
     $rootScope.$on('$stateChangeStart', 
         function(event, toState, toParams, fromState, fromParams){ 
             $rootScope.loading = true
+            $mdBottomSheet.hide();
     });
 
     $rootScope.$on('$viewContentLoaded',

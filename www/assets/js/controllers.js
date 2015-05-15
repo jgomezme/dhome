@@ -3,22 +3,18 @@ function detalleVisitaController($scope,$rootScope, $stateParams, $http, $API){
     $scope.load = function(){
         $API
         .visit($stateParams.id)
+        .get()
         .success(function(visitas){
-            $scope.visitas = visitas.data || [];
+            $scope.current_visit = visitas || [];
         });
     }
 
 }
 
-function detalleCorrespondenciaController($scope, $stateParams, $http){
-    var _correspondencia = $stateParams.id;
-    $scope.load = function(){
-        $http.get("http://dhmysqlserver.cloudapp.net/api/Correspondence?SuiteId=" + _correspondencia).success(function(data){
-            if(data){
-                $scope.correspondencias = data || [];
-            }
-        })
-    }
+function detalleCorrespondenciaController($scope, $stateParams, $API){
+  $scope.load = function(){
+
+  }
 }
 
 
@@ -576,8 +572,9 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
   
 
 
-  $scope.centerBottomSheet = function() {  
-   
+  $scope.centerBottomSheet = function(val) {  
+    $rootScope.currentVisit = val;
+     
     $rootScope.center = $rootScope.center || this.value;  
     $mdBottomSheet.show({
       templateUrl: 'views/bottom_sheet/center.html',
@@ -650,7 +647,7 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
 }
 
 
-function correspondenceCtrl($scope, $rootScope){
+function correspondenceCtrl($scope, $rootScope, $API, $storage){
 
   delete $rootScope.photo;
 
@@ -659,9 +656,13 @@ function correspondenceCtrl($scope, $rootScope){
      document.getElementById('correspondence').click()
    }
 
-
     $scope.load = function(){
-
+      $API
+      .correspondencesall($storage.get('config').buildingId)
+      .get()
+      .success(function(correspondences){
+        $scope.correspondences = correspondences || [];
+      });
     }
 
     $scope.create = function(){
