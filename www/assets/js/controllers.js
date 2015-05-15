@@ -671,6 +671,7 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
             .success(function(rs){
                console.log(rs, 'visit');
                $rootScope.toast('Visita Registrada', 'Cerrar');
+               delete $scope.form;
                window.location = '#/visitas'
             })
 
@@ -748,6 +749,8 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage){
         .post($scope.form)
         .success(function(rs){
              console.log(rs, 'correspondence')
+               delete $scope.form;
+             
            window.location = "#/correspondencias";
         })
 
