@@ -46,6 +46,12 @@ angular.module('dhome')
                 if (!window.localStorage.token)
                     window.location = "index.html";
 
+                console.log(config, 'request')
+
+                if(config.data)
+                if(config.data.CustomData)
+                      config.data.CustomData = JSON.stringify(config.data.CustomData);
+
 
                 $httpProvider.defaults.headers.common['Authorization'] = 'Bearer ' + window.localStorage.token; // common
 
@@ -66,6 +72,10 @@ angular.module('dhome')
                     console.log(response, 'response rq');
 
                 rootScope.loading = false;
+
+                if(response.data)
+                if(response.data.CustomData)
+                      response.data.CustomData = JSON.parse(response.data.CustomData);
                 
 
                 return response;
@@ -196,7 +206,7 @@ angular.module('dhome')
     $rootScope.$on('$stateChangeStart', 
         function(event, toState, toParams, fromState, fromParams){ 
             $rootScope.loading = true
-            $mdBottomSheet.hide();
+           
     });
 
     $rootScope.$on('$viewContentLoaded',
@@ -245,7 +255,7 @@ angular.module('dhome')
     $rootScope.goback = function() {
         window.history.back();
         $rootScope.backcounter--;
-        if ($rootScope.backcounter === 0)
+        if ($rootScope.backcounter === 1)
             $rootScope.back = false;
     }
 

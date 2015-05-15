@@ -3,6 +3,7 @@
     <div layout="row">
         <md-content layout-padding flex>
             <br>
+
             <h4 ng-cloak>Registrar Visita {{$root.suite ? $rootScope.suite.tower.Name + '(APTO. ' + $root.suite.suite.Name + ')' : ''}}</h4>
             <br>
             <form ng-model="form">
@@ -13,22 +14,22 @@
 
                   <md-input-container>
              <label>Residente al que visita *</label>
-            <input ng-model="form.no_documento" layout="column" flex>             
+            <input required ng-model="form.LookingFor" layout="column" flex>             
           </md-input-container>
     
                 <md-input-container flex>
                     <label>No. Documento del Visitante *</label>
-                    <input ng-model="form.no_documento" layout="column" flex>
+                    <input required ng-model="form.VisitIdentification" layout="column" flex>
                 </md-input-container>
                 
                 <md-input-container flex>
                     <label>Nombre del Visitante *</label>
-                    <input ng-model="form.full_name">
+                    <input required ng-model="form.VisitName">
                 </md-input-container>
 
                 <md-input-container flex>
                     <label>No. Matricula Vehículo Visitante</label>
-                    <input ng-model="form.metadata.numeroMatricula" layout="column" flex>
+                    <input ng-model="form.CustomData.matricula" layout="column" flex>
                 </md-input-container>
                 <md-input-container flex>
                     <md-select ng-required ng-model="form.torre" ng-if='!$root.suite' placeholder="Torre *" flex>
@@ -37,7 +38,7 @@
                 </md-input-container>
                   <md-input-container>
         <label>Mótivo u Observación de la Visita</label>
-        <textarea ng-model="form.observacion" columns="1" md-maxlength="150"></textarea>
+        <textarea ng-model="form.Reason" columns="1" md-maxlength="150"></textarea>
              </md-input-container>
                 <md-input-container flex>
                     <md-select ng-required ng-model="form.nro_apto" ng-if='!$root.suite' placeholder="Numero de Apto *" flex>
@@ -45,14 +46,14 @@
                     </md-select>
                 </md-input-container>
                 
-                <md-photo-capture label="Foto del visitante" required=true></md-photo-capture> 
-
+                <md-photo-capture label="Foto de la correspondecia" required=true></md-photo-capture>            
+               
   
     </md-content>
 
     <br>
     <md-content layout="row" flex layout-align="end">
-        <md-button class="md-raised md-primary" ng-disabled="form.$invalid" ng-click="create()">Registrar Visita</md-button>
+        <md-button class="md-raised md-primary" ng-disabled="form.$invalid" ng-click="add()">Registrar Visita</md-button>
     </md-content>
     </form>    
     </div>

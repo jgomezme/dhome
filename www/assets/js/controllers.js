@@ -1,17 +1,19 @@
 // controllers 
-function detalleVisitaController($scope,$rootScope, $stateParams, $http, $API){
+function detalleVisitaController($scope,$rootScope, $stateParams, $http, $API, $mdBottomSheet){
+  $mdBottomSheet.hide(); 
     $scope.load = function(){
         $API
         .visit($stateParams.id)
         .get()
-        .success(function(visitas){
-            $scope.current_visit = visitas || [];
+        .success(function(visita){
+            $scope.current_visit = visita || [];
+            console.log(visita)
         });
     }
 
 }
 
-function detalleCorrespondenciaController($scope, $stateParams, $API){
+function detalleCorrespondenciaController($scope, $stateParams, $API, $mdBottomSheet){
   $scope.load = function(){
 
   }
@@ -86,7 +88,7 @@ var map_error = {
 }
 
 
-function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdMedia, $mdBottomSheet, $state, $API, $storage, $location){
+function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdMedia, $mdBottomSheet, $state, $API, $storage, $location, $mdToast){
 
        //handling device ready
        
@@ -96,6 +98,10 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
          
       })
 
+
+
+
+  $rootScope.nothing="No asignado"
 
    $rootScope.resetSuite = function(){
      delete $rootScope.suite;
@@ -112,7 +118,34 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
      delete $rootScope.toall;
   }
 
-     
+
+ $rootScope.toast = function(message, close){
+
+   function toastCtrl($scope, $mdToast){
+      $scope.closeToast = function() {
+         $mdToast.hide();
+       };
+   }
+
+    $mdToast.show({
+      controller: toastCtrl,
+      templateUrl: '<md-toast><span flex>'+message+'</span><md-button ng-click="closeToast()">'+close+'</md-button></md-toast>',
+      hideDelay: 6000,
+      position: {
+          bottom: false,
+          top: true,
+          left: false,
+          right: true
+        }
+
+    });
+
+ }
+
+
+
+  
+
       $scope.checkLogin = function(){
               if($storage.get('token'))
                 window.location = 'app.html';
@@ -179,57 +212,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
               $mdSidenav("right").toggle();
             }
 
-          $rootScope.requetsAmbulance = function(ev) {
-
-            if(this.value)
-               $rootScope.center = this.value;
-
-          var content = (!$rootScope.center) ? 
-            'Desea solicitar una ambulancia al centro de salud mas cercano?' :
-            'Desea solicitar una ambulancia a ' + $rootScope.center.name + ' mas cercano(a)? '  
-
-         
-          $mdDialog.show(
-            $mdDialog.confirm()
-              .title('Solicitar Ambulancia')
-              .content(content)
-              .ariaLabel('Solicitar')
-              .ok('Aceptar')  
-              .cancel('Cancelar')           
-              .targetEvent(ev)
-            )
-          .then(function(){           
-
-            var content = (!$rootScope.center) ? 
-            'Se ha solicitado una ambulancia a su ubicación. Por favor mantenga su dispositivo móvil cerca mientras llega la ayuda médica.' :
-            'Se ha solicitado a ' + $rootScope.center.name + ' una ambulancia a su ubicación. Por favor mantenga su dispositivo móvil cerca mientras llega la ayuda médica.' 
-
-            $mdDialog.show(
-              $mdDialog.alert()
-              .title('Ambulancia Solicitada.')
-              .content(content)
-              .ariaLabel('solicitada')
-              .ok('Ok')
-              )
-            .then(function(){
-                    if(!$state.current.name.match('profile'))                   
-                delete $rootScope.center;
-                  $mdSidenav("right").close();
-
-            })
-
-          }, function(){
-              //
-         if(!$state.current.name.match('profile'))    
-                delete $rootScope.center;
-          })
-          ;
-
-      $mdBottomSheet.hide();
-
-
-            };     
-
+          
      $scope.showAlertLeft = function(ev) {
       $mdDialog.show(
         $mdDialog.alert()
@@ -294,7 +277,37 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
     }
 
 
-    if(!true)
+  $rootScope.stats = function(){
+
+    alert('hey')
+
+     $API
+     .visitsall($storage.get('config').buildingId)
+      .get()
+      .success(function(rs){
+
+        $rootScope.vaprobadas = 0;
+        $rootScope.vnoparobadas = 0;
+          for(x in rs)
+             if(rs[x].State === "")
+                $rootScope.vnoparobadas++;
+              else
+                $rootScope.vaprobadas++;
+
+      })
+
+
+  }
+  
+
+
+}
+
+
+function logedCtrl($rootScope, $storage, $API){
+
+     
+$scope.userinfo = function(){
       $API
        .user()
        .get()
@@ -302,7 +315,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
            $rootScope.user = rs;
            $rootScope.username = rs.FisrtName + ' ' + rs.LastName;
        });
-
+     }
 
 }
 
@@ -342,10 +355,24 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
 
    $scope.building = $storage.get('config').buildingId;
 
+
+
     document.addEventListener('deviceready', function(){
          StatusBar.show();
       });
 
+
+
+
+
+    var lookAtSel = function(){
+
+
+
+         if($rootScope.selected)
+            for(x in $rootScope.selected)
+                $scope.values[$scope.values.indexOf($rootScope.selected[x])].checked=true;
+     }
 
 
     $scope.towerBottomSheet = function() {  
@@ -371,18 +398,18 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
   };
 
  $scope.iniSel = function(){
-     $scope.selected = new Array();
+     $rootScope.selected = new Array();
  }
 
 
   $scope.selectAll = function(){
 
-    $scope.selected = [];
+    $rootScope.selected = [];
 
      for(x in $scope.values)
          { 
           $scope.values[x].checked=true;
-          $scope.selected.push($scope.values[x])
+          $rootScope.selected.push($scope.values[x])
          }
         $rootScope.toall=true;
 
@@ -393,7 +420,7 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
       for(x in $scope.values)
           $scope.values[x].checked=false;
 
-      $scope.selected = new Array();
+      $rootScope.selected = new Array();
   }
 
 
@@ -531,6 +558,7 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
 
             console.log($scope.values);
 
+     lookAtSel()
 
           return;
         }
@@ -541,8 +569,9 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
                    $scope.values.push({tower: {Name : $scope.thebuilding.Towers[x].Name, Id: $scope.thebuilding.Towers[x].Id}, suite : $scope.thebuilding.Towers[x].Floors[j].Suites[n]});  
                            
                  
-
             console.log($scope.values, $scope.suites)
+
+           lookAtSel()
 
       }
 
@@ -570,7 +599,7 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
 
     delete $rootScope.photo;
   
-
+ $mdBottomSheet.hide();
 
   $scope.centerBottomSheet = function(val) {  
     $rootScope.currentVisit = val;
@@ -610,7 +639,7 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
           }
 
         $API
-       .visitsall(1)
+       .visitsall(parseInt($storage.get('config').buildingId))
        .get()
        .success(function(rs){
            console.log(rs);
@@ -622,9 +651,30 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
 
    $scope.add = function(){
 
+     var data = new FormData();
+         data.append('file', $rootScope.photosrc)
+
       $API
-      .file()
-      .post(file)
+      .file($storage.get('config').buildingId)
+      .post(data, {'Content-Type' : undefined})
+      .success(function(rs){
+           console.log(rs, 'file')
+
+           $scope.form.ImageName = rs;
+           $scope.form.CustomData = $scope.form.CustomData || {};
+           $scope.form.CustomData.tower = $rootScope.suite.tower.Name;
+           $scope.form.CustomData.suite = $rootScope.suite.suite.Name;
+
+            $API
+            .post_visit($rootScope.suite.suite.Id)
+            .post($scope.form)
+            .success(function(rs){
+               console.log(rs, 'visit');
+               $rootScope.toast('Visita Registrada', 'Cerrar');
+               window.location = '#/visitas'
+            })
+
+      })
 
    }
 
@@ -661,11 +711,48 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage){
       .correspondencesall($storage.get('config').buildingId)
       .get()
       .success(function(correspondences){
-        $scope.correspondences = correspondences || [];
+        $scope.values = correspondences || [];
       });
     }
 
-    $scope.create = function(){
+    $scope.add = function(){
+
+        var to = $rootScope.toall ? [] : $rootScope.selected || $rootScope.suite.suite.Id;
+
+        if(typeof to === 'array')
+            {
+              _to = [];
+
+              for(x in to)
+                _to.push(to[x].suite.Id);
+
+              to = _to;
+              delete _to;
+              console.log(to);
+            }
+
+        $scope.form.SuitesId = to;
+        delete to;
+
+      var data = new FormData();
+      data.append('file', $rootScope.photosrc)
+
+      $API
+      .file($storage.get('config').buildingId)
+      .post(data, {'Content-Type' : undefined})
+      .success(function(rs){
+         
+
+        $API
+        .correspondence($storage.get('config').buildingId)
+        .post($scope.form)
+        .success(function(rs){
+             console.log(rs, 'correspondence')
+           window.location = "#/correspondencias";
+        })
+
+      });
+
 
     }
 
@@ -680,5 +767,6 @@ angular.module('dhome')
 .controller('dashboardController', dashboardController)
 .controller('detalleVisitaController', detalleVisitaController)
 .controller('detalleCorrespondenciaController', detalleCorrespondenciaController)
+.controller('logedCtrl', logedCtrl)
 ;
 

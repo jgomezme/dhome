@@ -11,12 +11,12 @@
 </div>
      
      
-     <md-list-item class="md-3-line"   ng-repeat="value in values | filter:search || '' track by $index" aria-label="swipe">
+     <md-list-item class="md-3-line"   ng-repeat="value in values | filter:search || '' | orderBy : '-VisitDate' track by $index" aria-label="swipe">
 
 
       <img  ng-src="{{ value.image || 'assets/img/guest.png' }}" class="md-avatar" ng-click="goToProfile()" aria-label="profile">
       
-      <div class="md-list-item-text" flex  aria-label="profile" ng-click="goToProfile()">
+      <div class="md-list-item-text" flex  aria-label="profile" ng-click='true' ui-sref="detalle_visitas({id:this.value.Id})">
           
 
           <h3>{{ value.VisitName }}</h3>          

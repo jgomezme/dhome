@@ -7,7 +7,7 @@
        </md-lis-item>   
      
 
-     <md-list-item class="md-3-line"   ng-repeat="value in values filter:search || '' track by $index" aria-label="swipe">
+     <md-list-item class="md-3-line"   ng-repeat="value in values | filter:search || '' | orderBy:'-CorrespondenceDate' track by $index" aria-label="swipe">
 
 
 
@@ -15,8 +15,8 @@
       
       <div class="md-list-item-text" flex  aria-label="profile" ng-click="goToProfile()">
           
-          <h3>{{ value.name }}</h3>          
-          <p class="p-aligned">{{ value.description.ellipsis()}}</p>          
+          <h3>{{ value.To }}</h3>          
+          <p class="p-aligned">{{ value.Observations.ellipsis()}}</p>          
         </div>
         <div layout="column">
         <div layout="row">
