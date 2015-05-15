@@ -11,7 +11,7 @@
        </md-list-item>
 
 
-        <md-list-item  aria-label="item"  class="md-3-line" aria-label="suite" ng-repeat="value in values track by $index | filter:search">
+        <md-list-item  aria-label="item"  class="md-3-line" aria-label="suite" ng-repeat="value in values | filter:search || '' track by $index">
         <div  flex>
           <h3 style="font-weight:normal" flex>APTO. {{value.suite.Name}}</h3>
 
