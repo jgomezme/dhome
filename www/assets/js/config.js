@@ -9,7 +9,7 @@ angular.module('dhome')
         '200': 'ef9a9a',
         '300': 'e57373',
         '400': 'ef5350',
-        '500': '00A9E0',
+        '500': '3606C3',
         '600': 'e53935',
         '700': 'd32f2f',
         '800': 'c62828',
@@ -205,7 +205,9 @@ angular.module('dhome')
 
     $rootScope.$on('$stateChangeStart', 
         function(event, toState, toParams, fromState, fromParams){ 
-            $rootScope.loading = true
+            $rootScope.loading = true;
+
+            alert(toState)
            
     });
 
@@ -215,6 +217,8 @@ angular.module('dhome')
             console.log($state);
 
             $rootScope.state = $state.current.name;
+            alert(toState)
+            
     /**
      * Build handler to open/close a SideNav; when animation finishes
      * report completion in console

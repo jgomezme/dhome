@@ -46,6 +46,8 @@
 
     <preference name="StatusBarStyle" value="lightcontent" />   
 
+    <preference name="DisallowOverscroll" value="true" />
+
     <feature name="Camera">
         <param name="ios-package" value="CDVCamera" />
     </feature>

@@ -1,14 +1,14 @@
 <md-toolbar layout="row" md-scroll-shrink>
 
-      <div class="md-toolbar-tools" style="padding-top:7px !important">
+      <div class="md-toolbar-tools md-whiteframe-glow-z2 md-default-theme" style="padding-top:7px !important">
         
         <md-button class="md-icon-button menu-btn" aria-label="back" ng-if="$root.back && !$root.insearch" ng-click="goback()">
          <ng-md-icon icon="arrow_back" style="fill:white;   top: 0;"  ></ng-md-icon>
         </md-button>
 
         <span ng-hide="$root.insearch" flex style="cursor:default" ui-sref="home" class="noselect">
-         <h2 hide-gt-sm flex >{{ $root.pageTitle.ellipsis(11) }}</h2>
-         <h2 hide-sm flex style="text-transform:capitalize">{{$root.pageTitle || 'home'}}</h2>
+         <h2 hide-gt-sm flex style="color:white" >{{ $root.pageTitle.ellipsis(11) }}</h2>
+         <h2 hide-sm style="white" flex style="text-transform:capitalize">{{$root.pageTitle || 'home'}}</h2>
           </span>
 
           <md-autocomplete layout="column" flex='44' ng-hide="!$root.insearch"

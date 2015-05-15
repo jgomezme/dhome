@@ -6,7 +6,7 @@
   <div ng-if="values">
   <md-lis-item ng-if="values && values.length == 0">
 
-        <p>Parece que no tienes visitas por el momento.</p>
+        <p>Parece que no tienes visitas pendientes por el momento.</p>
        </md-lis-item>   
 </div>
      
@@ -23,9 +23,8 @@
           <p class="p-aligned">{{ value.Reason.ellipsis()}}</p>          
     </div>
     <div layout="column">
-        <div layout="row">
-              <md-button  class="md-icon-button" ng-click="centerBottomSheet(value)" aria-label="more-center" style="position: relative;
-            left: 25px;">
+      <div layout="row">
+        <md-button  class="md-icon-button" ng-click="centerBottomSheet(value)" aria-label="more-center" style="position:left: 25px;">
                   <md-icon md-svg-icon="assets/icons/more_vert.svg"></md-icon>    
               </md-button>
         </div>
