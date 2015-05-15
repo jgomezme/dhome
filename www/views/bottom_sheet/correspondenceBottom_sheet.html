@@ -4,7 +4,7 @@
     <md-list-item >
       <md-button class="md-list-item-content" >
         <ng-md-icon icon="layers" style="fill:gray" ></ng-md-icon>        
-        <span class="md-inline-list-icon-label" ui-sref="detalle_correspondencia({id:$root.correspondence.Id})" href="#/detalle_correspondencia" >Ver detalles</span>
+        <span class="md-inline-list-icon-label" ui-sref="detalle_correspondencia({{$root.correspondence}})" href="#/detalle_correspondencia" >Ver detalles</span>
       </md-button>
     </md-list-item>
     <md-list-item ng-hide="$root.state == 'favorites'">
