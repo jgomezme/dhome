@@ -2,9 +2,9 @@
 
      <md-list ng-init="load()" style="position:relative" layout-padding>
 
-  <md-lis-item ng-if="values.length == 0">
+      <md-lis-item ng-if="correspondences.length == 0">
         <p>Vaya, parece que no tienes correspondencias por el momento.</p>
-       </md-lis-item>   
+      </md-lis-item>   
      
      
      <md-list-item class="md-3-line"   ng-repeat="value in correspondences track by $index | filter:$root.search" aria-label="swipe">
