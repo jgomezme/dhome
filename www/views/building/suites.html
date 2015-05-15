@@ -1,5 +1,5 @@
 
-  <div layout="row">
+  <div layout="row" style="  border-bottom: 1px solid #ebebeb;">
   <md-button style="" ng-if="!$root.selected" ng-click="iniSel()" flex>Seleccionar varios</md-button>
   <md-button style="" ng-if="$root.selected && $root.selected.length == 0" ng-click="selectAll()" flex>Seleccionar todos</md-button>
   <md-button style="" ng-if="$root.selected.length > 0" ng-click="delSelected()" flex>Eliminar Selección ({{selected.length}})</md-button>
