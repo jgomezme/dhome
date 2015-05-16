@@ -19,7 +19,11 @@
       <div class="md-list-item-text" flex  aria-label="profile" ng-click='true' ui-sref="detalle_visitas({id:this.value.Id})">
           
 <h3>{{ (value.CustomData.suite ?  'APTO.' + value.CustomData.suite: '') + ( value.CustomData.tower  ? ' ('+value.CustomData.tower + ') - ' : ' ' ) + value.VisitName }}</h3>          
-          <p class="p-aligned">{{ moment(value.VisitDate).format("YYYY-MM-DD HH:mm") + ' - Residente: ' + value.LookingFor }}</p>         
+          <p class="p-aligned">
+          {{ 'Fecha: ' + moment(value.VisitDate).format("MMMM Do YYYY, h:mm a") }}
+          <br>
+          {{ 'Residente: ' + (value.LookingFor || $root.nothing) }}
+          </p>         
     </div>
     <div layout="column">
       <div layout="row">

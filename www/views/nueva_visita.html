@@ -53,7 +53,7 @@
 
     <br>
     <md-content layout="row" flex layout-align="end">
-        <md-button class="md-raised md-primary" ng-disabled="form.$invalid" ng-click="add()">Registrar Visita</md-button>
+        <md-button class="md-raised md-primary" ng-disabled="form.$invalid || $root.loading" ng-click="add()">Registrar Visita</md-button>
     </md-content>
     </form>    
     </div>

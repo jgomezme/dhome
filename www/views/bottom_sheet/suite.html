@@ -18,9 +18,17 @@
     </md-list-item>
 
 
+      <md-list-item >
+      <md-button class="md-list-item-content" ng-click="resetTower()" ui-sref="correspondencias.entregar({id : {{$root.suite.suite.Id}} })">
+        <ng-md-icon icon="reply" style="fill:gray" ></ng-md-icon>        
+        <span class="md-inline-list-icon-label" >Entregar correspondencia</span>
+      </md-button>
+    </md-list-item>
+
+
     <md-list-item >
       <md-button class="md-list-item-content" ng-click="resetTower()" ui-sref="enviar-inbox">
-        <ng-md-icon icon="my_library_books" style="fill:gray" ></ng-md-icon>        
+        <ng-md-icon icon="mail" style="fill:gray" ></ng-md-icon>        
         <span class="md-inline-list-icon-label">Enviar mensaje</span>
       </md-button>
     </md-list-item>

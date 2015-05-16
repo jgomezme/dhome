@@ -1,40 +1,6 @@
 <!-- Lista Correspondencias -->
 <ng-md-search></ng-md-search>
-     <md-list ng-init="load()" style="position:relative" layout-padding>
 
-      <md-lis-item ng-if="values && correspondences.length == 0 && !$root.loading">
-        <p>Parece que no tienes correspondencias por el momento.</p>
-      </md-lis-item>   
-     
-
-     <md-list-item class="md-3-line"   ng-repeat="value in values | filter:search || '' | orderBy:'-CorrespondenceDate' track by $index" aria-label="swipe">
-
-
-
-      <img  ng-src="{{ value.image || 'assets/img/guest.png' }}" class="md-avatar" ng-click="goToProfile()" aria-label="profile">
-      
-      <div class="md-list-item-text" flex  aria-label="profile" ng-click="goToProfile()">
-          
-          <h3>{{ value.To }}</h3>          
-          <p class="p-aligned">{{ value.Observations.ellipsis()}}</p>          
-        </div>
-        <div layout="column">
-        <div layout="row">
-      <md-button  class="md-icon-button" ng-click="centerBottomSheet(value)" aria-label="more-center" style="position: relative;
-left: 25px;">
-          <md-icon md-svg-icon="assets/icons/more_vert.svg"></md-icon>    
-      </md-button>
-      </div>
-      </div>
- 
-      <br>
-       <md-divider inset></md-divider>
-
-
-     </md-list-item> 
-
-
-      
-    </md-list>
+<div ui-view></div>
 
   

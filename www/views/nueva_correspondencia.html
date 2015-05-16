@@ -39,7 +39,7 @@
     </md-input-container>
     <br>
     <md-content layout="row" flex layout-align="end">
-        <md-button class="md-raised md-primary" ng-disabled="form.$invalid" ng-click="add()">Registrar</md-button>
+        <md-button class="md-raised md-primary" ng-disabled="form.$invalid || $root.loading" ng-click="add()">Registrar</md-button>
     </md-content>
     </form>
     </md-content>

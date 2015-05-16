@@ -19,7 +19,7 @@
 
           </div>
             <div>
-            <div layout="row" >
+            <div layout="row" style="padding-top:6px">
             <md-button  class="md-icon-button" ng-if="selected"   style="position: relative;
 left: 50px; outline:none" >
           <ng-md-icon icon="radio_button_off" aria-label="check" ng-click="this.value.checked=true;$root.selected.push(this.value)" style="outline:none; top:0; fill:gray" ng-if="!this.value.checked"></ng-md-icon> 
@@ -34,7 +34,8 @@ left: 25px;">
         </md-list-item>
      </md-list>
 </div>
-
+<br>
+<br>
 <div layout="row" ng-if="$root.selected.length > 0" flex style="position:fixed; bottom:0;left:0; width:100%; background:white; border-top:1px solid #ccc">
 <div layout="row" flex>
    <md-button ui-sref="nueva-correspondencia" flex>Correspondencia a seleccionados</md-button>

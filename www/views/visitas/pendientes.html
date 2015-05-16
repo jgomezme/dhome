@@ -11,7 +11,7 @@
 </div>
      
      
-     <md-list-item class="md-3-line" ng-init="totime()"   ng-repeat="value in values | filter:{State:' '} | filter:search || ''  | orderBy : '-VisitDate' track by $index" aria-label="swipe">
+     <md-list-item class="md-3-line" ng-init="totime()"   ng-repeat="value in values | filter:pending | filter:search || ''  | orderBy : '-VisitDate' track by $index" aria-label="swipe">
   
 
       <img  ng-src="{{ value.image || 'assets/img/guest.png' }}" class="md-avatar" ng-click="goToProfile()" aria-label="profile">
@@ -19,11 +19,15 @@
       <div class="md-list-item-text" flex  aria-label="profile" ng-click='true' ui-sref="detalle_visitas({id:this.value.Id})">
           
           <h3>{{ (value.CustomData.suite ?  'APTO.' + value.CustomData.suite: '') + ( value.CustomData.tower  ? ' ('+value.CustomData.tower + ') - ' : ' ' ) + value.VisitName }}</h3>          
-           <p class="p-aligned">{{ moment(value.VisitDate).format() + ' - Residente: ' + value.LookingFor }}</p>             
+              <p class="p-aligned">
+          {{ 'Fecha: ' + moment(value.VisitDate).format("MMMM Do YYYY, h:mm a") }}
+          <br>
+          {{ 'Residente: ' + (value.LookingFor || $root.nothing) }}
+          </p>                 
     </div>
     <div layout="column">
       <div layout="row">
-        <md-button  class="md-icon-button" ng-click="centerBottomSheet(value)" aria-label="more-center" style="position:left: 25px;">
+        <md-button layout-align="right" class="md-icon-button" ng-click="centerBottomSheet(value)" aria-label="more-center" style="position:left: 25px;">
                   <md-icon md-svg-icon="assets/icons/more_vert.svg"></md-icon>    
               </md-button>
         </div>

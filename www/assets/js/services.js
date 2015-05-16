@@ -37,8 +37,8 @@ function API($http,$rootScope){
 	  this.post_visit = function(id){  this.url = this.baseUrl + "/visitis?suiteid=" + id; return this; }
 	 
 	  this.correspondence = function(id){ this.url = this.baseUrl + "/correspondence?BuildingId="+id; return this; }
-	  this.visitsall = function(id){ this.url = this.baseUrl + "/visitis/bybuilding/" + id; return this; }
-	  this.correspondencesall = function(id){ this.url = this.baseUrl + "/correspondence/ByBuilding/" + id; return this; }
+	  this.visitsall = function(id){ this.url = this.baseUrl + "/visitis/bybuilding/" + id+"?page=1&pageSize=500"; return this; }
+	  this.correspondencesall = function(id){ this.url = this.baseUrl + "/correspondence/ByBuilding/" + id+"?page=1&pageSize=500"; return this; }
 	  this.user = function(){ this.url = this.baseUrl + "/account/userinfo"; return this; }
 	  this.file = function(id){ this.url = this.baseUrl + "/Images?BuildingId="+id; return this; }
 

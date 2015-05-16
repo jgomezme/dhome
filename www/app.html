@@ -10,8 +10,8 @@
     <link rel="stylesheet/less"  href="assets/less/default.less">
     <script src="assets/libs/less/less.js"></script>    
   </head>
-  <body layout="column" >
-    <div ng-controller="mainCtrl" layout="column" layout-fill>
+  <body layout="row" class="noscroll" ng-controller="mainCtrl">
+    <div  layout="column" layout-fill>
      
     <div ng-include="'views/common/header.html'"></div>  
 
@@ -21,7 +21,7 @@
     <div style="position:fixed;top:48%;left:48%;z-index:9999;" layout="row" layout-align="space-around" ng-show="loading">
         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
       </div>
-    <md-content   class="md-default-theme" style="height: 89%;" ui-view></md-content>
+    <md-content style="overflow:auto !important"   class="md-default-theme" style="height: 89%;" ui-view></md-content>
     </div>
 
    <div layout="column">
@@ -46,7 +46,9 @@
        
 
     <!-- core scripts -->
-    <script src="assets/libs/momentjs/moment.js"></script>      
+    <script src="assets/libs/momentjs/moment.js"></script>    
+    <script src="assets/libs/momentjs/min/locales.min.js"></script>      
+
     <script src="assets/js/main.js"></script>      
     <script src="assets/js/config.js"></script>
     <script src="assets/helpers/config.js"></script>  

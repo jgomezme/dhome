@@ -193,6 +193,24 @@ angular.module('dhome')
             controller: correspondenceCtrl,
             data : {title:'Correspondencias'}            
         })
+        .state('correspondencias.todas', {
+            url: "/todas",
+            templateUrl: "views/correspondencias/todas.html",
+            controller: correspondenceCtrl,
+            data : {title:'Correspondencias'}            
+        })
+        .state('correspondencias.entregar', {
+            url: "/entregar/:id",
+            templateUrl: "views/correspondencias/entregar.html",
+            controller: correspondenceCtrl,
+            data : {title:'Correspondencias'}            
+        })
+         .state('correspondencias.porentregar', {
+            url: "/porentregar/",
+            templateUrl: "views/correspondencias/noentregadas.html",
+            controller: correspondenceCtrl,
+            data : {title:'Correspondencias'}            
+        })
         .state('nueva-correspondencia', {
             url: "/nueva-correspondencia",
             templateUrl: "views/nueva_correspondencia.html",

@@ -101,10 +101,18 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
          console.log(cordova.plugins)
          
       })
-
+  moment.locale('es');
   $scope.moment = moment;
   $scope.Home = {};
   $scope.Home.show = true;
+
+   $scope.totime = function(){
+
+   if(this.value.CustomData)
+     this.value.CustomData = JSON.parse(this.value.CustomData);
+     console.log(this.CustomData, "custom")
+     this.value.VisitDate = new Date(this.value.VisitDate).getTime();
+ }
 
   $rootScope.nothing="No asignado"
 
@@ -197,17 +205,16 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
     
         $scope.values = []; 
 
-        $rootScope.alerta = function(data){
+        $rootScope.alerta = function(title, content, ok){
 
-            var data = data || {};
 
-            $mdDialog.show(
+            return $mdDialog.show(
               $mdDialog.alert()
-              .title(data.title || 'Mensaje')
-              .content(data.content || '')
+              .title(title || 'Mensaje')
+              .content(content || '')
               .ariaLabel('alerta')
-              .ok(data.ok || 'Ok')
-              )
+              .ok(ok || 'Ok')
+              );
 
         }
 
@@ -625,12 +632,8 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
  $mdBottomSheet.hide();
 
 
- $scope.totime = function(){
-
-   if(this.value.CustomData)
-     this.value.CustomData = JSON.parse(this.value.CustomData);
-     console.log(this.CustomData, "custom")
-     this.value.VisitDate = new Date(this.value.VisitDate).getTime();
+ $scope.pending = function(item){
+    return !/\w\s?/g.test(item.State);
  }
 
   $scope.centerBottomSheet = function(val) {  
@@ -710,8 +713,14 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
                $rootScope.toast('Visita Registrada', 'Cerrar');
 
                delete $scope.form;
-               alert('Visita registrada y notificada.');
-               window.location = '#/home';
+
+               $rootScope
+               .alerta('Visita', 'Visita registrada y notificada')
+               .then(function(){
+                
+                window.location = '#/home';
+           
+               });
 
             })
 
@@ -738,9 +747,14 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
 }
 
 
-function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet){
+function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, $state){
+
+  console.log($state, 'state');
+
+  $scope.suite = $state.params.id || null;
 
   delete $rootScope.photo;
+  $mdBottomSheet.hide();
 
   $scope.centerBottomSheet = function(val) {
     $rootScope.correspondence = val;
@@ -757,6 +771,15 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet){
 
   };
 
+ $scope.nodelivered = function(item){
+   console.log(item, 'item')
+    return !/\w\s?/g.test(item.DeliveredTo);
+ }
+
+ $scope.delivered = function(item){
+   console.log(item, 'item')
+    return /\w\s?/g.test(item.DeliveredTo);
+ }
 
   $scope.takeimage = function(){
      document.getElementById('correspondence').click()
@@ -773,7 +796,8 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet){
 
     $scope.add = function(){
 
-        var to = $rootScope.toall ? [] : $rootScope.selected || $rootScope.suite.suite.Id;
+        var to = $rootScope.toall ? [] : $rootScope.selected || [$rootScope.suite.suite.Id];
+
 
         if(typeof to === 'array')
             {
@@ -787,8 +811,9 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet){
               console.log(to);
             }
 
+
         $scope.form.SuitesId = to;
-        delete to;
+
 
       var data = new FormData();
       data.append('file', $rootScope.photosrc)
@@ -805,14 +830,22 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet){
         .success(function(rs){
              console.log(rs, 'correspondence')
                delete $scope.form;
-                $scope.form={};
+               delete $rootScope.selected;
+               $scope.form={};
 
                 $scope.$apply(function(){
                    $scope.form={};                                
+                   delete $scope.form;                                
                   });
 
-            alert('Correspondencia registrada y notificada.');
-           window.location = "#/home";
+               $rootScope
+               .alerta('Correspondencia', 'Correspondencia registrada y notificada')
+               .then(function(){
+                
+                window.location = '#/home';
+           
+               });
+  
 
         })
 
