@@ -6,11 +6,12 @@
     "angular-material": "latest",
     "jquery": "latest",
     "ui-router": "latest",
-    "fastclick": "latest",    
+    "fastclick": "latest",
     "bower": "*",
     "install": "~1.0.4",
     "angular-material-icons": "~0.4.0",
-    "angular-file-model": "~0.3.0"
+    "angular-file-model": "~0.3.0",
+    "momentjs": "~2.10.3"
   },
   "private": true
 }

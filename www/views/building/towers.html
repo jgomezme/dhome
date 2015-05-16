@@ -1,6 +1,6 @@
 <div layout="row" flex   style="overflow-x:hidden !important">
      <md-list ng-init="getTowers()" flex>
-       <md-list-item ng-if="values.length == 0 || !values">
+       <md-list-item ng-if="values.length == 0 || !values && !$root.loading">
          <p><br>Vaya, parece que no hay torres disponibles.</p>
        </md-list-item>       
            <md-list-item class="md-3-line"  ng-repeat="value in values">

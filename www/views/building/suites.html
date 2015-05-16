@@ -8,12 +8,12 @@
 <div layout="row" flex ng-init="getSuites()" style="overflow-x:hidden !important">
 
      <md-list flex >
-       <md-list-item ng-if="values && values.length == 0 || !values">
+       <md-list-item ng-if="values.length == 0 || !values && !$root.loading">
          <p><br>Parece que no hay Aptos. disponibles.</p>
        </md-list-item>
 
 
-        <md-list-item  aria-label="item"  class="md-3-line" aria-label="suite" ng-repeat="value in values | filter:search || '' track by $index">
+        <md-list-item ng-class="{'selected':this.value.checked}"  aria-label="item"  class="md-3-line" aria-label="suite" ng-repeat="value in values | filter:search || '' track by $index">
         <div  flex>
           <h3 style="font-weight:normal" ng-click="suiteBottomSheet()" flex>APTO. {{value.suite.Name}}</h3>
 

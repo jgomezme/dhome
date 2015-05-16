@@ -102,7 +102,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
          
       })
 
-
+  $scope.moment = moment;
   $scope.Home = {};
   $scope.Home.show = true;
 
@@ -262,14 +262,16 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
               console.log(rs);
               $storage.save('config',rs);  
               $storage.save('token', rs.access_token)     
-              $scope.loged=true;                
+              $scope.loged=true;          
+              delete $scope.form;      
               window.location = "app.html";
               $rootScope.loading = false 
           })
           .error(function(err){
             console.log(err)
               $scope.error_login = map_error[err.error.toLowerCase()];
-              $rootScope.loading = false 
+              $rootScope.loading = false;     
+
           })
 
     }
@@ -284,7 +286,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
   $rootScope.stats = function(){
 
-    alert('hey')
+  
 
      $API
      .visitsall($storage.get('config').buildingId)
@@ -425,11 +427,24 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
       for(x in $scope.values)
           $scope.values[x].checked=false;
 
-      $rootScope.selected = new Array();
+      delete $rootScope.selected;
   }
 
 
-  $scope.suiteBottomSheet = function() {  
+  $scope.suiteBottomSheet = function() { 
+
+   if($scope.selected)
+      {
+        this.value.checked = !this.value.checked;
+
+        if(this.value.checked)
+        $scope.selected.push(this.value);
+        else
+        $scope.selected.splice($scope.selected.indexOf(this.value),1);
+
+
+        return;
+      }
    
     $rootScope.suite = this.value; 
 
@@ -609,6 +624,15 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
   
  $mdBottomSheet.hide();
 
+
+ $scope.totime = function(){
+
+   if(this.value.CustomData)
+     this.value.CustomData = JSON.parse(this.value.CustomData);
+     console.log(this.CustomData, "custom")
+     this.value.VisitDate = new Date(this.value.VisitDate).getTime();
+ }
+
   $scope.centerBottomSheet = function(val) {  
     $rootScope.currentVisit = val;
      
@@ -664,7 +688,7 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
 
       $API
       .file($storage.get('config').buildingId)
-      .post(data, {'Content-Type' : undefined})
+      .post(data, { headers : {'Content-Type' : undefined} })
       .success(function(rs){
            console.log(rs, 'file')
 
@@ -677,11 +701,18 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
             .post_visit($rootScope.suite.suite.Id)
             .post($scope.form)
             .success(function(rs){
+                
+              $scope.$apply(function(){
+               $scope.form={};                                
+              })
+
                console.log(rs, 'visit');
                $rootScope.toast('Visita Registrada', 'Cerrar');
+
                delete $scope.form;
                alert('Visita registrada y notificada.');
-               window.location = '#/home'
+               window.location = '#/home';
+
             })
 
       })
@@ -764,7 +795,7 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet){
 
       $API
       .file($storage.get('config').buildingId)
-      .post(data, {'Content-Type' : undefined})
+      .post(data, { headers : {'Content-Type' : undefined} })
       .success(function(rs){
          
 
@@ -774,8 +805,15 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet){
         .success(function(rs){
              console.log(rs, 'correspondence')
                delete $scope.form;
+                $scope.form={};
+
+                $scope.$apply(function(){
+                   $scope.form={};                                
+                  });
+
             alert('Correspondencia registrada y notificada.');
            window.location = "#/home";
+
         })
 
       });

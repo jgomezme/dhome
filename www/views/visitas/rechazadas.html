@@ -4,23 +4,22 @@
      <md-list ng-init="load()" style="position:relative" layout-padding>
 
   <div ng-if="values">
-  <md-lis-item ng-if="values && values.length == 0">
+  <md-lis-item ng-if="values && values.length == 0 && !$root.loading">
 
         <p>Parece que no tienes visitas prealertadas por el momento.</p>
        </md-lis-item>   
 </div>
      
      
-     <md-list-item class="md-3-line"   ng-repeat="value in values | filter:{State:'Rechazadaasdasdsa'} | filter:search || ''  | orderBy : '-VisitDate' track by $index" aria-label="swipe">
+     <md-list-item class="md-3-line" ng-init="totime()"  ng-repeat="value in values | filter:{State:'Rechazadaasdasdsa'} | filter:search || ''  | orderBy : '-VisitDate' track by $index" aria-label="swipe">
 
 
       <img  ng-src="{{ value.image || 'assets/img/guest.png' }}" class="md-avatar" ng-click="goToProfile()" aria-label="profile">
       
       <div class="md-list-item-text" flex  aria-label="profile" ng-click='true' ui-sref="detalle_visitas({id:this.value.Id})">
           
-
-          <h3>{{ value.VisitName }}</h3>          
-          <p class="p-aligned">{{ value.Reason.ellipsis()}}</p>          
+<h3>{{ (value.CustomData.suite ?  'APTO.' + value.CustomData.suite: '') + ( value.CustomData.tower  ? ' ('+value.CustomData.tower + ') - ' : ' ' ) + value.VisitName }}</h3>          
+           <p class="p-aligned">{{ moment(value.VisitDate).format() + ' - Residente: ' + value.LookingFor }}</p>             
     </div>
     <div layout="column">
       <div layout="row">

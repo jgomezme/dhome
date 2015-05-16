@@ -7,11 +7,11 @@ window.config = {
 	    apiBaseUri : "/api"
 	},
 	qa : {
-	    apiUrlBase : "http://23.23.127.28", 
+	    apiUrlBase : "http://dhmysqlserver.cloudapp.net", 
 	    apiBaseUri : "/api"
 	},
 	prod : {
-	    apiUrlBase : "api.xxxxx.xxx",
-	    apiBaseUri : ""   	    
+	    apiUrlBase : "http://dhmysqlserver.cloudapp.net:83",
+	    apiBaseUri : "/api"   	    
 	}
 }

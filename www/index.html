@@ -51,11 +51,11 @@
 
 
                 <label>Nombre de Usuario *</label>
-                <input ng-model="form.username" >
+                <input ng-model="form.username" placeholder="Usuario">
               </md-input-container>
                <md-input-container flex>
                 <label>Contraseña *</label>
-                <input type="password" ng-model="form.password">
+                <input type="password" ng-model="form.password" >
               </md-input-container>
              
              <div layout="row">
@@ -76,7 +76,7 @@
 </md-content>
               </form>
 
-                        <form hide-gt-sm layout-align="center" ng-submit="login()" style="margin:0 auto" ng-model="form">
+                        <form hide-gt-sm layout-align="center" ng-submit="login()" style="margin:0 auto" ng-model="form" autocomplete='off'>
           <br>
           <br>
           <br>
@@ -92,7 +92,7 @@
             <div ng-show="!loading">
               <md-input-container flex>
                 <label>Nombre de Usuario *</label>
-                <input ng-model="form.username" >
+                <input ng-model="form.username"  placeholder="Usuario">
               </md-input-container>
                <md-input-container flex>
                 <label>Contraseña *</label>
@@ -139,6 +139,8 @@
   
     
     <!-- core scripts -->      
+    <script src="assets/libs/momentjs/moment.js"></script>      
+    
     <script src="assets/helpers/config.js"></script>
     <script src="assets/js/main.js"></script>    
     <script src="assets/js/api_service.js"></script>
