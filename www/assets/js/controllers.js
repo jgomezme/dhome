@@ -95,7 +95,7 @@ var map_error = {
 function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdMedia, $mdBottomSheet, $state, $API, $storage, $location, $mdToast){
 
        //handling device ready
-       
+        $mdBottomSheet.hide();
 
       document.addEventListener('deviceready', function(){
          console.log(cordova.plugins)
