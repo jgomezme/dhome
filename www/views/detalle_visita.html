@@ -17,7 +17,7 @@
 		<span >{{current_visit.Reason || $root.nothing}}</span>
 		<h4>Foto del Visitante</h4>
 		<span ng-if="!current_visit.CustomData.image">{{ $root.nothing }}</span>
-		<img ng-if="$current_visit.CustomData.image" src="{{$root.apiurl + '/images?buildingid='+ $root.building + '&name=' + current_visit.CustomData.image}}" alt="image">
+		<img width="350" ng-if="current_visit.CustomData.image" src="{{$root.apiurl + '/images?buildingid='+ $root.building + '&name=' + current_visit.CustomData.image}}" alt="image">
 	</md-input-container>
 </md-content>
 

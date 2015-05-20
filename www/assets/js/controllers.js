@@ -138,7 +138,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
    if(this.value.CustomData)
      this.value.CustomData = JSON.parse(this.value.CustomData);
      console.log(this.CustomData, "custom")
-     this.value.VisitDate = new Date(this.value.VisitDate).getTime();
+     this.value.VisitDate = new Date(this.value.RegisterDate).getTime();
  }
 
 
