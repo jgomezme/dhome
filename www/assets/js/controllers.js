@@ -142,6 +142,20 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
  }
 
 
+ $rootScope.gohome = function(){
+
+
+     if(window.location.hash.match('home')){
+      window.location.reload();
+        return;      
+     }
+
+     window.location = "#/home";
+
+
+ }
+
+
 
  $scope.parseCustom = function(){
    if(this.value.CustomData)
@@ -770,15 +784,18 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
 
                console.log(rs, 'visit');
 
-               delete $scope.form;
-               delete $rootScope.selected;
-               delete $rootScope.photosrc;
+               
 
                $rootScope
                .alerta('Visita', 'Visita registrada y notificada')
                .then(function(){
 
-                window.location = '#/home';
+                 delete $scope.form;
+                 delete $rootScope.selected;
+                 delete $rootScope.photosrc;
+
+                 $rootScope.stats();
+               $rootScope.gohome();
            
                });
 
