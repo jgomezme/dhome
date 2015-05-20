@@ -8,6 +8,7 @@
 		<h4>Observación</h4>
 		<span>{{$root.correspondence.Observations || $root.nothing}}</span>
 		<h4>Foto de la Correspondecia</h4>
-		<span>{{$root.correspondence.CustomData.image || $root.nothing }}</span>
+		<span ng-if="!$root.correspondence.CustomData.image">{{$root.nothing }}</span>
+		<img ng-if="$root.correspondence.CustomData.image" src="{{$root.apiurl + '/images?buildingid='+ $root.building + '&name=' + $root.correspondence.CustomData.image}}" alt="image">
 	</md-input-container>
 </md-content>

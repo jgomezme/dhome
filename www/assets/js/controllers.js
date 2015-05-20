@@ -142,9 +142,14 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
  }
 
 
+
  $scope.parseCustom = function(){
    if(this.value.CustomData)
      this.value.CustomData = JSON.parse(this.value.CustomData);
+
+   if(this.value.CorrespondenceDate)
+     this.value.CorrespondenceDate = new Date(this.value.CorrespondenceDate).getTime();
+
  }
 
   $rootScope.nothing="No asignado"
@@ -365,13 +370,17 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
        });
      }
 
+     var configg = window.config[window.config.env];
+     $rootScope.apiurl  = configg.apiUrlBase + configg.apiBaseUri;
+     delete configg;
+
 
   setTimeout(function(){
-
 
   if(window.localStorage.token)
      $scope.stats();
      $scope.userinfo();
+     $rootScope.building = $storage.get('config').buildingId;
 
   }, 2000)
 
