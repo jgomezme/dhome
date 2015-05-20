@@ -83,13 +83,34 @@ function resizeMe(img, max_width, max_height) {
   ctx.drawImage(img, 0, 0, width, height);
   
   
-  return canvas.toDataURL("image/jpeg",0.7); // get the data from canvas as 70% JPG (can be also PNG, etc.)
+  return canvas.toDataURL(); // get the data from canvas as 70% JPG (can be also PNG, etc.)
 
 }
 
-var map_error = {
-   "invalid_grant" : "Usuario o contraseña no validos."
-}
+
+var dataURLToBlob = function(dataURL) {
+    var BASE64_MARKER = ';base64,';
+    if (dataURL.indexOf(BASE64_MARKER) == -1) {
+      var parts = dataURL.split(',');
+      var contentType = parts[0].split(':')[1];
+      var raw = decodeURIComponent(parts[1]);
+
+      return new Blob([raw], {type: contentType});
+    }
+
+    var parts = dataURL.split(BASE64_MARKER);
+    var contentType = parts[0].split(':')[1];
+    var raw = window.atob(parts[1]);
+    var rawLength = raw.length;
+
+    var uInt8Array = new Uint8Array(rawLength);
+
+    for (var i = 0; i < rawLength; ++i) {
+      uInt8Array[i] = raw.charCodeAt(i);
+    }
+
+    return new Blob([uInt8Array], {type: contentType});
+  }
 
 
 function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdMedia, $mdBottomSheet, $state, $API, $storage, $location, $mdToast){
@@ -101,10 +122,15 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
          console.log(cordova.plugins)
          
       })
+
   moment.locale('es');
   $scope.moment = moment;
   $scope.Home = {};
   $scope.Home.show = true;
+
+  $rootScope.hideBS = function(){
+      $mdBottomSheet.hide();
+  }
 
    $scope.totime = function(){
 
@@ -173,10 +199,12 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
            $rootScope.loading = true;                        
            delete $rootScope.photosrc;
+
+           console.log(n);
            
            window.URL = window.URL || window.webkitURL;
            
-           var blob = n.match('://')  ? n : window.URL.createObjectURL(n);         
+           var blob = window.URL.createObjectURL(n);                  
                    
            //compress image
 
@@ -186,8 +214,13 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
            img.onload = function(){
 
                $rootScope.$apply(function(){
-               $rootScope.photosrc = resizeMe(img,350,350);           
-               $rootScope.loading=false; 
+
+               $rootScope.photosrc = resizeMe(img,350,350); 
+               console.log($rootScope.photosrc, 'resize');
+
+                console.log(dataURLToBlob($rootScope.photosrc), 'blob yeah')
+
+                $rootScope.loading=false; 
 
              });
                
@@ -239,38 +272,38 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
     if(window.config.env.match('dev'))
     {
-      $scope.form = {};
-      $scope.form.username = 1047;
-      $scope.form.password = "C0ntr4";
+      $scope._form = {};
+      $scope._form.username = 1047;
+      $scope._form.password = "C0ntr4";
     }
 
     $scope.login = function(){  
 
       'use strict'; 
 
-        if(!$scope.form)
+        if(!$scope._form)
             {
                $scope.error_login = "Todos los campos son requeridos";
                return;
             }
 
-        $scope.form.grant_type="password";
-        $scope.form.login_type="door";
+        $scope._form.grant_type="password";
+        $scope._form.login_type="door";
    
-         console.log($scope.form)
+         console.log($scope._form)
 
           //window.location = "app.html";
           $API
           .login()          
-          .post("login_type=door&grant_type=password&username="+$scope.form.username+"&password="+$scope.form.password, {
+          .post("login_type=door&grant_type=password&username="+$scope._form.username+"&password="+$scope._form.password, {
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             })
           .success(function(rs){
               console.log(rs);
               $storage.save('config',rs);  
               $storage.save('token', rs.access_token)     
-              $scope.loged=true;          
-              delete $scope.form;      
+              $rootScope.loged=true;          
+              delete $scope._form;      
               window.location = "app.html";
               $rootScope.loading = false 
           })
@@ -294,24 +327,47 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
   $rootScope.stats = function(){
 
   
-
      $API
-     .visitsall($storage.get('config').buildingId)
-      .get()
-      .success(function(rs){
+     .visit()
+     .add('/summary/'+$storage.get('config').buildingId)
+     .get()
+     .success(function(rs){
 
-        $rootScope.vaprobadas = 0;
-        $rootScope.vnoparobadas = 0;
-          for(x in rs)
-             if(rs[x].State === "")
-                $rootScope.vnoparobadas++;
-              else
-                $rootScope.vaprobadas++;
 
+        $rootScope.vstats = {
+            approved : rs.Apporveds,
+            pending : rs.Pendings,
+            rejected : rs.Rejecteds,
+            preauthorized : rs.Preauthorizeds,
+            all : (rs.Apporveds + rs.Pendings + rs.Rejecteds + rs.Preauthorizeds)
+        };
+         
       })
 
-
   }
+
+  $scope.userinfo = function(){
+
+    if(!$rootScope.user)
+      $API
+       .user()
+       .get()
+       .success(function(rs){
+           $rootScope.user = rs;
+           $rootScope.username = rs.FirstName + ' ' + rs.LastName;
+       });
+     }
+
+
+  setTimeout(function(){
+
+
+  if(window.localStorage.token)
+     $scope.stats();
+     $scope.userinfo();
+
+  }, 2000)
+
   
 
 
@@ -321,15 +377,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 function logedCtrl($rootScope, $storage, $API){
 
      
-$scope.userinfo = function(){
-      $API
-       .user()
-       .get()
-       .success(function(rs){
-           $rootScope.user = rs;
-           $rootScope.username = rs.FisrtName + ' ' + rs.LastName;
-       });
-     }
+
 
 }
 
@@ -624,17 +672,12 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
 
     delete $rootScope.photo;
 
-    $scope.pendientes = function(item){
-      alert(item.State);
-        return item.State === 'asa';
-    }
+
   
  $mdBottomSheet.hide();
 
 
- $scope.pending = function(item){
-    return !/\w\s?/g.test(item.State);
- }
+
 
   $scope.centerBottomSheet = function(val) {  
     $rootScope.currentVisit = val;
@@ -687,37 +730,36 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
    $scope.add = function(){
 
      var data = new FormData();
-         data.append('file', $rootScope.photosrc)
+         data.append('file', dataURLToBlob($rootScope.photosrc))
 
       $API
       .file($storage.get('config').buildingId)
       .post(data, { headers : {'Content-Type' : undefined} })
       .success(function(rs){
+           
            console.log(rs, 'file')
 
-           $scope.form.ImageName = rs;
            $scope.form.CustomData = $scope.form.CustomData || {};
            $scope.form.CustomData.tower = $rootScope.suite.tower.Name;
            $scope.form.CustomData.suite = $rootScope.suite.suite.Name;
+           $scope.form.CustomData.image = rs;
 
             $API
             .post_visit($rootScope.suite.suite.Id)
             .post($scope.form)
             .success(function(rs){
-                
-              $scope.$apply(function(){
-               $scope.form={};                                
-              })
+       
 
                console.log(rs, 'visit');
-               $rootScope.toast('Visita Registrada', 'Cerrar');
 
                delete $scope.form;
+               delete $rootScope.selected;
+               delete $rootScope.photosrc;
 
                $rootScope
                .alerta('Visita', 'Visita registrada y notificada')
                .then(function(){
-                
+
                 window.location = '#/home';
            
                });
@@ -816,27 +858,30 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
 
 
       var data = new FormData();
-      data.append('file', $rootScope.photosrc)
+
+      data.append('file', dataURLToBlob($rootScope.photosrc))
 
       $API
       .file($storage.get('config').buildingId)
       .post(data, { headers : {'Content-Type' : undefined} })
       .success(function(rs){
+
+    
+        $scope.form.CustomData = $scope.form.CustomData || {};
+        $scope.form.CustomData.image = rs;
+    
          
 
         $API
         .correspondence($storage.get('config').buildingId)
         .post($scope.form)
         .success(function(rs){
-             console.log(rs, 'correspondence')
+              
+               console.log(rs, 'correspondence')
+              
                delete $scope.form;
                delete $rootScope.selected;
-               $scope.form={};
-
-                $scope.$apply(function(){
-                   $scope.form={};                                
-                   delete $scope.form;                                
-                  });
+               delete $rootScope.photosrc;
 
                $rootScope
                .alerta('Correspondencia', 'Correspondencia registrada y notificada')
@@ -847,9 +892,10 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
                });
   
 
+          })
         })
 
-      });
+     
 
 
     }

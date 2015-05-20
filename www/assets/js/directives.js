@@ -42,7 +42,12 @@ function photo(){
                      console.log(err);
                  }
 
-                 navigator.camera.getPicture(success, error);       
+                 //var cordova = cordova || false;
+
+                 //if(cordova)
+                 navigator.camera.getPicture(success, error);  
+                 //else
+                 //document.getElementById('iphoto').click();     
 
               } 
          },
@@ -58,7 +63,7 @@ function search(){
           link : function(scope){
               scope.$parent.search = scope.search;
           },
-          template : '  <div layout="row" style="  padding: 10px 10px; background: #ebebeb;"> <input ng-model="search" placeholder="Buscar" style="padding:3px; border-radius:3px; border: 1px solid #ccc !important; pading:3px;" flex> &nbsp;<ng-md-icon icon="search" style="fill:gray"></ng-md-icon> </div>'
+          template : '  <div layout="row" style="  padding: 10px 10px; background: rgba(219, 219, 219, 0.16); border-bottom:1px solid #ccc"> <input ng-model="search" placeholder="Buscar" style="padding:3px; border-radius:3px; border: 1px solid #ccc !important; pading:3px;" flex> &nbsp;<ng-md-icon icon="search" style="fill:gray"></ng-md-icon> </div>'
     }
 }
 

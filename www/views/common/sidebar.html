@@ -1,9 +1,9 @@
-<md-sidenav class="md-sidenav-right" layout="column" md-component-id="right" md-is-locked-open="$mdMedia('gt-sm')">
+<md-sidenav class="md-sidenav-right colored" layout="column" md-component-id="right" md-is-locked-open="$mdMedia('gt-sm')">
     <md-toolbar hide-gt-sm class="md-theme-light md-whiteframe-glow-z2">
         <h1 class="md-toolbar-tools">Opciones</h1>
     </md-toolbar>
     <md-content style="overflow: auto;
-  height: 100%;">
+  height: 100%; " >
         <md-list  flex>
             <md-item layout="row" flex>
                 <md-item-content flex class="docs-menu">
@@ -36,7 +36,7 @@
                     <li>
                       <menu-link>
                         <md-button class="md-button md-button-toggle md-default-theme docs-menu" ui-sref="visitas.prealertadas" ng-class="{'active' : Home.selected}">
-                          <span >Prealertadas ({{$root.vprealertadas || 0}})
+                          <span >Prealertadas ({{$root.vstats.preauthorized || 0}})
                           </span>
                         <div class="md-ripple-container"></div>
                       </md-button>
@@ -46,7 +46,7 @@
                     <li>
                       <menu-link>
                         <md-button class="md-button md-button-toggle md-default-theme docs-menu" ui-sref="visitas.pendientes" ng-class="{'active' : Home.selected}">
-                          <span >Pendiente Aprobación ({{$root.vnoaprobadas || 0}})
+                          <span >Pendiente Aprobación ({{$root.vstats.pending || 0}})
                           </span>
                         <div class="md-ripple-container"></div>
                       </md-button>
@@ -55,7 +55,17 @@
                      <li>
                       <menu-link>
                         <md-button class="md-button md-button-toggle md-default-theme docs-menu" ui-sref="visitas.aprobadas" ng-class="{'active' : Home.selected}">
-                          <span >Aprobadas ({{$root.vaprobadas || 0}})
+                          <span >Aprobadas ({{$root.vstats.approved || 0}})
+                          </span>
+                        <div class="md-ripple-container"></div>
+                      </md-button>
+                    </menu-link>
+                  </li>
+
+                       <li>
+                      <menu-link>
+                        <md-button class="md-button md-button-toggle md-default-theme docs-menu" ui-sref="visitas.rechazadas" ng-class="{'active' : Home.selected}">
+                          <span >Rechazadas ({{$root.vstats.rejected || 0}})
                           </span>
                         <div class="md-ripple-container"></div>
                       </md-button>
@@ -65,7 +75,7 @@
                      <li>
                       <menu-link>
                         <md-button class="md-button md-button-toggle md-default-theme docs-menu"  ui-sref="visitas.historial" ng-class="{'active' : Home.selected}">
-                          <span>Todas
+                          <span>Todas ({{$root.vstats.all || 0}})
                           </span>
                         <div class="md-ripple-container"></div>
                       </md-button>
@@ -151,7 +161,7 @@
                     </md-button>
                 </md-item-content>
             </md-item>-->
-            <md-item layout="row" class="ng-hide" flex>
+            <md-item layout="row"  flex>
 
 
                 <md-item-content layout="row" flex>

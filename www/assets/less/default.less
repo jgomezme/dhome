@@ -3,6 +3,7 @@
 .docs-menu ul {
   list-style: none;
   padding: 0;
+    background: none
 }
 .docs-menu li {
   margin: 0;
@@ -148,29 +149,42 @@ p.p-aligned{
 }
 
 
-@media (max-width: 599px) {
 
-  .menu-btn{
-    text-align: right !important;
-    width: 26px !important;
-  }
-
-  }
 
   .subtlebtn{
   box-shadow: none !important;
   background: rgb(244, 241, 241) !important;
   }
 
+  .colored{
+    border-left: 1px solid #ccc !important;
+    
+    md-content{
+     background:rgba(219, 219, 219, 0.16) !important;
+    }
 
-  @media (max-width: 400px) {
+  }
+
+
+  @media (max-width: 599px) {
   		
   		.menu-btn{
    			 text-align: right !important;
    			 width: 26px !important;
          }
 
+         .colored{
+    border-left: none !important;
+    
+    md-content{
+     background:white !important;
     }
+
+  }
+
+    }
+
+
   
   .bg-blurred{
   -webkit-filter: blur(5px);

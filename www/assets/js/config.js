@@ -113,43 +113,43 @@ angular.module('dhome')
             url: "/pendientes",
             templateUrl: "views/visitas/pendientes.html",
             controller: visitasCtrl,
-            data : {title:'Visitas Pendientes'}
+            data : {title:'Pendientes'}
         })
         .state('visitas.prealertadas', {
             url: "/prealertadas",
             templateUrl: "views/visitas/prealertadas.html",
             controller: visitasCtrl,
-            data : {title:'Visitas Prealertadas'}
+            data : {title:'Prealertadas'}
         })
         .state('visitas.rechazadas', {
             url: "/rechazadas",
             templateUrl: "views/visitas/rechazadas.html",
             controller: visitasCtrl,
-            data : {title:'Visitas Rechazadas'}
+            data : {title:'Visitas'}
         })
         .state('visitas.aprobadas', {
             url: "/aprobadas",
             templateUrl: "views/visitas/aprobadas.html",
             controller: visitasCtrl,
-            data : {title:'Visitas Aprobadas'}
+            data : {title:'Aprobadas'}
         })
         .state('visitas.historial', {
             url: "/historial",
             templateUrl: "views/visitas/historial.html",
             controller: visitasCtrl,
-            data : {title:'Historial Visitas'}
+            data : {title:'Todas'}
         })
         .state('detalle_visitas', {
             url: "/detalle_visita/:id",
             templateUrl: "views/detalle_visita.html",
             controller: detalleVisitaController,
-            data : {title:'Detalle de Visita'}
+            data : {title:'Visita'}
         })
         .state('detalle_correspondencia', {
             url: "/detalle_correspondencia/{value}",
             templateUrl: "views/detalle_correspondencia.html",
             controller: detalleCorrespondenciaController,
-            data : {title:'Detalle Correspondecia'}
+            data : {title:'Correspondecia'}
         })
         .state('dashboard', {
             url: "/dashboard",
@@ -161,13 +161,13 @@ angular.module('dhome')
             url: "/nueva-visita",
             templateUrl: "views/nueva_visita.html",
             controller: visitasCtrl,
-            data:{title:'Nueva visita'}            
+            data:{title:'Visita'}            
         }) 
         .state('enviar-inbox', {
             url: "/enviar-inbox",
             templateUrl: "views/enviar_inbox.html",
             controller: mainCtrl,
-            data : {title:'Enviar mensaje'}
+            data : {title:'Mensaje'}
         }) 
          .state('cambiar-contrasena', {
             url: "/cambiar-contrasena",
@@ -215,7 +215,7 @@ angular.module('dhome')
             url: "/nueva-correspondencia",
             templateUrl: "views/nueva_correspondencia.html",
             controller: correspondenceCtrl,
-            data : {title:'Nueva correspondencia'}            
+            data : {title:'Correspondencia'}            
         })
         .state('home', {
             url: "/home",

@@ -40,14 +40,14 @@ function API($http,$rootScope){
 	  this.visitsall = function(id){ this.url = this.baseUrl + "/visitis/bybuilding/" + id+"?page=1&pageSize=500"; return this; }
 	  this.correspondencesall = function(id){ this.url = this.baseUrl + "/correspondence/ByBuilding/" + id+"?page=1&pageSize=500"; return this; }
 	  this.user = function(){ this.url = this.baseUrl + "/account/userinfo"; return this; }
-	  this.file = function(id){ this.url = this.baseUrl + "/Images?BuildingId="+id; return this; }
+	  this.file = function(id){ this.url = this.baseUrl + "/images?buildingid="+id; return this; }
 
 
 	  this.add = function(comp){ this.url += comp; return this;  }
 	  this.reset = function(){ this.url = ""; }
 
 	  this.get = function(){ var url = this.url; this.reset(); return $http.get(url); }
-	  this.post = function(data, header){  var url = this.url; this.reset(); return $http.post(url, data || {}, {} || ''); }
+	  this.post = function(data, header){  var url = this.url; this.reset(); return $http.post(url, data || {}, header || { headers : {'Content-Type': 'application/json'} }); }
 	  this.put = function(data){ var url = this.url; this.reset(); return $http.put(url, data || {}); }	  
 	  this.delete = function(){ var url = this.url; this.reset(); return $http.delete(url); }
 	  

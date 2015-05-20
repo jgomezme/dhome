@@ -1,8 +1,10 @@
 <md-content ng-cloak layout-padding ng-init="load()">
-	<md-content>
+	<md-content ng-cloak>
 		<h3>APTO {{current_visit.CustomData.suite}} ({{current_visit.CustomData.tower}})</h3>
 	<md-content>
 	<md-input-container flex="">
+		<h4>Fecha</h4>
+		<span>{{moment(current_visit.VisitDate).format("MMMM Do YYYY, h:mm a")}}</span>
 		<h4>Para el Residente</h4>
 		<span>{{current_visit.LookingFor || $root.nothing }}</span>
 	    <h4>No. Documento Visitante</h4>
