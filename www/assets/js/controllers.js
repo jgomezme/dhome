@@ -887,9 +887,10 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
         $scope.form.CustomData = $scope.form.CustomData || {};
         $scope.form.CustomData.image = rs[0];
 
-        if(!$rootScope.selected)
+        if(!$rootScope.selected){
         $scope.form.CustomData.suite = $rootScope.suite.suite.Name;
         $scope.form.CustomData.tower = $rootScope.suite.tower.Name;
+        }
     
          
 
