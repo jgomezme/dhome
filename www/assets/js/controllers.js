@@ -854,6 +854,7 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
   $mdBottomSheet.hide();
 
   $scope.centerBottomSheet = function(val) {
+    
     $rootScope.correspondence = val;
 
     $mdBottomSheet.show({
@@ -895,7 +896,7 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
 
         var to = $rootScope.toall ? [] : $rootScope.selected || [$rootScope.suite.suite.Id];
 
-
+        if($rootScope.selected)
         if(!$rootScope.toall && $rootScope.selected.length > 0)
             {
               _to = [];

@@ -14,8 +14,11 @@
       
       <div class="md-list-item-text" flex  aria-label="profile" ng-click="goToProfile()">
           
-          <h3>{{ value.CustomData.suite ? 'APTO. ' + value.CustomData.suite + ' (' + value.CustomData.tower + ')' : 'Masivo'  }}</h3>          
-          <p class="p-aligned">para: {{ value.To }}</p>            
+          <h3>{{ value.CustomData.suite ? 'APTO. ' + value.CustomData.suite + ' (' + value.CustomData.tower + ')' : 'Masivo'  }} {{ value.CustomData.de ? ' -  ' + value.CustomData.de : '' }}</h3>          
+          <p class="p-aligned">
+          fecha: {{ moment(value.CorrespondenceDate).format("MMMM Do YYYY, h:mm a") }} <br>
+          para: {{ value.To }}
+          </p>                       
         </div>
         <div layout="column">
         <div layout="row">
