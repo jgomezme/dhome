@@ -1,13 +1,13 @@
 <md-content layout-padding ng-init="load()">
 	<md-content>
-		<h3>APTO (TORRE )</h3>
+		<h3> APTO. {{$root.correspondence.CustomData.suite || $root.nothing}} ( {{$root.correspondence.CustomData.tower || $root.nothing}})</h3>
 	<md-content>
 	<md-input-container flex="">
 		<h4>Para el Residente</h4>
-		<span>{{current_visit.residente || rootScope.nothing }}</span>
-		<h4>Observaciòn</h4>
-		<span>{{current_visit.observation || rootScope.nothing}}</span>
-		<h4>No. Documento Visitante</h4>
-		<h4>Foto del Correspondecia<h4>
+		<span>{{$root.correspondence.To || $root.nothing }}</span>
+		<h4>Observación</h4>
+		<span>{{$root.correspondence.Observations || $root.nothing}}</span>
+		<h4>Foto del Correspondecia</h4>
+		<span>{{$root.correspondence.CustomData.image || $root.nothing }}</span>
 	</md-input-container>
 </md-content>

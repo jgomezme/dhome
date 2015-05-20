@@ -7,6 +7,7 @@ function detalleVisitaController($scope,$rootScope, $stateParams, $http, $API, $
         .get()
         .success(function(visita){
             $scope.current_visit = visita || [];
+            $scope.current_visit.CustomData = JSON.parse($scope.current_visit.CustomData);
             console.log(visita)
         });
     }
@@ -140,6 +141,12 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
      this.value.VisitDate = new Date(this.value.VisitDate).getTime();
  }
 
+
+ $scope.parseCustom = function(){
+   if(this.value.CustomData)
+     this.value.CustomData = JSON.parse(this.value.CustomData);
+ }
+
   $rootScope.nothing="No asignado"
 
    $rootScope.resetSuite = function(){
@@ -204,7 +211,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
            
            window.URL = window.URL || window.webkitURL;
            
-           var blob = window.URL.createObjectURL(n);                  
+           var blob = n.match('//') ? n : window.URL.createObjectURL(n);                  
                    
            //compress image
 
@@ -742,7 +749,7 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
            $scope.form.CustomData = $scope.form.CustomData || {};
            $scope.form.CustomData.tower = $rootScope.suite.tower.Name;
            $scope.form.CustomData.suite = $rootScope.suite.suite.Name;
-           $scope.form.CustomData.image = rs;
+           $scope.form.CustomData.image = rs[0];
 
             $API
             .post_visit($rootScope.suite.suite.Id)
@@ -859,6 +866,7 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
 
       var data = new FormData();
 
+      if($rootScope.photosrc)
       data.append('file', dataURLToBlob($rootScope.photosrc))
 
       $API
@@ -868,7 +876,9 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
 
     
         $scope.form.CustomData = $scope.form.CustomData || {};
-        $scope.form.CustomData.image = rs;
+        $scope.form.CustomData.image = rs[0];
+        $scope.form.CustomData.suite = $rootScope.suite.suite.Name;
+        $scope.form.CustomData.tower = $rootScope.suite.tower.Name;
     
          
 

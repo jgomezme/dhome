@@ -15,7 +15,8 @@
 		<span>{{current_visit.CustomData.matricula || $root.nothing}}</span>
 		<h4>Observación o Motivo de Visita</h4>
 		<span >{{current_visit.Reason || $root.nothing}}</span>
-		<h4>Foto del Visitante<h4>
+		<h4>Foto del Visitante</h4>
+		<span>{{ current_visit.CustomData.image || $root.nothing }}</span>
 	</md-input-container>
 </md-content>
 
