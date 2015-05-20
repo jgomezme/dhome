@@ -746,6 +746,8 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
    $scope.add = function(){
 
      var data = new FormData();
+
+      if($rootScope.photosrc)
          data.append('file', dataURLToBlob($rootScope.photosrc))
 
       $API
