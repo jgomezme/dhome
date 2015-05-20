@@ -137,6 +137,18 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
    if(this.value.CustomData)
      this.value.CustomData = JSON.parse(this.value.CustomData);
+
+     console.log(this.value.VisitName.split(' ')[0].split(''))
+
+    if(this.value.VisitName != null) 
+     this.value.inits = this.value.VisitName.split(' ')[0].split('')[0] || 'V';
+    else
+      this.value.inits = 'V';
+
+
+    if(!this.value.inits)
+       this.value.inits = 'V';
+
      console.log(this.CustomData, "custom")
      this.value.VisitDate = new Date(this.value.RegisterDate).getTime();
  }
@@ -163,6 +175,14 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
    if(this.value.CorrespondenceDate)
      this.value.CorrespondenceDate = new Date(this.value.CorrespondenceDate).getTime();
+
+   if(this.value.To)
+      this.value.inits = this.value.To.split(' ')[0].split('')[0] || 'C';
+   
+
+    if(!this.value.inits)
+       this.value.inits = 'C';
+
 
  }
 
@@ -795,7 +815,7 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
                  delete $rootScope.photosrc;
 
                  $rootScope.stats();
-               $rootScope.gohome();
+                 $rootScope.gohome();
            
                });
 
@@ -876,7 +896,7 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
         var to = $rootScope.toall ? [] : $rootScope.selected || [$rootScope.suite.suite.Id];
 
 
-        if(typeof to === 'array')
+        if(!$rootScope.toall && $rootScope.selected.length > 0)
             {
               _to = [];
 
@@ -885,9 +905,8 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
 
               to = _to;
               delete _to;
-              console.log(to);
+              console.log(to,'array');
             }
-
 
         $scope.form.SuitesId = to;
 

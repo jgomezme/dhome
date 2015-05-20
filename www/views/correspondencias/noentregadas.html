@@ -9,11 +9,14 @@
 
 
 
+      <div class="md-avatar" style="background:#ebebeb; text-align:center; line-height:2.5; text-transform:uppercase"  aria-label="profile">
+       {{value.inits}}
+      </div>
       
       <div class="md-list-item-text" flex  aria-label="profile" ng-click="goToProfile()">
           
-          <h3>{{ value.To }}</h3>          
-          <p class="p-aligned">{{ value.Observations.ellipsis()}}</p>          
+          <h3>{{ value.CustomData.suite ? 'APTO. ' + value.CustomData.suite + ' (' + value.CustomData.tower + ')' : 'Masivo'  }}</h3>          
+          <p class="p-aligned">para: {{ value.To }}</p>          
         </div>
         <div layout="column">
         <div layout="row">

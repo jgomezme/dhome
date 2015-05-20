@@ -14,16 +14,20 @@
      <md-list-item class="md-3-line" ng-init="totime()"  ng-repeat="value in values | filter:{State:'Autorizada'} | filter:search || ''  | orderBy : '-VisitDate' track by $index" aria-label="swipe">
 
 
-      <img  ng-src="{{ value.image || 'assets/img/guest.png' }}" class="md-avatar" ng-click="goToProfile()" aria-label="profile">
+
+      <div class="md-avatar" style="background:#ebebeb; text-align:center; line-height:2.5; text-transform:uppercase"  aria-label="profile">
+       {{value.inits}}
+      </div>
       
       <div class="md-list-item-text" flex  aria-label="profile" ng-click='true' ui-sref="detalle_visitas({id:this.value.Id})">
           
 <h3>{{ (value.CustomData.suite ?  'APTO.' + value.CustomData.suite: '') + ( value.CustomData.tower  ? ' ('+value.CustomData.tower + ') - ' : ' ' ) + value.VisitName }}</h3>          
-          <p class="p-aligned">
+            <p class="p-aligned">
           {{ 'Fecha: ' + moment(value.VisitDate).format("MMMM Do YYYY, h:mm a") }}
           <br>
           {{ 'Residente: ' + (value.LookingFor || $root.nothing) }}
-          </p>         
+          </p>  
+          
     </div>
     <div layout="column">
       <div layout="row">
