@@ -297,7 +297,6 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
         }
 
-       
          
             $scope.menu_right = function(){
               $mdSidenav("right").toggle();
@@ -314,11 +313,12 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
           .targetEvent(ev)
       );
     };
+    
+      $scope._form = {};
 
 
     if(window.config.env.match('dev'))
     {
-      $scope._form = {};
       $scope._form.username = 1047;
       $scope._form.password = "C0ntr4";
     }
