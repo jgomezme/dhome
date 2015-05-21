@@ -909,7 +909,8 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
           CorrespondencesIds : [$rootScope.correspondence.Id]
         })
         .success(function(){
-            $rootScope.alerta('Mensaje', 'Correspondencia(s) Entregada(s)')
+            $mdBottomSheet.hide();
+            $rootScope.alerta('Mensaje', 'Correspondencia(s) Entregada(s)');
             .then(function(){
               // $rootScope.gohome();
             });
