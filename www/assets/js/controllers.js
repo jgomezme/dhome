@@ -313,7 +313,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
           .targetEvent(ev)
       );
     };
-    
+
       $scope._form = {};
 
 
@@ -905,6 +905,7 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
         $API
         .deliver()
         .post({
+          To : 'Any',
           SuiteId : $rootScope.correspondence.SuitesId[x],
           CorrespondencesIds : [$rootScope.correspondence.Id]
         })
