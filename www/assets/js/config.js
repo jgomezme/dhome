@@ -219,8 +219,8 @@ angular.module('dhome')
         })
         .state('home', {
             url: "/home",
-            templateUrl: "views/building.html",
-            controller: buildingCtrl,
+            templateUrl: "views/news.html",
+            controller: mainCtrl,
             data : {title: '' }                             
         })
         .state('home.towers', {
@@ -239,7 +239,7 @@ angular.module('dhome')
             url: "/suites",
             templateUrl: "views/building/suites.html",
             controller: buildingCtrl,
-            data : {title:'Apartamentos'}                             
+            data : {title:'News'}                             
         })
 
 
