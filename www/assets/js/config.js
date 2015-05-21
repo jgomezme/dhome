@@ -103,7 +103,7 @@ angular.module('dhome')
 
 
     $stateProvider
-        .state('visitas', {
+        /*.state('visitas', {
             url: "/visitas",
             templateUrl: "views/visitas.html",
             controller: visitasCtrl,
@@ -144,7 +144,7 @@ angular.module('dhome')
             templateUrl: "views/detalle_visita.html",
             controller: detalleVisitaController,
             data : {title:'Visita'}
-        })
+        }) */
         .state('detalle_correspondencia', {
             url: "/detalle_correspondencia/{value}",
             templateUrl: "views/detalle_correspondencia.html",
@@ -187,7 +187,7 @@ angular.module('dhome')
             controller: visitasCtrl,
             data : {title:'Mensajes'}            
         })      
-         .state('correspondencias', {
+      /*   .state('correspondencias', {
             url: "/correspondencias",
             templateUrl: "views/correspondencias.html",
             controller: correspondenceCtrl,
@@ -216,7 +216,7 @@ angular.module('dhome')
             templateUrl: "views/nueva_correspondencia.html",
             controller: correspondenceCtrl,
             data : {title:'Correspondencia'}            
-        })
+        }) */
         .state('home', {
             url: "/home",
             templateUrl: "views/news.html",
