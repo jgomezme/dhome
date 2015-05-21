@@ -363,10 +363,30 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
     }
 
     $scope.logout = function(){
-         $storage.delete('config');
+
+
+       var confirm = $mdDialog.confirm()
+                     .title('Confirmación')
+                     .content('Esta seguro de cerrar la sesión?')
+                     .ariaLabel('alerta')
+                     .ok('Si')
+                     .cancel('No');
+
+
+      $mdDialog.show(confirm)
+        .then(function(){
+         
+          $storage.delete('config');
          $storage.delete('token');
 
          window.location.reload();
+
+        }, function(){
+           
+        })
+      ;
+
+        
     }
 
 
@@ -721,11 +741,11 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
 function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $storage, $location, $state, $API) {
 
     delete $rootScope.photo;
+                 $rootScope.stats();
 
 
   
- $mdBottomSheet.hide();
-
+  $mdBottomSheet.hide();
 
 
 
@@ -858,12 +878,13 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
     $rootScope.correspondence = val;
 
     $mdBottomSheet.show({
-      templateUrl: 'views/bottom_sheet/correspondence.html'
+      templateUrl: 'views/bottom_sheet/correspondence.html',
+      preserveScope : true
     })
     .then(function(){ 
        $mdBottomSheet.hide();
     }, function(){
-      $mdBottomSheet.hide();
+       $mdBottomSheet.hide();
     })
     ;
 
@@ -877,6 +898,23 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
  $scope.delivered = function(item){
    console.log(item, 'item')
     return /\w\s?/g.test(item.DeliveredTo);
+ }
+
+ $rootScope.deliver = function(){
+     for(x in $rootScope.correspondence.SuitesId)
+        $API
+        .deliver()
+        .post({
+          SuiteId : $rootScope.correspondence.SuitesId[x],
+          CorrespondencesIds : [$rootScope.correspondence.Id]
+        })
+        .success(function(){
+            $rootScope.alerta('Mensaje', 'Correspondencia(s) Entregada(s)')
+            .then(function(){
+              // $rootScope.gohome();
+            });
+
+        })
  }
 
   $scope.takeimage = function(){
@@ -930,6 +968,8 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
         $scope.form.CustomData.suite = $rootScope.suite.suite.Name;
         $scope.form.CustomData.tower = $rootScope.suite.tower.Name;
         }
+
+        $scope.form.CustomData.SuitesId = to;
     
          
 
