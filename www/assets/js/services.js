@@ -35,6 +35,8 @@ function API($http,$rootScope){
 	  this.building = function(id){ if(!id) this.url = this.baseUrl + "/building"; else this.url = this.baseUrl + "/building/" + id; return this; }
 	  this.visit = function(id){ if(!id) this.url = this.baseUrl + "/visitis"; else this.url = this.baseUrl + "/visits/" + id; return this; }
 	  this.post_visit = function(id){  this.url = this.baseUrl + "/visitis?suiteid=" + id; return this; }
+	  this.register = function(id){ if(!id) this.url = this.baseUrl + "/register"; else this.url = this.baseUrl + "/register/" + id; return this; }
+
 	 
 	  this.correspondence = function(id){ this.url = this.baseUrl + "/correspondence?BuildingId="+id; return this; }
 	  this.correspondence = function(id){ this.url = this.baseUrl + "/correspondence?BuildingId="+id; return this; }
@@ -42,7 +44,7 @@ function API($http,$rootScope){
 	  this.correspondencesall = function(id){ this.url = this.baseUrl + "/correspondence/ByBuilding/" + id+"?page=1&pageSize=500"; return this; }
 	  this.user = function(){ this.url = this.baseUrl + "/account/userinfo"; return this; }
 	  this.file = function(id){ this.url = this.baseUrl + "/images?buildingid="+id; return this; }
-	  this.deliver = function(){ this.url = this.baseUrl + "/deliveries"; return this; }
+	  this.deliver = function(){ this.url = this.baseUrl + "/deliveries";  return this; }
 
 
 
@@ -51,7 +53,7 @@ function API($http,$rootScope){
 
 	  this.get = function(){ var url = this.url; this.reset(); return $http.get(url); }
 	  this.post = function(data, header){  var url = this.url; this.reset(); return $http.post(url, data || {}, header || { headers : {'Content-Type': 'application/json'} }); }
-	  this.put = function(data){ var url = this.url; this.reset(); return $http.put(url, data || {}); }	  
+	  this.put = function(data, header){ var url = this.url; this.reset(); return $http.put(url, data || {}, header || { headers : {'Content-Type': 'application/json'} }); }	  
 	  this.delete = function(){ var url = this.url; this.reset(); return $http.delete(url); }
 	  
 

@@ -229,14 +229,13 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
 
 
-  
-
       $scope.checkLogin = function(){
               if($storage.get('token'))
                 window.location = 'app.html';
               else
                 $scope.nolog = true;
       }
+
 
       function previewPhoto(n){
            
@@ -350,8 +349,172 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
               $storage.save('token', rs.access_token)     
               $rootScope.loged=true;          
               delete $scope._form;      
-              window.location = "app.html";
-              $rootScope.loading = false 
+            
+             window.location = "app.html";
+              
+
+/*
+
+              var successHandler = function(rs){
+
+                
+              }
+
+              var errorHandler = function(err){
+                  console.log(err)
+              }
+
+
+              window.onNotification = function(e) {
+
+                    $("#app-status-ul").append('<li>EVENT -> RECEIVED:' + e.event + '</li>');
+
+                    switch( e.event )
+                    {
+                    case 'registered':
+                        if ( e.regid.length > 0 )
+                        {
+
+
+                          $API
+                          .register()
+                          .post()
+                          .success(function(rs){
+
+                               $API
+                                  .register(rs.Registration)
+                                  .put({
+                                    Handle : e.regid,
+                                    platform : 'gcm',
+                                    BuildingId : $storage.get('config').buildingId
+                                  })
+                                  .success(function(rs){
+                                         console.log('dispositivo registrado');
+                                         window.location = "app.html";
+                                  })
+
+
+                          })
+
+                           
+
+                        }
+                    break;
+
+                    case 'message':
+                        // if this flag is set, this notification happened while we were in the foreground.
+                        // you might want to play a sound to get the user's attention, throw up a dialog, etc.
+                        if ( e.foreground )
+                        {
+                            $("#app-status-ul").append('<li>--INLINE NOTIFICATION--' + '</li>');
+
+                            // on Android soundname is outside the payload.
+                            // On Amazon FireOS all custom attributes are contained within payload
+                            var soundfile = e.soundname || e.payload.sound;
+                            // if the notification contains a soundname, play it.
+                            var my_media = new Media("/android_asset/www/"+ soundfile);
+                            my_media.play();
+                        }
+                        else
+                        {  // otherwise we were launched because the user touched a notification in the notification tray.
+                            if ( e.coldstart )
+                            {
+                                $("#app-status-ul").append('<li>--COLDSTART NOTIFICATION--' + '</li>');
+                            }
+                            else
+                            {
+                                $("#app-status-ul").append('<li>--BACKGROUND NOTIFICATION--' + '</li>');
+                            }
+                        }
+
+                       $("#app-status-ul").append('<li>MESSAGE -> MSG: ' + e.payload.message + '</li>');
+                           //Only works for GCM
+                       $("#app-status-ul").append('<li>MESSAGE -> MSGCNT: ' + e.payload.msgcnt + '</li>');
+                       //Only works on Amazon Fire OS
+                       $status.append('<li>MESSAGE -> TIME: ' + e.payload.timeStamp + '</li>');
+                    break;
+
+                    case 'error':
+                        $("#app-status-ul").append('<li>ERROR -> MSG:' + e.msg + '</li>');
+                    break;
+
+                    default:
+                        $("#app-status-ul").append('<li>EVENT -> Unknown, an event was received and we do not know what it is</li>');
+                    break;
+             }
+        }
+
+
+
+        window.onNotificationAPN = function(event) {
+            if ( event.alert )
+            {
+                navigator.notification.alert(event.alert);
+            }
+
+            if ( event.sound )
+            {
+                var snd = new Media(event.sound);
+                snd.play();
+            }
+
+            if ( event.badge )
+            {
+                pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, event.badge);
+            }
+        }
+
+
+        function tokenHandler (result) {
+ 
+          alert('device token = ' + result);
+
+
+                             
+                          $API
+                          .register()
+                          .post()
+                          .success(function(rs){
+
+                               $API
+                                  .register(rs.Registration)
+                                  .put({
+                                    Handle : e.regid,
+                                    platform : 'apns',
+                                    BuildingId : $storage.get('config').buildingId
+                                  })
+                                  .success(function(rs){
+                                         console.log('dispositivo registrado');
+                                         
+                                  })
+
+
+                          })
+
+      }
+
+        
+
+        if ( device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos" )
+                  pushNotification.register(
+                  successHandler,
+                  errorHandler,
+                  {
+                      "senderID":"replace_with_sender_id",
+                      "ecb":"window.onNotification"
+                  });
+        else
+          pushNotification.register(
+                    tokenHandler,
+                    errorHandler,
+                    {
+                        "badge":"true",
+                        "sound":"true",
+                        "alert":"true",
+                        "ecb":"window.onNotificationAPN"
+                    });
+*/
+
           })
           .error(function(err){
             console.log(err)

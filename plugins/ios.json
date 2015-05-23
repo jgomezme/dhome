@@ -89,6 +89,10 @@
                         {
                             "xml": "<preference name=\"StatusBarStyle\" value=\"lightcontent\" />",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"PushPlugin\"><param name=\"ios-package\" value=\"PushPlugin\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -113,6 +117,9 @@
             "PACKAGE_NAME": "com.digitalhomes.app"
         },
         "org.apache.cordova.statusbar": {
+            "PACKAGE_NAME": "com.digitalhomes.app"
+        },
+        "com.phonegap.plugins.PushPlugin": {
             "PACKAGE_NAME": "com.digitalhomes.app"
         }
     },

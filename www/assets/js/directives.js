@@ -68,9 +68,33 @@ function search(){
 }
 
 
+function showme(){
+    return {
+          restrict : 'A',
+          replace : true,
+          link : function(scope, element, attrs){
+
+              scope.src = attrs.src;
+              
+              scope.show = function(){
+                alert(attrs.src)
+              scope.src = attrs.src;
+
+              }
+
+
+              angular.element(element).click = scope.show;
+               
+
+          },
+          template : '<div class="overlay" ng-if="preview"><img  alt="preview"></div>'
+    }
+}
+
 angular.module('dhome')
 .directive('fileModel', fileModel)
 .directive('mdPhotoCapture', photo)
 .directive('ngMdSearch', search)
+.directive('ngShowme', showme)
 
 ;
