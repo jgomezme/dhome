@@ -1,0 +1,45 @@
+
+<!-- visitas -->
+<ng-md-search></ng-md-search>
+     <md-list ng-init="load()" style="position:relative" layout-padding>
+
+  <div ng-if="values">
+  <md-lis-item ng-if="values && values.length == 0 && !$root.loading">
+
+        <p>Parece que no tienes visitas PREALERTADAS por el momento.</p>
+       </md-lis-item>   
+</div>
+     
+     
+     <md-list-item class="md-3-line" ng-init="totime()"  ng-repeat="value in values | filter:{State:'Prealertada'} | filter:search || ''  | orderBy : '-VisitDate' track by $index" aria-label="swipe">
+
+
+      
+
+      <div class="md-avatar" style="background:#ebebeb; text-align:center; line-height:2.5; text-transform:uppercase"  aria-label="profile">
+       {{value.inits}}
+      </div>
+      
+      <div class="md-list-item-text" flex  aria-label="profile" ng-click='true' ui-sref="detalle_visitas({id:this.value.Id})">
+          
+<h3>{{ (value.CustomData.suite ?  'APTO.' + value.CustomData.suite: '') + ( value.CustomData.tower  ? ' ('+value.CustomData.tower + ') - ' : ' ' ) + value.VisitName }}</h3>          
+            <p class="p-aligned">
+          {{ 'Fecha: ' + moment(value.VisitDate).format("MMMM Do YYYY, h:mm a") }}
+          <br>
+          {{ 'Residente: ' + (value.LookingFor || $root.nothing) }}
+          </p>  
+                          
+    </div>
+    <div layout="column">
+      <div layout="row">
+        <md-button  class="md-icon-button" ng-click="centerBottomSheet(value)" aria-label="more-center" style="position:left: 25px;">
+                  <md-icon md-svg-icon="assets/icons/more_vert.svg"></md-icon>    
+              </md-button>
+        </div>
+    </div>
+  <br>
+   <md-divider inset></md-divider>
+</md-list-item> 
+</md-list>
+
+  

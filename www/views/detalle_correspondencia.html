@@ -1,0 +1,14 @@
+<md-content layout-padding ng-init="load()">
+	<md-content>
+		<h3> APTO. {{$root.correspondence.CustomData.suite || $root.nothing}} ( {{$root.correspondence.CustomData.tower || $root.nothing}})</h3>
+	<md-content>
+	<md-input-container flex="">
+		<h4>Para el Residente</h4>
+		<span>{{$root.correspondence.To || $root.nothing }}</span>
+		<h4>Observación</h4>
+		<span>{{$root.correspondence.Observations || $root.nothing}}</span>
+		<h4>Foto de la Correspondecia</h4>
+		<span ng-if="!$root.correspondence.CustomData.image">{{$root.nothing }}</span>
+		<img width="350" ng-if="$root.correspondence.CustomData.image" src="{{$root.apiurl + '/images?buildingid='+ $root.building + '&name=' + $root.correspondence.CustomData.image}}" alt="image">
+	</md-input-container>
+</md-content>

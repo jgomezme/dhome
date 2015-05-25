@@ -1,0 +1,54 @@
+<!-- nueva correspondencia -->
+<section >
+
+    <div layout="row">
+        <md-content layout-padding flex>
+            <br>
+            <h4>Registrar Correspondencia {{$root.suite && !$root.toall ? '(APTO. ' + $root.suite.suite.Name + ')' : ''}} </h4>
+            <br>
+            <div layout="row" ng-if="$root.selected">
+            <span layout="row">Aptos:</span>
+            <md-list >
+                    <md-list-item  ng-repeat="value in $root.selected">
+                     <p>{{ 'Apto. ' + value.suite.Name + ' (' + value.tower.Name + ')'}}</p>
+                   </md-list-item>
+            </md-list>
+
+            </div>
+            <form ng-model="form">
+                <md-photo-capture label="Foto de la correspondecia" required=true></md-photo-capture>            
+              
+      <md-input-container flex>
+                    <md-select ng-required ng-model="form.torre" ng-if='!$root.suite' ng-hide="$root.toall || $root.selected"  placeholder="Torre *" flex>
+                        <md-option ng-repeat="value in [1,2,3,4,5,6,7,8,9]">{{value}}</md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container flex>
+                    <md-select ng-required ng-model="form.nro_apto" ng-if='!$root.suite'  ng-hide="$root.toall  || $root.selected"   placeholder="Numero de Apto *" flex>
+                        <md-option ng-repeat="value in [402,403,404,405,406,407,408]">{{value}}</md-option>
+                    </md-select>
+                </md-input-container>
+              
+       <md-input-container flex>
+        <label>De</label>
+        <input ng-model="form.CustomData.de">
+    </md-input-container>
+             
+    <md-input-container flex>
+        <label>Para</label>
+        <input ng-model="form.To">
+    </md-input-container>
+   
+    <md-input-container>
+        <label>Descripcion</label>
+
+        <textarea ng-model="form.Observations" columns="1" md-maxlength="150"></textarea>
+    </md-input-container>
+    <br>
+    <md-content layout="row" flex layout-align="end">
+        <md-button class="md-raised md-primary" ng-disabled="form.$invalid || $root.loading" ng-click="add()">Registrar</md-button>
+    </md-content>
+    </form>
+    </md-content>
+    </div>
+</section>

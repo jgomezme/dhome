@@ -1,0 +1,23 @@
+<md-content ng-cloak layout-padding ng-init="load()">
+	<md-content ng-cloak>
+		<h3>APTO {{current_visit.CustomData.suite}} ({{current_visit.CustomData.tower}})</h3>
+	<md-content>
+	<md-input-container flex="">
+		<h4>Fecha</h4>
+		<span>{{moment(current_visit.VisitDate).format("MMMM Do YYYY, h:mm a")}}</span>
+		<h4>Para el Residente</h4>
+		<span>{{current_visit.LookingFor || $root.nothing }}</span>
+	    <h4>No. Documento Visitante</h4>
+		<span>{{current_visit.VisitIdentification || $root.nothing}}</span>
+		<h4>Nombre del Visitante</h4>
+		<span>{{current_visit.VisitName || $root.nothing}}</span>
+	    <h4>No. Matricula Vehiculo Visitante</h4>
+		<span>{{current_visit.CustomData.matricula || $root.nothing}}</span>
+		<h4>Observación o Motivo de Visita</h4>
+		<span >{{current_visit.Reason || $root.nothing}}</span>
+		<h4>Foto del Visitante</h4>
+		<span ng-if="!current_visit.CustomData.image">{{ $root.nothing }}</span>
+		<img width="350" ng-if="current_visit.CustomData.image" src="{{$root.apiurl + '/images?buildingid='+ $root.building + '&name=' + current_visit.CustomData.image}}" alt="image">
+	</md-input-container>
+</md-content>
+

@@ -1,0 +1,35 @@
+<!--perfil-->
+
+<section>
+    <div layout="row">
+    	<md-content layout-padding flex>
+            <br>      
+               <div class="profile-image" style="border-radius: 50%;
+  margin: 0 auto;
+  margin-top: 15px;
+  height: 120px;
+  width: 120px; background-color:#ebebeb"></div>
+            <form>
+
+            <p style="text-align:center">
+
+            <span ng-cloak flex layout-align="center">{{username}} (Yo)</span>
+            <input ng-model='username' ng-if='editing'>
+            &nbsp;
+            <ng-md-icon ng-click="editing=!editing" ng-if="!editing" icon="edit" style="color:#ccc"></ng-md-icon>
+            <ng-md-icon icon="check" ng-if="editing" ng-click="editing=!editing"></ng-md-icon>
+            </form>
+    
+            <br>    
+            </p>                   
+
+           <md-button class="md-raised md-primary" layout-align="center center" style="  margin: 0 auto;
+  display: flex;
+  width: 50%; min-width:310px" ui-sref="cambiar-contrasena">Cambiar Contrasena</md-button>
+
+          </md-content>
+
+        
+    </div>
+
+</section>
