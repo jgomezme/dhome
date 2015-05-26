@@ -1,0 +1,53 @@
+<!-- menu reservas -->
+<section>
+    <div layout="row">
+        <md-content layout-padding flex>
+         
+            <div class="menu-toggle">
+                <ul class="docs-menu" >
+                  <li>
+                    <md-button class="md-button-toggle md-button md-default-theme docs-menu"   aria-controls="docs-menu-Demos"  class="docs-menu">
+                      <div flex layout="row" > 
+                       <ng-md-icon icon="archive" style="fill:gray;top:5px;position:relative"></ng-md-icon> &nbsp;<span> Correspondencias </span>
+                        <span flex=""></span>
+                        <span aria-hidden="false" class="md-toggle-icon" ng-class="{'toggled' : true}">
+                          <md-icon md-svg-src="md-toggle-arrow" class="ng-isolate-scope md-default-theme" style="height:40px;"></md-icon>
+                        </span>
+                      </div>
+                      <div class="md-ripple-container"></div>
+                    </md-button>                    
+                  </li>
+                </ul>
+                <ul ng-show="true" id="docs-menu-Demos" class="menu-toggle-list">
+               
+
+                    <li  >
+                      <menu-link style="margin-left:0.7em;" >
+                        <md-button class="md-button md-button-toggle md-default-theme docs-menu" ui-sref="correspondencias.porentregar" ng-class="{'active' : Home.selected}">
+                          <span >Recibidas (9)
+                          </span>
+                        <div class="md-ripple-container"></div>
+                      </md-button>
+                    </menu-link>
+                  </li>
+         
+
+                      <li>
+                        <menu-link style="margin-left:0.7em;" >
+                        <md-button class="md-button md-button-toggle md-default-theme docs-menu" ui-sref="correspondencias.porentregar" ng-class="{'active' : Home.selected}">
+                          <span >Historico (4)
+                          </span>
+                        <div class="md-ripple-container"></div>
+                      </md-button>
+                    </menu-link>
+                  </li>
+    
+                </ul>                  
+                </div>
+    
+        </md-content>
+        <br>
+       
+        </form>
+    </div>
+</section>

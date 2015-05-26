@@ -222,6 +222,30 @@ angular.module('dhome')
             templateUrl: "views/news.html",
             controller: mainCtrl,
             data : {title: '' }                             
+        }) 
+         .state('notificar_visita', {
+            url: "/notificar_visita",
+            templateUrl: "views/visitas/notificar_visita.html",
+            controller: mainCtrl,
+            data : {title: '' }                             
+        })    
+         .state('reservar_area', {
+            url: "/reservar_area",
+            templateUrl: "views/reservas/reservar_area.html",
+            controller: mainCtrl,
+            data : {title: '' }                             
+        })
+        .state('menu_reservas', {
+            url: "/menu_correspondencias",
+            templateUrl: "views/correspondencias/menu_correspondencias.html",
+            controller: mainCtrl,
+            data : {title: '' }                             
+        })
+         .state('menu_visitas', {
+            url: "/menu_visitas",
+            templateUrl: "views/visitas/menu_visitas.html",
+            controller: mainCtrl,
+            data : {title: '' }                             
         })
         .state('home.towers', {
             url: "/towers",
