@@ -127,11 +127,13 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
   moment.locale('es');
   $scope.moment = moment;
   $scope.Home = {};
-  $scope.Home.show = true;
+  $scope.Home.show = false;
 
   $rootScope.hideBS = function(){
       $mdBottomSheet.hide();
   }
+
+
 
    $scope.totime = function(){
 
@@ -439,6 +441,17 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
   }, 2000)
 
   
+// AREAS CONTROLLER
+
+   $scope.gotoschedule = function(id){
+       window.location = "#/schedule/"+id;
+   }
+
+   $scope.test = function(){
+       alert('working')
+   }
+
+
 
 
 }

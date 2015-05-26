@@ -1,0 +1,65 @@
+ <md-list style="background:white" ng-init="load()" style="position:relative" layout-padding>
+
+      <md-lis-item ng-if="values && correspondences.length == 0 && !$root.loading">
+        <p>Parece que no tienes areas disponibles por el momento.</p>
+      </md-lis-item>   
+     
+
+     <md-list-item class="md-2-line" ng-click="gotoschedule(1)" aria-label="swipe">
+
+      <div class="md-list-item-text" flex  aria-label="profile" >
+          
+            <h3>Piscina</h3>          
+          <p class="p-aligned">
+          Disponbible Ahora
+          </p>                       
+        </div>
+
+        <div layout="column">
+        <div layout="row">
+      <md-button  class="md-icon-button ng-hide"  aria-label="more-center" style="position: relative;
+left: 25px;">
+          <md-icon md-svg-icon="assets/icons/more_vert.svg"></md-icon>    
+      </md-button>
+      </div>
+      </div>
+ 
+      <br>
+       <md-divider inset></md-divider>
+
+
+     </md-list-item> 
+
+
+       <md-list-item class="md-2-line" ng-click="gotoschedule(1)" aria-label="swipe">
+
+      
+      <div class="md-list-item-text" flex  aria-label="profile" >
+          
+            <h3>Salon Social</h3>          
+          <p class="p-aligned _disable">
+          No disponbible Ahora
+          </p>                       
+        </div>
+
+        <div layout="column">
+        <div layout="row">
+      <md-button  class="md-icon-button ng-hide"  aria-label="more-center" style="position: relative;
+left: 25px;">
+          <md-icon md-svg-icon="assets/icons/more_vert.svg"></md-icon>    
+      </md-button>
+      </div>
+      </div>
+ 
+      <br>
+       <md-divider inset></md-divider>
+
+
+     </md-list-item> 
+
+
+     
+
+
+      
+    </md-list>

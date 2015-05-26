@@ -4,25 +4,36 @@
         <md-content layout-padding flex>
             <br>
             <h4>Reservar Area</h4>
+             <br>
+            <md-divider></md-divider>
+             <br>
+
+             <span> Area: {{$root.area || $root.nothing}}</span>
+             <br>
+                         <br>
+
+             <span> Fecha y hora: {{$root.datetime || $root.nothing}}</span>
             <br>
+            <br>
+            <md-divider></md-divider>
+            <br>
+            <br>
+             <label class="tgray">Capacidad y tiempo requerido:</label>
+             <br>
+             <br>
             <form ng-model="form">
                 <md-input-container flex>
-                    <label>Area a Reservar *</label>
-                    <input required ng-model="form.Area">
-                </md-input-container>
-                <md-input-container flex>
-                    <label>Cantidad de Personas *</label>
-                    <input required ng-model="form.cantidadPersonas">
+                    <label>Cantidad de Personas </label>
+                    <input type="number" ng-model="form.cantidadPersonas">
                 </md-input-container>
                 <md-input-container flex>
                     <label>Nro de Horas *</label>
-                    <input required ng-model="form.nroHoras" layout="column" flex>
+                    <input type="number" required ng-model="form.nroHoras" layout="column" flex>
                 </md-input-container>
 
 
                 <md-input-container flex>
-                    <label>Costo *</label>
-                    <input required ng-model="form.costo" layout="column" flex>
+                    <label layout="column" flex>Costo: {{costo || '$0'}}</label>
                 </md-input-container>
 
           

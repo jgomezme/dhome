@@ -229,12 +229,26 @@ angular.module('dhome')
             controller: mainCtrl,
             data : {title: '' }                             
         })    
-         .state('reservar_area', {
+         .state('areas', {
+            url: "/areas",
+            templateUrl: "views/areas/areas.html",
+            controller: mainCtrl,
+            data : {title: 'Areas' }                             
+        })
+             .state('reservar_area', {
             url: "/reservar_area",
             templateUrl: "views/reservas/reservar_area.html",
             controller: mainCtrl,
-            data : {title: '' }                             
+            data : {title: 'Nombre Área' }                             
         })
+
+               .state('schedule', {
+            url: "/schedule/:id",
+            templateUrl: "views/areas/schedule.html",
+            controller: mainCtrl,
+            data : {title: 'Agenda' }                             
+        })
+
         .state('menu_correspondencias', {
             url: "/menu_correspondencias",
             templateUrl: "views/correspondencias/menu_correspondencias.html",
