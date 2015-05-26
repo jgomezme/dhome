@@ -235,7 +235,7 @@ angular.module('dhome')
             controller: mainCtrl,
             data : {title: '' }                             
         })
-        .state('menu_reservas', {
+        .state('menu_correspondencias', {
             url: "/menu_correspondencias",
             templateUrl: "views/correspondencias/menu_correspondencias.html",
             controller: mainCtrl,
