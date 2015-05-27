@@ -227,7 +227,7 @@ angular.module('dhome')
             url: "/notificar_visita",
             templateUrl: "views/visitas/notificar_visita.html",
             controller: mainCtrl,
-            data : {title: '' }                             
+            data : {title: 'Visitas' }                             
         })    
          .state('areas', {
             url: "/areas",
@@ -253,13 +253,13 @@ angular.module('dhome')
             url: "/menu_correspondencias",
             templateUrl: "views/correspondencias/menu_correspondencias.html",
             controller: mainCtrl,
-            data : {title: '' }                             
+            data : {title: 'Correspondencias' }                             
         })
          .state('menu_visitas', {
             url: "/menu_visitas",
             templateUrl: "views/visitas/menu_visitas.html",
             controller: mainCtrl,
-            data : {title: '' }                             
+            data : {title: 'Visitas' }                             
         })
         .state('home.towers', {
             url: "/towers",
