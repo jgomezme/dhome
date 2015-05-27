@@ -24,6 +24,11 @@
     <param name="android-package" value="org.apache.cordova.file.FileUtils" />
 </feature>
 
+
+<feature name="PushPlugin">
+  <param name="android-package" value="com.plugin.gcm.PushPlugin" />
+</feature>
+
     <icon src="www/res/icon/android/ldpi.png" density="ldpi" />
     <icon src="www/res/icon/android/mdpi.png" density="mdpi"  />
     <icon src="www/res/icon/android/hdpi.png"  density="hdpi" />
