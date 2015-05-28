@@ -12,28 +12,28 @@
              <br>
                          <br>
 
-             <span> Fecha y hora: {{$root.datetime || $root.nothing}}</span>
+             <span> Fecha y hora inicio: {{$root.datetime || $root.nothing}}</span>
+            <br>
+            <br>
+             <span> Fecha y hora fin: {{$root.datetime || $root.nothing}}</span>
+                    <br>
+            <br>
+             <span> Total horas: {{$root.datetime || $root.nothing}}</span>
             <br>
             <br>
             <md-divider></md-divider>
             <br>
             <br>
-             <label class="tgray">Capacidad y tiempo requerido:</label>
-             <br>
-             <br>
+            <span>Capacidad Requerida</span>
             <form ng-model="form">
                 <md-input-container flex>
-                    <label>Cantidad de Personas </label>
+                    <label>Ingrese la Cantidad de Personas </label>
                     <input type="number" ng-model="form.cantidadPersonas">
                 </md-input-container>
-                <md-input-container flex>
-                    <label>Nro de Horas *</label>
-                    <input type="number" required ng-model="form.nroHoras" layout="column" flex>
-                </md-input-container>
 
 
                 <md-input-container flex>
-                    <label layout="column" flex>Costo: {{costo || '$0'}}</label>
+                    <label layout="column" flex>Costo Estimado: {{costo || '$0'}}</label>
                 </md-input-container>
 
           

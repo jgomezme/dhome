@@ -242,7 +242,7 @@ angular.module('dhome')
             data : {title: 'Nombre Área' }                             
         })
 
-               .state('schedule', {
+        .state('schedule', {
             url: "/schedule/:id",
             templateUrl: "views/areas/schedule.html",
             controller: mainCtrl,
