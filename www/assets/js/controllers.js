@@ -344,7 +344,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
            
            window.URL = window.URL || window.webkitURL;
            
-           var blob = n.match('//') ? n : window.URL.createObjectURL(n);                  
+           var blob = window.cordova ? n : window.URL.createObjectURL(n);                  
                    
            //compress image
 
@@ -444,9 +444,11 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
               $storage.save('config',rs);  
               $storage.save('token', rs.access_token)     
               $rootScope.loged=true;          
-              delete $scope._form;      
-            
-           //  window.location = "app.html";
+              delete $scope._form;   
+
+               
+
+             window.location = "app.html";
               
 
 
@@ -495,20 +497,18 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
       var pushNotification = window.plugins.pushNotification;
 
-      alert('loged')
 
-      console.log(device, 'heyyyyy')
 
-        
-   /*     if ( device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos" )
+   if(window.cordova)        
+       if ( device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos" )
                   pushNotification.register(
                   successHandler,
                   errorHandler,
                   {
-                      "senderID":"replace_with_sender_id",
+                      "senderID":"rtcdigitalconsulting.com:api-project-352820816141 ",
                       "ecb":"window.onNotification"
                   });
-        else */
+       /* else 
           pushNotification.register(
                     tokenHandler,
                     errorHandler,
@@ -518,7 +518,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
                         "alert":"true",
                         "ecb":"window.onNotificationAPN"
                     });
-
+   */
 
 
           })

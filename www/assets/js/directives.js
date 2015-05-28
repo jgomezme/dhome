@@ -42,12 +42,11 @@ function photo(){
                      console.log(err);
                  }
 
-                 //var cordova = cordova || false;
 
-                 //if(cordova)
+                 if(window.cordova)
                  navigator.camera.getPicture(success, error);  
-                 //else
-                 //document.getElementById('iphoto').click();     
+                 else
+                 document.getElementById('iphoto').click();     
 
               } 
          },
