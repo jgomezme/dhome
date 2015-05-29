@@ -94,18 +94,19 @@
       </md-card-content>
       <md-divider></md-divider>
       <div class="md-actions" layout="row" layout-align="end center">
-           <md-button flex><ng-md-icon icon="thumb_up"  style="fill:gray"></ng-md-icon> Recibido</md-button>
+           <md-button ng-click="agree()" flex><ng-md-icon icon="thumb_up"  style="fill:gray"></ng-md-icon> Recibido</md-button>
            <md-button ng-click="comment=!comment" flex><ng-md-icon icon="comment" style="fill:gray" ></ng-md-icon> Comentar </md-button>
       </div>
 
       <div layout="row" ng-if="comment" layout-padding>
+      <form>
        <md-input-container flex>
          <label>Escribir comentario...</label>
-          <textarea autofocus="{{comment}}"></textarea>
+          <textarea ng-model="commentext" autofocus="{{comment}}"></textarea>
        </md-input-container>
   
-        <ng-md-icon class="gray" style="padding:8px; position:relative; top: 37px;" icon="send"></ng-md-icon>
-       
+        <ng-md-icon class="gray" ng-click="docomment()" style="padding:8px; position:relative; top: 37px;" icon="send"></ng-md-icon>
+       </form>
       </div>
      
     </md-card>

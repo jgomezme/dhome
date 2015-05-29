@@ -512,6 +512,9 @@ function newsCtrl($scope, $rootScope, $API, $storage){
 
 
       if($scope.file)
+        if(window.cordova)
+         data.append('file', dataURLToBlob($scope.file))
+        else
          data.append('file', $scope.file)
 
       $API
@@ -519,7 +522,7 @@ function newsCtrl($scope, $rootScope, $API, $storage){
       .post(data, { headers : {'Content-Type' : undefined} })
       .success(function(rs, code){
 
-        console.log(rs, 'file')
+      console.log(rs, 'file')
 
       $scope.form.CustomData = $scope.CustomData || {};
      
@@ -527,6 +530,10 @@ function newsCtrl($scope, $rootScope, $API, $storage){
       $scope.form.CustomData.image = rs;
       else if (code != 500)
       $scope.form.CustomData.file = rs[0];
+
+    $scope.form.CustomData.comments = 0;
+    $scope.form.CustomData.agree   = 0;
+
 
          $API
          .notices(1)
@@ -543,6 +550,15 @@ function newsCtrl($scope, $rootScope, $API, $storage){
        });
    }
 
+   $scope.agree = function(){
+       this.value.CustomData = this.value.CustomData || {};
+       this.value.CustomData.agree = this.value.CustomData.agree || 0;
+       this.value.CustomData.agree++;
+   }
+
+   $scope.docomment = function(){
+
+   }
 
    $scope.takef = function(){  
 
@@ -562,7 +578,10 @@ function newsCtrl($scope, $rootScope, $API, $storage){
 
 
                  if(window.cordova)
-                 fileChooser.open(success, error); 
+                    if(device.platform==="android")
+                      fileChooser.open(success, error); 
+                     else
+                      document.getElementById('ifile').click();     
                  else
                  document.getElementById('ifile').click();     
 

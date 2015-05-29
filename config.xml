@@ -50,6 +50,14 @@
         <param name="ios-package" value="CDVCamera" />
     </feature>
 
+    <feature name="File">
+     <param name="ios-package" value="CDVFile" />
+    </feature>
+    
+    <feature name="FileTransfer">
+        <param name="ios-package" value="CDVFileTransfer" />
+    </feature>
+
     <feature name="Keyboard">
             <param name="ios-package" value="CDVKeyboard" onload="true" />
         </feature>
