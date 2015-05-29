@@ -43,6 +43,7 @@ function API($http,$rootScope){
 	  this.user = function(){ this.url = this.baseUrl + "/account/userinfo"; return this; }
 	  this.file = function(id){ this.url = this.baseUrl + "/images?buildingid="+id; return this; }
 	  this.notices = function(id){ this.url = this.baseUrl + "/notices?buildingid="+id; return this; }
+	  this.noticess = function(id){ this.url = this.baseUrl + "/notices/"+id; return this; }
 	  this.deliver = function(){ this.url = this.baseUrl + "/deliveries"; return this; }
 	
 

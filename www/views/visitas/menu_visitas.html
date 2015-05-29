@@ -1,27 +1,19 @@
 <!-- menu visitas -->
-<section>
+<section class="white">
     <div layout="row">
-        <md-content layout-padding flex>
+        <md-content class="white" layout-padding flex>
          
             <div class="menu-toggle">
                 <ul class="docs-menu" >
                   <li>
                     <md-button class="md-button-toggle md-button md-default-theme docs-menu"   aria-controls="docs-menu-Demos"  class="docs-menu">
-                      <div flex layout="row" > 
-                       <ng-md-icon icon="layers" style="fill:gray;top:5px;position:relative"></ng-md-icon> &nbsp;<span> Visitas </span>
-                        <span flex=""></span>
-                        <span aria-hidden="false" class="md-toggle-icon" ng-class="{'toggled' : true}">
-                          <md-icon md-svg-src="md-toggle-arrow" class="ng-isolate-scope md-default-theme" style="height:40px;"></md-icon>
-                        </span>
-                      </div>
                       <div class="md-ripple-container"></div>
                     </md-button>                    
                   </li>
                 </ul>
                 <ul ng-show="true" id="docs-menu-Demos" class="menu-toggle-list">
                
-
-                    <li  >
+                  <li>
                       <menu-link style="margin-left:0.7em;" >
                         <md-button class="md-button md-button-toggle md-default-theme docs-menu" ui-sref="correspondencias.porentregar" ng-class="{'active' : Home.selected}">
                           <span >En Espera (3)
@@ -75,7 +67,7 @@
     
                 </ul>                  
                 </div>
-      <md-button style="position:fixed; bottom:12%; left:80% ;background-color: rgb(13, 1, 192);" class="md-fab md-default-theme" ui-sref="notificar_visita" >
+      <md-button style="position:fixed; bottom:12%; left:80% ;background-color: rgb(13, 1, 192); right: 10px;" class="md-fab md-default-theme" ui-sref="notificar_visita" >
     <ng-md-icon icon="add" style="fill:white; top: 15px; "></ng-md-icon>
     </md-button>
         </md-content>

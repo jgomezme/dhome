@@ -136,6 +136,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
   $scope.moment = moment;
   $scope.Home = {};
   $scope.Home.show = false;
+  $rootScope.platform = window.cordova ? window.cordova.platformId : 'web';
 
   $rootScope.hideBS = function(){
       $mdBottomSheet.hide();
@@ -181,7 +182,8 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
  
 
 
- $scope.parseCustom = function(){
+$scope.parseCustom = function(){
+   
    if(this.value.CustomData)
      this.value.CustomData = JSON.parse(this.value.CustomData);
 
@@ -196,8 +198,6 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
        this.value.inits = 'C';
 
      this.value.RegisterDate = new Date(this.value.RegisterDate).getTime();
-
-
 
  }
 
@@ -365,13 +365,15 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
               console.log(rs);
               $storage.save('config',rs);  
               $storage.save('token', rs.access_token)     
-              $rootScope.loged=true;          
+              $rootScope.loged=true; 
+              $storage.save('user', rs.user);  
+              $storage.save('buildings', JSON.parse(rs.user).Buildings);     
               delete $scope._form;      
               window.location = "app.html";
               $rootScope.loading = false 
           })
           .error(function(err){
-            console.log(err)
+              console.log(err)
               $scope.error_login = map_error[err.error.toLowerCase()];
               $rootScope.loading = false;     
 
@@ -412,10 +414,9 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
   
      $API
      .visit()
-     .add('/summary/'+$storage.get('config').buildingId)
+     .add('/summary/'+$storage.get('buildings')[0].buildingId)
      .get()
      .success(function(rs){
-
 
         $rootScope.vstats = {
             approved : rs.Apporveds,
@@ -451,7 +452,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
   if(window.localStorage.token)
      $scope.stats();
      $scope.userinfo();
-     $rootScope.building = $storage.get('config').buildingId;
+     $rootScope.building = $storage.get('buildings')[0].BuildingId;
 
   }, 2000)
 
@@ -478,7 +479,7 @@ function newsCtrl($scope, $rootScope, $API, $storage){
 
    $scope.load = function(){
          $API
-         .notices(1)
+         .notices($storage.get('buildings')[0].BuildingId)
          .get()
          .success(function(rs){
                 $scope.values = rs;
@@ -490,11 +491,11 @@ function newsCtrl($scope, $rootScope, $API, $storage){
    $scope.delfile = function(){ delete $scope.file; }
    $scope.viewFile = function(){
 
-    var url = rootScope.apiurl + '/images?buildingid='+ 1 + '&name=' + this.value.CustomData.file;
+    var url = rootScope.apiurl + '/images?buildingid='+ $storage.get('buildings')[0].BuildingId + '&name=' + this.value.CustomData.file;
 
     if(!window.cordova)
        window.open(url);
-    else if(device.platform === 'android')
+    else if($rootScope.platform === 'android')
       navigator.app.loadUrl(url, {openExternal : true});
     else
        window.open(url, '_system');
@@ -518,45 +519,73 @@ function newsCtrl($scope, $rootScope, $API, $storage){
          data.append('file', $scope.file)
 
       $API
-      .file($storage.get('config').buildingId === '0' ? 1 : $storage.get('config').buildingId )
+      .file( $storage.get('buildings')[0].BuildingId )
       .post(data, { headers : {'Content-Type' : undefined} })
       .success(function(rs, code){
 
       console.log(rs, 'file')
 
-      $scope.form.CustomData = $scope.CustomData || {};
+      $scope.formm.CustomData = $scope.CustomData || {};
      
       if(!$scope.file && code != 500)
-      $scope.form.CustomData.image = rs;
+      $scope.formm.CustomData.image = rs[0];
       else if (code != 500)
-      $scope.form.CustomData.file = rs[0];
+      $scope.formm.CustomData.file = rs[0];
 
-    $scope.form.CustomData.comments = 0;
-    $scope.form.CustomData.agree   = 0;
+      $scope.formm.CustomData.comments = 0;
+      $scope.formm.CustomData.agree   = 0;
+      $scope.formm.CustomData.user = $rootScope.user;
+      $scope.formm.CustomData.userfullname = $rootScope.user.FirstName + ' ' + $rootScope.user.LastName;
 
 
          $API
-         .notices(1)
-         .post($scope.form)
-         .success(function(){
-                $scope.form.RegisterDate = new Date().getTime();
-                $scope.values.push($scope.form);
-                delete $scope.form;
+         .notices($rootScope.building)
+         .post($scope.formm)
+         .success(function(rs){
+
+                $scope.formm.RegisterDate = new Date().getTime();
+                $scope.values.push($scope.formm);
+                delete $scope.formm;
                 delete $rootScope.photosrc;
                 delete $scope.file;
-                console.log(rs, 'news')
+                window.scrollTo($('md-content md-card:first-child').scrollTop() - 10);
+                console.log(rs, 'news');
+
          })
 
        });
    }
 
-   $scope.agree = function(){
-       this.value.CustomData = this.value.CustomData || {};
-       this.value.CustomData.agree = this.value.CustomData.agree || 0;
-       this.value.CustomData.agree++;
+   $scope.agree = function(value){
+
+       value.CustomData = this.value.CustomData || {};
+       value.CustomData.agree = this.value.CustomData.agree || 0;
+       value.CustomData.agree++;
+
+        $API
+       .noticess(value.Id)
+       .add("/CustomData")
+       .put({CustomData:this.value.CustomData})
+       .success(function(rs){
+         console.log(rs);
+       })
+
    }
 
    $scope.docomment = function(){
+
+       this.value.CustomData = this.value.CustomData || {};
+       this.value.CustomData.comments = this.value.CustomData.comments || [];
+       this.value.CustomData.comments.push({user:$root.username,text: $scope.commentext});
+
+       $API
+       .noticess(this.value.Id)
+       .add("/CustomData")
+       .put({CustomData:this.value.CustomData})
+       .success(function(rs){
+          console.log(rs);
+       })
+
 
    }
 
@@ -577,15 +606,14 @@ function newsCtrl($scope, $rootScope, $API, $storage){
                  }
 
 
-                 if(window.cordova)
-                    if(device.platform==="android")
+      
+                if($rootScope.platform==="android")
                       fileChooser.open(success, error); 
-                     else
-                      document.getElementById('ifile').click();     
                  else
-                 document.getElementById('ifile').click();     
+                      document.getElementById('ifile').click();     
+    
 
-              } 
+                  } 
 
 
 

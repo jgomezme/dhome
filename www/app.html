@@ -22,23 +22,20 @@
     <div style="position:fixed;top:48%;left:48%;z-index:9999;" layout="row" layout-align="space-around" ng-show="loading">
         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
       </div>
-    <md-content style="overflow:auto !important; background: rgba(128, 128, 128, 0.3)"   class="md-default-theme" style="height: 89%;" ui-view></md-content>
+    <md-content style="overflow:auto !important; background: rgba(128, 128, 128, 0.3); height: 100%;"   class="md-default-theme" style="height: 89%;" ui-view></md-content>
       <br>
   <br>
     </div>
 
-   <div layout="column">
+     <div layout="column">
 
-   <div ng-include="'views/common/sidebar.html'"></div>
+       <div ng-include="'views/common/sidebar.html'"></div>
 
-   </div>
-
-
+      </div>
   
-   </div>
+     </div>
 
   </div>
-
 
 
     <div ng-include="'views/common/bottom_bar.html'"></div>
