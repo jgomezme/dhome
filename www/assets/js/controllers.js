@@ -525,17 +525,18 @@ function newsCtrl($scope, $rootScope, $API, $storage){
 
       console.log(rs, 'file')
 
-      $scope.formm.CustomData = $scope.CustomData || {};
+      $scope.formm.Notice.CustomData = $scope.CustomData || {};
+      $scope.formm.SuiteIds = [];
      
       if(!$scope.file && code != 500)
-      $scope.formm.CustomData.image = rs[0];
+      $scope.formm.Notice.CustomData.image = rs[0];
       else if (code != 500)
-      $scope.formm.CustomData.file = rs[0];
+      $scope.formm.Notice.CustomData.file = rs[0];
 
-      $scope.formm.CustomData.comments = 0;
-      $scope.formm.CustomData.agree   = 0;
-      $scope.formm.CustomData.user = $rootScope.user;
-      $scope.formm.CustomData.userfullname = $rootScope.user.FirstName + ' ' + $rootScope.user.LastName;
+      $scope.formm.Notice.CustomData.comments = 0;
+      $scope.formm.Notice.CustomData.agree   = 0;
+      $scope.formm.Notice.CustomData.user = $rootScope.user;
+      $scope.formm.Notice.CustomData.userfullname = $rootScope.user.FirstName + ' ' + $rootScope.user.LastName;
 
 
          $API

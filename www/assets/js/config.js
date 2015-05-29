@@ -48,9 +48,16 @@ angular.module('dhome')
 
                 console.log(config, 'request')
 
-                if(config.data)
+                if(config.data){
+                
                 if(config.data.CustomData)
                       config.data.CustomData = JSON.stringify(config.data.CustomData);
+
+                if(config.data.Notice)
+                      config.data.Notice.CustomData = JSON.stringify(config.data.Notice.CustomData);
+
+
+                   }
 
 
                 $httpProvider.defaults.headers.common['Authorization'] = 'Bearer ' + window.localStorage.token; // common
