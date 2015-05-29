@@ -21,8 +21,8 @@
                    Documento <ng-md-icon style="fill:gray" icon="attach_file"></ng-md-icon>
                  </md-button>
 
-                      <input  type="file" style="display:none"   id="ifile" file-model="file">
-                
+                      <input  type="file" style="display:none"  id="ifile" file-model="file">
+                 
                  
 
               </div>
@@ -31,6 +31,7 @@
 
 
               <fieldset layout="row">
+
               <md-input-container style="  padding-bottom: 7px;">
                  <label> Qué deseas publicar? </label>
                 <textarea required style="line-height:1.4" ng-model="form.Description" columns="1" ></textarea>
@@ -45,7 +46,7 @@
               </div>
 
               <div ng-if="file" layout="row" style="height:50px; overflow:auto; position:relative">
-                  <span  ><ng-md-icon class="gray" size="18" icon="attach_file"></ng-md-icon> {{file}} <ng-md-icon class="gray" ng-click="file=null" size="18" icon="close"></ng-md-icon></span>
+                  <span  ><ng-md-icon class="gray" size="18" icon="attach_file"></ng-md-icon> {{file.name}} <ng-md-icon class="gray" ng-click="delfile()" size="18" icon="close"></ng-md-icon></span>
                    
               </div>
             
@@ -80,12 +81,16 @@
         <h3 class="md-title" ng-if="value.CustomData.title">{{value.CustomData.title}}</h3>
         <p>
           {{value.Description}}
+           <br>
+           <br>
+          <md-button class="md-primary" style="text-transform: initial;" ng-if="value.CustomData.file" tartget="_blank" ng-click="viewFile()">Archivo <ng-md-icon icon="attach_file" class="gray" size="18"></ng-md-icon></md-button>
         </p>
+
       </md-card-content>
       <md-divider></md-divider>
       <md-card-content>
 
-      <small>{{value.CustomData.agree || 0}} De acuerdo · {{value.CustomData.comments || 0}} Comentarios</small>
+      <small>{{value.CustomData.agree || 0}} Recibido · {{value.CustomData.comments || 0}} Comentarios</small>
       </md-card-content>
       <md-divider></md-divider>
       <div class="md-actions" layout="row" layout-align="end center">

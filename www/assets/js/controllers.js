@@ -178,6 +178,8 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
  }
 
 
+ 
+
 
  $scope.parseCustom = function(){
    if(this.value.CustomData)
@@ -485,6 +487,20 @@ function newsCtrl($scope, $rootScope, $API, $storage){
    }
 
 
+   $scope.delfile = function(){ delete $scope.file; }
+   $scope.viewFile = function(){
+
+    var url = rootScope.apiurl + '/images?buildingid='+ 1 + '&name=' + this.value.CustomData.file;
+
+    if(!window.cordova)
+       window.open(url);
+    else if(device.platform === 'android')
+      navigator.app.loadUrl(url, {openExternal : true});
+    else
+       window.open(url, '_system');
+
+
+ }
 
    $scope.post = function(){
 
@@ -496,7 +512,7 @@ function newsCtrl($scope, $rootScope, $API, $storage){
 
 
       if($scope.file)
-         data.append('file', file)
+         data.append('file', $scope.file)
 
       $API
       .file($storage.get('config').buildingId === '0' ? 1 : $storage.get('config').buildingId )
@@ -509,8 +525,8 @@ function newsCtrl($scope, $rootScope, $API, $storage){
      
       if(!$scope.file && code != 500)
       $scope.form.CustomData.image = rs;
-      else
-      $scope.form.CustomData.file = rs;
+      else if (code != 500)
+      $scope.form.CustomData.file = rs[0];
 
          $API
          .notices(1)
@@ -520,6 +536,7 @@ function newsCtrl($scope, $rootScope, $API, $storage){
                 $scope.values.push($scope.form);
                 delete $scope.form;
                 delete $rootScope.photosrc;
+                delete $scope.file;
                 console.log(rs, 'news')
          })
 

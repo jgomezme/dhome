@@ -9,6 +9,8 @@ function fileModel ($parse) {
 
             
             element.bind('change', function(){
+
+                console.log(element[0].files[0], 'fileeee')
  
                 scope.$apply(function(){
                     modelSetter(scope, element[0].files[0]);
