@@ -114,6 +114,9 @@
         },
         "org.apache.cordova.statusbar": {
             "PACKAGE_NAME": "com.digitalhomes.residente.app"
+        },
+        "com.megster.cordova.FileChooser": {
+            "PACKAGE_NAME": "com.digitalhomes.residente.app"
         }
     },
     "dependent_plugins": {}

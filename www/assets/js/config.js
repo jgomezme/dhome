@@ -173,7 +173,7 @@ angular.module('dhome')
             url: "/cambiar-contrasena",
             templateUrl: "views/cambiar_contrasena.html",
             controller: mainCtrl,
-            data : {title:'Cambiar contraseña'}
+            data : {title:'Seguridad'}
         })     
          .state('perfil', {
             url: "/perfil",
@@ -220,8 +220,8 @@ angular.module('dhome')
         .state('home', {
             url: "/home",
             templateUrl: "views/news.html",
-            controller: mainCtrl,
-            data : {title: '' }                             
+            controller: newsCtrl,
+            data : {title: 'Noticias' }                             
         }) 
          .state('notificar_visita', {
             url: "/notificar_visita",

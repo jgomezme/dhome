@@ -1,68 +1,116 @@
 <!-- bloque - aptos -->
-<section ng-init="load()">
+
+
+<section >
+<br>
 <br>
  <md-content class="nobg">
-   <md-card>
-      <md-card-content class="post-title">
+   <div class="post" layout-padding  style="padding-bottom: 0 !important;">
+       <md-content   layout-align="center center" style="border-radius: 5px; margin-bottom:0; padding-bottom: 0 !important;" flex>
+            <form name="form" ng-model="form" flex>
+
+              <div layout="row">
+
+              <md-button  ng-click="takei()"  flex>
+                   Imagen <ng-md-icon icon="image" style="fill:gray"></ng-md-icon>
+                </md-button>
+
+                      <input  type="file" style="display:none" accept="image/*;capture=camera"  id="iphoto" file-model="$root.photo">
+              
+                 <md-button ng-click="takef()" flex>
+                   Documento <ng-md-icon style="fill:gray" icon="attach_file"></ng-md-icon>
+                 </md-button>
+
+                      <input  type="file" style="display:none"   id="ifile" file-model="file">
+                
+                 
+
+              </div>
+
+              <md-divider></md-divider>
+
+
+              <fieldset layout="row">
+              <md-input-container style="  padding-bottom: 7px;">
+                 <label> Qué deseas publicar? </label>
+                <textarea required style="line-height:1.4" ng-model="form.Description" columns="1" ></textarea>
+                 
+              </md-input-container>
+            </fieldset>
+
+
+              <div ng-if="$root.photosrc" layout="row" style="height:50px; overflow:auto; position:relative">
+                  <span style="position:absolute; top:0; left:60px" ng-click="$root.photosrc=null"><ng-md-icon class="gray" size="18" icon="close"></ng-md-icon></span>
+                   <img ng-src="{{$root.photosrc}}" width="50px">
+              </div>
+
+              <div ng-if="file" layout="row" style="height:50px; overflow:auto; position:relative">
+                  <span  ><ng-md-icon class="gray" size="18" icon="attach_file"></ng-md-icon> {{file}} <ng-md-icon class="gray" ng-click="file=null" size="18" icon="close"></ng-md-icon></span>
+                   
+              </div>
+            
+
+              <div layout="row" >
+                <md-button  ng-disabled="form.$invalid" ng-click="post()"  style="margin-bottom:0 !importat" flex>
+                   Publicar 
+                </md-button>
+              </div>
+        
+
+
+            </form>
+       </md-content>
+   </div>
+   </section>
+   <br>
+   <section ng-init="load()">
+   <div ng-init="parseCustom()" ng-repeat="value in values | orderBy : '-RegisterDate' ">
+   <md-card >
+      <md-card-content class="post-title" >
      <h4 >
-      <div class="post-photo" >
+      <div class="post-photo" style="background:url({{value.CustomData.userpic || 'http://success.grownupgeek.com/wp-content/uploads/2013/01/no-avatar.png'}}) no-repeat; background-position: center; background-size: cover;">
      
       </div>
 
-     Megan Fox (Administradora)</h4>
-     <small class="post-date">hace 2 horas</small>
+     {{value.CustomData.userfullname || 'Sergio Giraldo'}} </h4>
+     <small class="post-date">{{moment(value.RegisterDate).fromNow()}}</small>
      </md-card-content>
-      <img src="http://www.cascaismirage.com/site_images/contents/contents/76/page/piscina-5.jpg?1412607609" class="md-card-image" alt="Washed Out">
+      <img ng-if="value.CustomData.image" ng-src="{{$root.apiurl + '/images?buildingid='+ 1 + '&name=' + value.CustomData.image}}" class="md-card-image" alt="Washed Out">
       <md-card-content>
-        <h3 class="md-title">Cierre de Piscina</h3>
+        <h3 class="md-title" ng-if="value.CustomData.title">{{value.CustomData.title}}</h3>
         <p>
-          Se informa que por efectos de mantenimiento a la piscina, se suspenderá el acceso durante los días 27 y 28 de Mayo...
+          {{value.Description}}
         </p>
       </md-card-content>
       <md-divider></md-divider>
       <md-card-content>
 
-      <small>1000 Geniales · 20 Comentarios</small>
+      <small>{{value.CustomData.agree || 0}} De acuerdo · {{value.CustomData.comments || 0}} Comentarios</small>
       </md-card-content>
       <md-divider></md-divider>
       <div class="md-actions" layout="row" layout-align="end center">
            <md-button flex><ng-md-icon icon="thumb_up"  style="fill:gray"></ng-md-icon> Recibido</md-button>
-        <md-button flex><ng-md-icon icon="comment" style="fill:gray"></ng-md-icon> Comentar </md-button>
+           <md-button ng-click="comment=!comment" flex><ng-md-icon icon="comment" style="fill:gray" ></ng-md-icon> Comentar </md-button>
       </div>
-    </md-card>
-<br>
 
-    <md-card>
-      <md-card-content class="post-title">
-     <h4 >
-      <div class="post-photo" >
+      <div layout="row" ng-if="comment" layout-padding>
+       <md-input-container flex>
+         <label>Escribir comentario...</label>
+          <textarea autofocus="{{comment}}"></textarea>
+       </md-input-container>
+  
+        <ng-md-icon class="gray" style="padding:8px; position:relative; top: 37px;" icon="send"></ng-md-icon>
+       
+      </div>
      
-      </div>
-
-     Megan Fox (Administradora)</h4>
-     <small class="post-date">hace 2 horas</small>
-     </md-card-content>
-      <img src="http://www.cascaismirage.com/site_images/contents/contents/76/page/piscina-5.jpg?1412607609" class="md-card-image" alt="Washed Out">
-      <md-card-content>
-        <h3 class="md-title">Cierre de Piscina</h3>
-        <p>
-          Se informa que por efectos de mantenimiento a la piscina, se suspenderá el acceso durante los días 27 y 28 de Mayo...
-        </p>
-      </md-card-content>
-      <md-divider></md-divider>
-      <md-card-content>
-
-      <small>1000 Geniales · 20 Comentarios</small>
-      </md-card-content>
-      <md-divider></md-divider>
-      <div class="md-actions" layout="row" layout-align="end center">
-           <md-button flex><ng-md-icon icon="thumb_up"  style="fill:gray"></ng-md-icon> Recibido</md-button>
-        <md-button flex><ng-md-icon icon="comment" style="fill:gray"></ng-md-icon> Comentar </md-button>
-      </div>
     </md-card>
+    <br>
+</div>
+
+  </section>
  </md-content>
 
-</section>
+
 <br>
 <br>
 <br>

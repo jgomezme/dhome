@@ -20,6 +20,12 @@
                             "xml": "<feature name=\"StatusBar\"><param name=\"android-package\" value=\"org.apache.cordova.statusbar.StatusBar\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         }
+                    ],
+                    "/widget": [
+                        {
+                            "xml": "<feature name=\"FileChooser\"><param name=\"android-package\" value=\"com.megster.cordova.FileChooser\" /></feature>",
+                            "count": 1
+                        }
                     ]
                 }
             },
@@ -554,6 +560,9 @@
         },
         "org.apache.cordova.statusbar": {
             "PACKAGE_NAME": "com.digitalhomes.app"
+        },
+        "com.megster.cordova.FileChooser": {
+            "PACKAGE_NAME": "com.digitalhomes.residente.app"
         }
     },
     "dependent_plugins": {}

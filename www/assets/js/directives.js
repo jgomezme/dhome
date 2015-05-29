@@ -2,13 +2,16 @@ function fileModel ($parse) {
     return {
         restrict: 'A',
         link: function(scope, element, attrs) {
+                
+
             var model = $parse(attrs.fileModel);
             var modelSetter = model.assign;
+
             
             element.bind('change', function(){
+ 
                 scope.$apply(function(){
                     modelSetter(scope, element[0].files[0]);
-                    
                 });
             });
         }
@@ -19,7 +22,6 @@ function photo(){
 
     return {
          restrict : 'E',
-         replace : true,
          scope : {
             label : '@',
             required : '@'
@@ -44,14 +46,103 @@ function photo(){
 
                  //var cordova = cordova || false;
 
-                 //if(cordova)
+                 if(window.cordova)
                  navigator.camera.getPicture(success, error);  
-                 //else
-                 //document.getElementById('iphoto').click();     
+                 else
+                 document.getElementById('iphoto').click();     
 
               } 
          },
          templateUrl : 'views/components/photo.html'         
+    }
+}
+
+
+
+function inputPhoto(){
+
+    return {
+         restrict : 'E',
+         scope : {
+            label : '@',
+            required : '@'
+         },
+         controller : function($scope, $rootScope){ 
+       
+
+            
+            $scope.take = function(){  
+
+              
+                 function success(rs){
+                     console.log(rs);
+                     $rootScope.$apply(function(){
+                     $rootScope.photo = rs;
+                                                
+                     })
+                    // $rootScope.$broadcast('preview-photo', rs)
+
+                 }  
+
+                 function error(err){
+                     console.log(err);
+                 }
+
+                 //var cordova = cordova || false;
+
+                 if(window.cordova)
+                 navigator.camera.getPicture(success, error);  
+                 else
+                 document.getElementById('iphoto').click();     
+
+              } 
+         },
+         templateUrl : 'views/components/inputphoto.html'
+    }
+}
+
+
+function inputFile(){
+
+    return {
+         restrict : 'E',
+         replace : true,
+         scope : {
+            label : '@',
+            required : '@'
+         },
+         templateUrl : 'views/components/inputfile.html',
+         controller : function($scope, $rootScope){ 
+            
+            
+            
+            $scope.$parent.take = function(){  
+
+                alert('yeah')
+
+                 function success(rs){
+                     console.log(rs);
+                     $rootScope.$apply(function(){
+                     $rootScope.photo = rs;
+                                                
+                     })
+                    // $rootScope.$broadcast('preview-photo', rs)
+
+                 }  
+
+                 function error(err){
+                     console.log(err);
+                 }
+
+                 //var cordova = cordova || false;
+
+                 if(window.cordova)
+                 navigator.camera.getPicture(success, error);  
+                 else
+                 document.getElementById('ifile').click();     
+
+              } 
+         }      
     }
 }
 
@@ -72,5 +163,4 @@ angular.module('dhome')
 .directive('fileModel', fileModel)
 .directive('mdPhotoCapture', photo)
 .directive('ngMdSearch', search)
-
 ;

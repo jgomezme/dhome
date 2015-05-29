@@ -1,4 +1,12 @@
+
+window.isme = function(data){
+    console.log(data || 'is me');
+}
+
+
 // controllers 
+
+
 function detalleVisitaController($scope,$rootScope, $stateParams, $http, $API, $mdBottomSheet){
   $mdBottomSheet.hide(); 
     $scope.load = function(){
@@ -185,6 +193,9 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
     if(!this.value.inits)
        this.value.inits = 'C';
 
+     this.value.RegisterDate = new Date(this.value.RegisterDate).getTime();
+
+
 
  }
 
@@ -241,7 +252,9 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
       }
 
       function previewPhoto(n){
-           
+
+
+
            if(!n)
                return;
 
@@ -252,7 +265,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
            
            window.URL = window.URL || window.webkitURL;
            
-           var blob = n.match('//') ? n : window.URL.createObjectURL(n);                  
+           var blob = window.cordova ? n : window.URL.createObjectURL(n);                  
                    
            //compress image
 
@@ -321,7 +334,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
     if(window.config.env.match('dev'))
     {
-      $scope._form.username = 1047;
+      $scope._form.username = 'sergiogirado@nativapps.com';
       $scope._form.password = "C0ntr4";
     }
 
@@ -343,7 +356,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
           //window.location = "app.html";
           $API
           .login()          
-          .post("login_type=door&grant_type=password&username="+$scope._form.username+"&password="+$scope._form.password, {
+          .post("login_type=admin&grant_type=password&username="+$scope._form.username+"&password="+$scope._form.password, {
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             })
           .success(function(rs){
@@ -452,6 +465,118 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
    }
 
 
+
+
+}
+
+
+
+function newsCtrl($scope, $rootScope, $API, $storage){
+
+
+   $scope.load = function(){
+         $API
+         .notices(1)
+         .get()
+         .success(function(rs){
+                $scope.values = rs;
+                console.log(rs, 'news')
+         })
+   }
+
+
+
+   $scope.post = function(){
+
+      var data = new FormData();
+
+
+      if($rootScope.photosrc)
+         data.append('file', dataURLToBlob($rootScope.photosrc))
+
+
+      if($scope.file)
+         data.append('file', file)
+
+      $API
+      .file($storage.get('config').buildingId === '0' ? 1 : $storage.get('config').buildingId )
+      .post(data, { headers : {'Content-Type' : undefined} })
+      .success(function(rs, code){
+
+        console.log(rs, 'file')
+
+      $scope.form.CustomData = $scope.CustomData || {};
+     
+      if(!$scope.file && code != 500)
+      $scope.form.CustomData.image = rs;
+      else
+      $scope.form.CustomData.file = rs;
+
+         $API
+         .notices(1)
+         .post($scope.form)
+         .success(function(){
+                $scope.form.RegisterDate = new Date().getTime();
+                $scope.values.push($scope.form);
+                delete $scope.form;
+                delete $rootScope.photosrc;
+                console.log(rs, 'news')
+         })
+
+       });
+   }
+
+
+   $scope.takef = function(){  
+
+              
+                 function success(rs){
+                     console.log(rs);
+                
+                     $scope.file = rs;
+                                                
+                    // $rootScope.$broadcast('preview-photo', rs)
+
+                 }  
+
+                 function error(err){
+                     console.log(err);
+                 }
+
+
+                 if(window.cordova)
+                 fileChooser.open(success, error); 
+                 else
+                 document.getElementById('ifile').click();     
+
+              } 
+
+
+
+                 $scope.takei = function(){  
+
+
+              
+                 function success(rs){
+                     console.log(rs);
+                
+                     $rootScope.photo = rs;
+                                                
+                    // $rootScope.$broadcast('preview-photo', rs)
+
+                 }  
+
+                 function error(err){
+                     console.log(err);
+                 }
+
+
+                 if(window.cordova)
+                 navigator.camera.getPicture(success, error);  
+                 else
+                 document.getElementById('iphoto').click();     
+
+              } 
 
 
 }
@@ -1026,6 +1151,7 @@ angular.module('dhome')
 .controller('dashboardController', dashboardController)
 .controller('detalleVisitaController', detalleVisitaController)
 .controller('detalleCorrespondenciaController', detalleCorrespondenciaController)
+.controller('logedCtrl', logedCtrl)
 .controller('logedCtrl', logedCtrl)
 ;
 
