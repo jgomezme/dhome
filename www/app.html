@@ -11,17 +11,18 @@
     <script src="assets/libs/less/less.js"></script>    
   </head>
   <body layout="row" class="noscroll" ng-controller="mainCtrl">
+
     <div  layout="column" layout-fill>
      
-    <div ng-include="'views/common/header.html'"></div>  
+    <div ng-include="'views/common/header.html'"></div>
 
-  <div layout="row" flex class="content-wrapper" ng-click="$root.insearch=false">
+
+ 
+  <div layout="row" style="margin-top: 6px;" flex class="content-wrapper" >
 
    <div  layout="column" flex>
-    <div style="position:fixed;top:48%;left:48%;z-index:9999;" layout="row" layout-align="space-around" ng-show="loading">
-        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-      </div>
-    <md-content style="overflow:auto !important"   class="md-default-theme" style="height: 89%;" ui-view></md-content>
+   
+    <md-content   class="md-default-theme" style="height: 89%;" ui-view></md-content>
     </div>
 
    <div layout="column">

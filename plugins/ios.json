@@ -111,16 +111,16 @@
     },
     "installed_plugins": {
         "com.phonegap.plugins.PushPlugin": {
-            "PACKAGE_NAME": "com.digitalhomes.app"
+            "PACKAGE_NAME": "com.digitalhomes.residente.app"
         },
         "com.phonegap.plugins.barcodescanner": {
-            "PACKAGE_NAME": "com.digitalhomes.app"
+            "PACKAGE_NAME": "com.digitalhomes.residente.app"
         },
         "org.apache.cordova.camera": {
-            "PACKAGE_NAME": "com.digitalhomes.app"
+            "PACKAGE_NAME": "com.digitalhomes.residente.app"
         },
         "org.apache.cordova.statusbar": {
-            "PACKAGE_NAME": "com.digitalhomes.app"
+            "PACKAGE_NAME": "com.digitalhomes.residente.app"
         }
     },
     "dependent_plugins": {}

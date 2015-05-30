@@ -62,7 +62,7 @@ function search(){
           link : function(scope){
               scope.$parent.search = scope.search;
           },
-          template : '  <div layout="row" style="  padding: 10px 10px; background: rgba(219, 219, 219, 0.16); border-bottom:1px solid #ccc"> <input ng-model="search" placeholder="Buscar" style="padding:3px; border-radius:3px; border: 1px solid #ccc !important; pading:3px;" flex> &nbsp;<ng-md-icon icon="search" style="fill:gray"></ng-md-icon> </div>'
+          template : '  <div layout="row" style="padding: 10px 10px; background: rgba(219, 219, 219, 0.16); border-bottom:1px solid #ccc;"> <input ng-model="search" placeholder="Buscar" style="padding:3px; border-radius:3px; border: 1px solid #ccc !important; pading:3px;" flex> &nbsp;<ng-md-icon icon="search" style="fill:gray"></ng-md-icon> </div>'
     }
 }
 
@@ -94,6 +94,6 @@ angular.module('dhome')
 .directive('fileModel', fileModel)
 .directive('mdPhotoCapture', photo)
 .directive('ngMdSearch', search)
-.directive('ngShowme', showme)
+
 
 ;

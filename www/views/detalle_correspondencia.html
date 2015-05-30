@@ -8,7 +8,8 @@
 		<h4>Observación</h4>
 		<span>{{$root.correspondence.Observations || $root.nothing}}</span>
 		<h4>Foto de la Correspondecia</h4>
+
 		<span ng-if="!$root.correspondence.CustomData.image">{{$root.nothing }}</span>
-		<img ng-showme width="350" ng-if="$root.correspondence.CustomData.image" ng-src="{{$root.apiurl + '/images?buildingid='+ $root.building + '&name=' + $root.correspondence.CustomData.image}}" alt="image">
+		<img  width="350" ng-if="$root.correspondence.CustomData.image" ng-src="{{$root.apiurl + '/images?buildingid='+ $root.building + '&amp;name=' + $root.correspondence.CustomData.image}}" alt="image">
 	</md-input-container>
 </md-content>

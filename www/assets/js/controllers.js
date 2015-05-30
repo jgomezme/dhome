@@ -440,7 +440,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
             })
           .success(function(rs){
              
-              console.log(rs);
+              console.log(rs, 'login');
               $storage.save('config',rs);  
               $storage.save('token', rs.access_token)     
               $rootScope.loged=true;          
@@ -448,7 +448,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
                
 
-             window.location = "app.html";
+                window.location = "app.html";
               
 
 
@@ -466,9 +466,9 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
             
 
 
-        function tokenHandler (result) {
+               function tokenHandler (result) {
  
-          alert('device token = ' + result);
+                           alert('device token = ' + result);
 
 
                              
@@ -499,7 +499,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
 
 
-   if(window.cordova)        
+      if(window.cordova)        
        if ( device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos" )
                   pushNotification.register(
                   successHandler,
@@ -603,7 +603,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
   if(window.localStorage.token)
      $scope.stats();
      $scope.userinfo();
-     $rootScope.building = $storage.get('config').buildingId;
+     $rootScope.building = 1;
 
   }, 2000)
 
