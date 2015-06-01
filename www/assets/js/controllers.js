@@ -334,13 +334,23 @@ $scope.parseCustom = function(){
       $scope._form = {};
 
 
+      var pushNotification = '';
+
+    
+    document.addEventListener('deviceready', function(){
+
+       pushNotification = window.plugins.pushNotification;
+
+    });
+
+
     if(window.config.env.match('dev'))
     {
       $scope._form.username = 'sergiogirado@nativapps.com';
       $scope._form.password = "C0ntr4";
     }
 
-    $scope.login = function(){  
+    $scope.login = function(){   
 
       'use strict'; 
 
@@ -369,17 +379,164 @@ $scope.parseCustom = function(){
               $storage.save('user', rs.user);  
               $storage.save('buildings', JSON.parse(rs.user).Buildings);     
               delete $scope._form;      
-              window.location = "app.html";
-              $rootScope.loading = false 
+               
+
+               
+
+               // window.location = "app.html";
+
+
+              var successHandler = function(rs){
+
+                
+              }
+
+              var errorHandler = function(err){
+                  console.log(err)
+              }
+
+
+            
+
+               function tokenHandler (result) {
+ 
+                           alert('device token = ' + result);
+
+                               $API
+                                  .register(rs.Registration)
+                                  .put({
+                                    Handle : e.regid,
+                                    platform : 'apns',
+                                    BuildingId : $storage.get('config').buildingId
+                                  })
+                                  .success(function(rs){
+                                         console.log('dispositivo registrado');
+                                         window.location = "app.html";
+
+                                       
+                                  })
+
+                     }
+
+
+
+           window.onNotification = function(e) {
+
+
+
+                    switch( e.event )
+                    {
+                    case 'registered':
+                        if ( e.regid.length > 0 )
+                        {
+
+
+                               $API
+                                  .register()
+                                  .post({
+                                    Handle : e.regid,
+                                    platform : 'gcm',
+                                    BuildingId : $storage.get('config').buildingId
+                                  }, {headers : {Authorization : 'Bearer ' + rs.access_token}} )
+                                  .success(function(rs){
+                                         console.log('dispositivo registrado');
+                                         window.location = "app.html";
+                                  })
+
+                        }
+                    break;
+
+                    case 'message':
+                        // if this flag is set, this notification happened while we were in the foreground.
+                        // you might want to play a sound to get the user's attention, throw up a dialog, etc.
+                        if ( e.foreground )
+                        {
+                          
+
+                            // on Android soundname is outside the payload.
+                            // On Amazon FireOS all custom attributes are contained within payload
+                            var soundfile = e.soundname || e.payload.sound;
+                            // if the notification contains a soundname, play it.
+                            var my_media = new Media("/android_asset/www/"+ soundfile);
+                            my_media.play();
+                        }
+                    
+
+                       $("#app-status-ul").append('<li>MESSAGE -> MSG: ' + e.payload.message + '</li>');
+
+                       var action = e.payload.message.split('/');
+                    
+                    break;
+
+                    case 'error':
+                       console.log(e.msg );
+                    break;
+
+                    default:
+                        console.log('unknow action');
+                    break;
+             }
+        }
+
+
+
+        window.onNotificationAPN = function(event) {
+            if ( event.alert )
+            {
+                navigator.notification.alert(event.alert);
+            }
+
+            if ( event.sound )
+            {
+                var snd = new Media(event.sound);
+                snd.play();
+            }
+
+            if ( event.badge )
+            {
+                pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, event.badge);
+            }
+        }
+
+   
+
+
+      if(window.cordova)        
+       if ( $rootScope.platform == 'android' || $rootScope.platform == 'Android' || $rootScope.platform == "amazon-fireos" )
+                  pushNotification.register(
+                  successHandler,
+                  errorHandler,
+                  {
+                      "senderID":"148915533168",
+                      "ecb":"window.onNotification"
+                  });
+        else
+           window.location = "app.html";
+
+       /* else 
+          pushNotification.register(
+                    tokenHandler,
+                    errorHandler,
+                    {
+                        "badge":"true",
+                        "sound":"true",
+                        "alert":"true",
+                        "ecb":"window.onNotificationAPN"
+                    });
+        */
+
+
           })
           .error(function(err){
-              console.log(err)
+            console.log(err)
               $scope.error_login = map_error[err.error.toLowerCase()];
               $rootScope.loading = false;     
 
           })
 
+
     }
+
 
     $scope.logout = function(){
 
