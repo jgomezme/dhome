@@ -1,7 +1,8 @@
+ <section on-scroll-bottom='more("Denieds")' style="overflow:auto; height:100%">
 
 <!-- visitas -->
 <ng-md-search></ng-md-search>
-     <md-list ng-init="load()" style="position:relative" layout-padding>
+     <md-list ng-init="load('Denieds')" style="position:relative" layout-padding>
 
   <div ng-if="values">
   <md-lis-item ng-if="values && values.length == 0 && !$root.loading">
@@ -11,7 +12,7 @@
 </div>
      
      
-     <md-list-item class="md-3-line" ng-init="totime()"  ng-repeat="value in values | filter:{State:'Rechazada'} | filter:search || ''  | orderBy : '-VisitDate' track by $index" aria-label="swipe">
+     <md-list-item class="md-3-line" ng-init="totime()"  ng-repeat="value in values  | filter:search || ''  | orderBy : '-VisitDate' track by $index" >
 
 
       <div class="md-avatar" style="background:#ebebeb; text-align:center; line-height:2.5; text-transform:uppercase"  aria-label="profile">
@@ -39,4 +40,5 @@
 </md-list-item> 
 </md-list>
 
+</section>
   

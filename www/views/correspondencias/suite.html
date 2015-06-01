@@ -1,35 +1,33 @@
 
- 
- <section on-scroll-bottom='more()' ng-init="load()"  style="overflow:auto; height:100%">
- 
-   <div layout="row" >
+ <section style="overflow:auto; height:100%">
+
+  <div layout="row" >
   <md-button style="" class="md-raised subtlebtn" ng-if="!$root.selected" ng-click="$root.iniSel()" flex>Seleccionar varios</md-button>
   <md-button style="" class="md-raised subtlebtn" ng-if="$root.selected && $root.selected.length == 0" ng-click="selectAll()" flex>Seleccionar todos</md-button>
   <md-button style="" class="md-raised subtlebtn" ng-if="$root.selected.length > 0" ng-click="delSelected()" flex>Eliminar Selección ({{selected.length}})</md-button>
   </div>
- 
 
- <md-list  layout-padding>
+
+ <md-list  ng-init="loadSuite()" style="position:relative"  layout-padding>
 
       <md-lis-item ng-if="values && correspondences.length == 0 && !$root.loading">
-        <p>Parece que no tienes correspondencias por el momento.</p>
+        <p>Parece que no hay correspondencias por el momento.</p>
       </md-lis-item>   
-     
+  
 
-     <md-list-item class="md-3-line"  ng-init="parseCustom()"  ng-repeat="value in values  | filter:search || '' | orderBy:'-CorrespondenceDate' track by $index" >
-
+     <md-list-item class="md-3-line"   ng-init="parseCustom()"  ng-repeat="value in values | filter:search || '' | orderBy:'-CorrespondenceDate' track by $index" >
 
 
       <div class="md-avatar" style="background:#ebebeb; text-align:center; line-height:2.5; text-transform:uppercase"  aria-label="profile">
        {{value.inits}}
       </div>
       
-      <div class="md-list-item-text" flex  ng-click="centerBottomSheet(value)" aria-label="profile" ng-click="goToProfile()">
+      <div class="md-list-item-text" flex ng-click="centerBottomSheet(value)" aria-label="profile" ng-click="goToProfile()">
           
-            <h3>{{ value.CustomData.suite ? 'APTO. ' + value.CustomData.suite + ' (' + value.CustomData.tower + ')' : 'Masivo'  }} {{ value.To ? ' -  ' + value.To : '' }}</h3>          
+          <h3>{{ value.CustomData.suite ? 'APTO. ' + value.CustomData.suite + ' (' + value.CustomData.tower + ')' : 'Masivo'  }} {{ value.To ? ' -  ' + value.To : '' }}</h3>          
           <p class="p-aligned">
           fecha: {{ moment(value.CorrespondenceDate).format("MMMM Do YYYY, h:mm a") }} <br>
-           {{ value.CustomData.de ?  'de: '+ value.CustomData.de : ''}}
+           {{ value.CustomData.de ?  'de: ' + value.CustomData.de : '' }}
           </p>                       
         </div>
         <div layout="column">
@@ -40,7 +38,6 @@ left: 50px; outline:none" >
           <ng-md-icon icon="radio_button_off" aria-label="check" ng-click="this.value.checked=true;$root.selected.push(this.value)" style="outline:none; top:0; fill:gray" ng-if="!this.value.checked"></ng-md-icon> 
           <ng-md-icon icon="check_circle" aria-label="uncheck" ng-click="this.value.checked=!this.value.checked; $root.selected.splice($root.selected.indexOf(this.value),1)" style="outline:none; top:0; fill:rgb(0, 129, 255)" ng-if="this.value.checked"></ng-md-icon>   
       </md-button>
-
       <md-button  class="md-icon-button"  aria-label="more-center" style="position: relative;
 left: 25px;">
           <md-icon md-svg-icon="assets/icons/more_vert.svg"></md-icon>    
@@ -49,12 +46,10 @@ left: 25px;">
       </div>
  
       <br>
-      
+  
+
 
      </md-list-item> 
-
-
-     
 
 
       

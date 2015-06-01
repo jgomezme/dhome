@@ -1,1 +1,1 @@
-angular.module('dhome', ['ngMaterial', 'ui.router', 'ngMdIcons']);
+angular.module('dhome', ['ngMaterial', 'ui.router', 'ngMdIcons', 'infinite-scroll']);

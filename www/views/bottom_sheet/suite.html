@@ -1,5 +1,6 @@
 <md-bottom-sheet class="md-list md-has-header">
   <md-subheader><h2 style="text-transform:capitalize">APTO. {{$root.suite.suite.Name}} ({{$root.suite.tower.Name}})</h2></md-subheader>
+
   <md-list>
 
       <md-list-item >
@@ -19,7 +20,7 @@
 
 
       <md-list-item >
-      <md-button class="md-list-item-content" ng-click="resetTower()" ui-sref="correspondencias.porentregar">
+      <md-button class="md-list-item-content" ng-click="resetTower()" ui-sref="correspondencias.suite({id: {{$root.suite.suite.Id}} })">
         <ng-md-icon icon="reply" style="fill:gray" ></ng-md-icon>        
         <span class="md-inline-list-icon-label" >Entregar correspondencia</span>
       </md-button>

@@ -7,7 +7,7 @@
         <span class="md-inline-list-icon-label" ui-sref="detalle_correspondencia()" href="#/detalle_correspondencia" >Ver detalles</span>
       </md-button>
     </md-list-item>
-    <md-list-item>
+    <md-list-item ng-if="$root.correspondence.State === 'Pendiente'">
       <md-button class="md-list-item-content" ng-click="deliver()">
         <ng-md-icon icon="reply" style="fill:gray" ></ng-md-icon>        
         <span class="md-inline-list-icon-label">Entregar correspondencia</span>

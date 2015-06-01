@@ -15,7 +15,7 @@
             </md-list>
 
             </div>
-            <form ng-model="form">
+            <form ng-model="form" name="formm" ng-submit="add()">
                 <md-photo-capture label="Foto de la correspondecia" required=true></md-photo-capture>            
               
       <md-input-container flex>
@@ -46,7 +46,7 @@
     </md-input-container>
     <br>
     <md-content layout="row" flex layout-align="end">
-        <md-button class="md-raised md-primary" ng-disabled="form.$invalid || $root.loading" ng-click="add()">Registrar</md-button>
+        <md-button class="md-raised md-primary" ng-disabled="formm.$invalid || $root.loading" >Registrar</md-button>
     </md-content>
     </form>
     </md-content>

@@ -1,0 +1,29 @@
+<md-content layout-padding ng-init="loadOneOpen()" >
+	<md-content>
+		<h3> APTO. {{value.SuiteName}}</h3>
+	<md-content>
+	<md-input-container flex="">
+		<h4>Para el Residente</h4>
+		<span>{{value.Correspondence.To || $root.nothing }}</span>
+		<h4>Observación</h4>
+		<span>{{value.Correspondence.Observations || $root.nothing}}</span>
+		<h4>Foto de la Correspondecia</h4>
+
+		<span ng-if="!value.Correspondence.CustomData.image">{{$root.nothing }}</span>
+		<img  width="350" ng-if="value.Correspondence.CustomData.image" ng-src="{{$root.apiurl + '/images?buildingid='+ $root.building + '&amp;name=' + value.Correspondence.CustomData.image}}" alt="image">
+
+        <div ng-if="value.OpenImage">
+
+		<h4>Foto de apertura de correspondencia</h4>
+
+		<img  width="350"  ng-src="{{$root.apiurl + '/images?buildingid='+ $root.building + '&amp;name=' + value.OpenImage}}" alt="image">
+
+		</div>
+<br>
+                <md-photo-capture label="Foto de correspondencia abierta" required=true></md-photo-capture>            
+	
+		<br>
+	</md-input-container>
+		<md-button class="md-raised md-primary" ng-disabled="!$root.photosrc" ng-click="replyOpen()"> Enviar Foto </md-button>
+
+</md-content>

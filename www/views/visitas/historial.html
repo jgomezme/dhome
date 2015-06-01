@@ -1,7 +1,8 @@
+ <section on-scroll-bottom='more("All")' style="overflow:auto; height:100%">
 
 <!-- visitas -->
 <ng-md-search></ng-md-search>
-     <md-list ng-init="load()" style="position:relative" layout-padding>
+     <md-list ng-init="load('All')" style="position:relative" layout-padding>
 
   <div ng-if="values">
   <md-lis-item ng-if="values && values.length == 0 && !$root.loading">
@@ -42,4 +43,5 @@
 </md-list-item> 
 </md-list>
 
+</section>
   

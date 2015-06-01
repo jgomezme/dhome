@@ -1,11 +1,15 @@
- <md-list ng-init="load()" style="position:relative" layout-padding>
+ <section on-scroll-bottom='more()' style="overflow:auto; height:100%; overflow-x:hidden;">
+
+ <md-list  ng-init="load()" style="position:relative"  layout-padding>
 
       <md-lis-item ng-if="values && correspondences.length == 0 && !$root.loading">
         <p>Parece que no tienes correspondencias por el momento.</p>
       </md-lis-item>   
+  
+ 
      
 
-     <md-list-item class="md-3-line"  ng-click="centerBottomSheet(value)" ng-init="parseCustom()"  ng-repeat="value in values | filter:search || '' | orderBy:'-CorrespondenceDate' track by $index" aria-label="swipe">
+     <md-list-item class="md-3-line"  ng-click="centerBottomSheet(value)" ng-init="parseCustom()"  ng-repeat="value in values | filter:search || '' | orderBy:'-CorrespondenceDate' track by $index" >
 
 
       <div class="md-avatar" style="background:#ebebeb; text-align:center; line-height:2.5; text-transform:uppercase"  aria-label="profile">
@@ -17,7 +21,7 @@
           <h3>{{ value.CustomData.suite ? 'APTO. ' + value.CustomData.suite + ' (' + value.CustomData.tower + ')' : 'Masivo'  }} {{ value.To ? ' -  ' + value.To : '' }}</h3>          
           <p class="p-aligned">
           fecha: {{ moment(value.CorrespondenceDate).format("MMMM Do YYYY, h:mm a") }} <br>
-          de: {{ value.CustomData.de }}
+           {{ value.CustomData.de ?  'de: '+ value.CustomData.de : ''}}
           </p>                       
         </div>
         <div layout="column">
@@ -30,7 +34,6 @@ left: 25px;">
       </div>
  
       <br>
-       <md-divider inset></md-divider>
 
 
      </md-list-item> 
@@ -38,3 +41,5 @@ left: 25px;">
 
       
     </md-list>
+
+    </section>

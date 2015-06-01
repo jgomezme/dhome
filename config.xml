@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.digitalhomes.app" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Digital Homes Portero</name>
+    <name>Digital Homes Conserje</name>
     <description>
         Manage the building 
     </description>
@@ -12,15 +12,21 @@
 
 
 <platform name="android">
+   
    <preference name="android-installLocation" value="auto" />
 	 <preference name="android-minSdkVersion" value="15" />
+   
    <feature name="Camera">
     <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
    </feature>
 
    <feature name="File">
     <param name="android-package" value="org.apache.cordova.file.FileUtils" />
-</feature>
+  </feature>
+
+  <feature name="PushPlugin" >
+    <param name="android-package" value="com.amazon.cordova.plugin.PushPlugin"/>
+  </feature>
 
     <icon src="www/res/icon/android/ldpi.png" density="ldpi" />
     <icon src="www/res/icon/android/mdpi.png" density="mdpi"  />

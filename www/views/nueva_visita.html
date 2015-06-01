@@ -6,7 +6,7 @@
 
             <h4 ng-cloak>Registrar Visita {{$root.suite ? $rootScope.suite.tower.Name + '(APTO. ' + $root.suite.suite.Name + ')' : ''}}</h4>
             <br>
-            <form ng-model="form">
+            <form name="form" ng-model="form" ng-submit="add()">
      <!--            <md-button layout="row" ng-click="scanId()" aria-label="scanid">
                     <ng-md-icon icon="credit_card" style="fill:gray" title="Leer Cédula"></ng-md-icon> &nbsp;&nbsp; <small flex="33" offset="2" style="position:relative">Escanear Cédula</small>
                 </md-button>
@@ -54,7 +54,7 @@
 
     <br>
     <md-content layout="row" flex layout-align="end">
-        <md-button class="md-raised md-primary" ng-disabled="form.$invalid || $root.loading" ng-click="add()">Registrar Visita</md-button>
+        <md-button class="md-raised md-primary" ng-disabled="form.$invalid || $root.loading" >Registrar Visita</md-button>
     </md-content>
     </form>    
     </div>

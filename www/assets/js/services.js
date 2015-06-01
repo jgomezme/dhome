@@ -38,14 +38,16 @@ function API($http,$rootScope){
 	  this.register = function(id){ if(!id) this.url = this.baseUrl + "/register"; else this.url = this.baseUrl + "/register/" + id; return this; }
 
 	 
-	  this.correspondence = function(id){ this.url = this.baseUrl + "/correspondence?BuildingId="+id; return this; }
-	  this.correspondence = function(id){ this.url = this.baseUrl + "/correspondence?BuildingId="+id; return this; }
-	  this.visitsall = function(id){ this.url = this.baseUrl + "/visitis/bybuilding/" + id+"?page=1&pageSize=500"; return this; }
-	  this.correspondencesall = function(id){ this.url = this.baseUrl + "/correspondence/ByBuilding/" + id+"?page=1&pageSize=500"; return this; }
+	  this.correspondence = function(id){ this.url = this.baseUrl + "/correspondence?buildingid="+id; return this; }
+	  this.correspondencee = function(id){ if(!id)this.url = this.baseUrl + "/correspondence"; else this.url = this.baseUrl + "/correspondence/"+id; return this; }
+	  this.visitsall = function(id, page){ this.url = this.baseUrl + "/visitis/bybuilding/"+ id+"?page="+ (page || 1); return this; }
+	  this.correspondencesall = function(id, page){ this.url = this.baseUrl + "/correspondence/bybuilding/"+id+"?page=" + (page || 1); return this; }
 	  this.user = function(){ this.url = this.baseUrl + "/account/userinfo"; return this; }
 	  this.file = function(id){ this.url = this.baseUrl + "/images?buildingid="+id; return this; }
 	  this.deliver = function(){ this.url = this.baseUrl + "/deliveries";  return this; }
-
+	  this.correspondenceStats = function(id){ this.url = this.baseUrl + "/correspondence/summary/" + id;  return this; }
+	  this.openrequest = function(id){ this.url = this.baseUrl + "/openrequests/building/" + id;  return this; }
+	  this.openrequests = function(id){ this.url = this.baseUrl + "/openrequests/" + id;  return this; }
 
 
 	  this.add = function(comp){ this.url += comp; return this;  }

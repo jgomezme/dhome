@@ -43,8 +43,12 @@ angular.module('dhome')
 
                 $httpProvider.defaults.withCredentials = true;
 
+
                 if (!window.localStorage.token)
                     window.location = "index.html";
+
+                $httpProvider.defaults.headers.common['Authorization'] = 'Bearer ' + window.localStorage.token; // common
+
 
                 console.log(config, 'request')
 
@@ -53,7 +57,6 @@ angular.module('dhome')
                       config.data.CustomData = JSON.stringify(config.data.CustomData);
 
 
-                $httpProvider.defaults.headers.common['Authorization'] = 'Bearer ' + window.localStorage.token; // common
 
                 for (x in config.data) {
                     if (typeof config.data[x] === 'boolean') {
@@ -84,6 +87,8 @@ angular.module('dhome')
             'responseError': function(err) { //usamos los interceptors para manipular los errores
 
                 if (window.config.env.match('qa|dev')) { //solo mostramos el error en caso de que el entorno sea dev
+                    console.log(err, "ERRRROOOOORR")
+
                     console.log('Error: ', err, 'Codigo: ', err.status);
                 }
 
@@ -187,9 +192,27 @@ angular.module('dhome')
             controller: visitasCtrl,
             data : {title:'Mensajes'}            
         })      
+        .state('apertura', {
+            url: "/apertura/:id",
+            templateUrl: "views/correspondencias/open.html",
+            controller: correspondenceCtrl,
+            data : {title:'Correspondencias'}            
+        })
          .state('correspondencias', {
             url: "/correspondencias",
             templateUrl: "views/correspondencias.html",
+            controller: correspondenceCtrl,
+            data : {title:'Correspondencias'}            
+        })
+        .state('correspondencias.detalle', {
+            url: "/detalle/:id",
+            templateUrl: "views/correspondencias/detalle.html",
+            controller: correspondenceCtrl,
+            data : {title:'Correspondencias'}            
+        })
+        .state('correspondencias.suite', {
+            url: "/suite/:id",
+            templateUrl: "views/correspondencias/suite.html",
             controller: correspondenceCtrl,
             data : {title:'Correspondencias'}            
         })
@@ -202,6 +225,12 @@ angular.module('dhome')
         .state('correspondencias.entregar', {
             url: "/entregar/:id",
             templateUrl: "views/correspondencias/entregar.html",
+            controller: correspondenceCtrl,
+            data : {title:'Correspondencias'}            
+        })
+        .state('correspondencias.aperturas', {
+            url: "/aperturas",
+            templateUrl: "views/correspondencias/openrequest.html",
             controller: correspondenceCtrl,
             data : {title:'Correspondencias'}            
         })
@@ -243,7 +272,7 @@ angular.module('dhome')
         })
 
 
-    $urlRouterProvider.otherwise("/home"); //aqui va?
+    $urlRouterProvider.otherwise("/home/suites"); //aqui va?
 
 
 

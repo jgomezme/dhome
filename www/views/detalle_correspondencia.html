@@ -11,5 +11,13 @@
 
 		<span ng-if="!$root.correspondence.CustomData.image">{{$root.nothing }}</span>
 		<img  width="350" ng-if="$root.correspondence.CustomData.image" ng-src="{{$root.apiurl + '/images?buildingid='+ $root.building + '&amp;name=' + $root.correspondence.CustomData.image}}" alt="image">
+
+		 <div ng-if="$root.correspondence.OpenImage">
+
+		<h4>Foto de apertura de correspondencia</h4>
+
+		<img  width="350"  ng-src="{{$root.apiurl + '/images?buildingid='+ $root.building + '&amp;name=' + $root.correspondence}}" alt="image">
+
+		</div>
 	</md-input-container>
 </md-content>

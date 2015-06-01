@@ -1,9 +1,11 @@
 
   <div layout="row" >
-  <md-button style="" class="md-raised subtlebtn" ng-if="!$root.selected" ng-click="iniSel()" flex>Seleccionar varios</md-button>
+  <md-button style="" class="md-raised subtlebtn" ng-if="!$root.selected" ng-click="$root.iniSel()" flex>Seleccionar varios</md-button>
   <md-button style="" class="md-raised subtlebtn" ng-if="$root.selected && $root.selected.length == 0" ng-click="selectAll()" flex>Seleccionar todos</md-button>
   <md-button style="" class="md-raised subtlebtn" ng-if="$root.selected.length > 0" ng-click="delSelected()" flex>Eliminar Selección ({{selected.length}})</md-button>
   </div>
+
+
 
 <div layout="row" flex ng-init="getSuites()" style="overflow-x:hidden !important">
 

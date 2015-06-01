@@ -26,7 +26,13 @@ function photo(){
          },
          controller : function($scope, $rootScope){ 
             
-            $scope.takeimage = function(){                
+
+            $scope.takeimage = function($event){
+
+                $event.preventDefault();
+
+                console.log($event, 'eveeeeeent')
+               
 
                  function success(rs){
                      console.log(rs);
@@ -46,7 +52,9 @@ function photo(){
                  if(window.cordova)
                  navigator.camera.getPicture(success, error);  
                  else
-                 document.getElementById('iphoto').click();     
+                 document.getElementById('iphoto').click();  
+
+                 return false;   
 
               } 
          },
@@ -94,6 +102,22 @@ angular.module('dhome')
 .directive('fileModel', fileModel)
 .directive('mdPhotoCapture', photo)
 .directive('ngMdSearch', search)
+.directive('onScrollBottom', function() {
+    return {
+      restrict: 'A',
+      link: function(scope, elem, attrs) {
+        elem.on('scroll', function(){
 
+          /* If reached bottom */
+          if ( elem[0].scrollHeight == elem[0].scrollTop + elem[0].clientHeight ) {
+            /* Do what is specified by onScrollBottom */
+            scope.$apply(function(){
+              scope.$eval(attrs.onScrollBottom);
+            });
+          }
+        });
+      }
+    };
+});
 
 ;

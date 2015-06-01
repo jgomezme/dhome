@@ -1,97 +1,4 @@
 
-  window.onNotification = function(e) {
-
-                    $("#app-status-ul").append('<li>EVENT -> RECEIVED:' + e.event + '</li>');
-
-                    switch( e.event )
-                    {
-                    case 'registered':
-                        if ( e.regid.length > 0 )
-                        {
-
-
-                       
-
-                               $API
-                                  .register()
-                                  .put({
-                                    Handle : e.regid,
-                                    platform : 'gcm',
-                                    BuildingId : $storage.get('config').buildingId
-                                  })
-                                  .success(function(rs){
-                                         console.log('dispositivo registrado');
-                                         window.location = "app.html";
-                                  })
-
-
-                           
-
-                        }
-                    break;
-
-                    case 'message':
-                        // if this flag is set, this notification happened while we were in the foreground.
-                        // you might want to play a sound to get the user's attention, throw up a dialog, etc.
-                        if ( e.foreground )
-                        {
-                            $("#app-status-ul").append('<li>--INLINE NOTIFICATION--' + '</li>');
-
-                            // on Android soundname is outside the payload.
-                            // On Amazon FireOS all custom attributes are contained within payload
-                            var soundfile = e.soundname || e.payload.sound;
-                            // if the notification contains a soundname, play it.
-                            var my_media = new Media("/android_asset/www/"+ soundfile);
-                            my_media.play();
-                        }
-                        else
-                        {  // otherwise we were launched because the user touched a notification in the notification tray.
-                            if ( e.coldstart )
-                            {
-                                $("#app-status-ul").append('<li>--COLDSTART NOTIFICATION--' + '</li>');
-                            }
-                            else
-                            {
-                                $("#app-status-ul").append('<li>--BACKGROUND NOTIFICATION--' + '</li>');
-                            }
-                        }
-
-                       $("#app-status-ul").append('<li>MESSAGE -> MSG: ' + e.payload.message + '</li>');
-                           //Only works for GCM
-                       $("#app-status-ul").append('<li>MESSAGE -> MSGCNT: ' + e.payload.msgcnt + '</li>');
-                       //Only works on Amazon Fire OS
-                       $status.append('<li>MESSAGE -> TIME: ' + e.payload.timeStamp + '</li>');
-                    break;
-
-                    case 'error':
-                        $("#app-status-ul").append('<li>ERROR -> MSG:' + e.msg + '</li>');
-                    break;
-
-                    default:
-                        $("#app-status-ul").append('<li>EVENT -> Unknown, an event was received and we do not know what it is</li>');
-                    break;
-             }
-        }
-
-
-
-        window.onNotificationAPN = function(event) {
-            if ( event.alert )
-            {
-                navigator.notification.alert(event.alert);
-            }
-
-            if ( event.sound )
-            {
-                var snd = new Media(event.sound);
-                snd.play();
-            }
-
-            if ( event.badge )
-            {
-                pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, event.badge);
-            }
-        }
 
 // controllers 
 function detalleVisitaController($scope,$rootScope, $stateParams, $http, $API, $mdBottomSheet){
@@ -106,8 +13,6 @@ function detalleVisitaController($scope,$rootScope, $stateParams, $http, $API, $
             console.log(visita)
         });
     }
-
-
 
 }
 
@@ -224,6 +129,8 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
   $scope.Home = {};
   $scope.Home.show = true;
 
+  $rootScope.platform = (window.cordova) ? window.cordova.platformId : 'web';
+
   $rootScope.hideBS = function(){
       $mdBottomSheet.hide();
   }
@@ -249,6 +156,15 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
  }
 
 
+    $rootScope.iniSel = function(){
+       $rootScope.selected = new Array();
+    }
+
+
+
+
+
+
  $rootScope.gohome = function(){
 
 
@@ -257,7 +173,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
         return;      
      }
 
-     window.location = "#/home";
+     window.location = "#/home/suites";
 
 
  }
@@ -265,6 +181,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
 
  $scope.parseCustom = function(){
+  
    if(this.value.CustomData)
      this.value.CustomData = JSON.parse(this.value.CustomData);
 
@@ -279,6 +196,16 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
        this.value.inits = 'C';
 
 
+ }
+
+
+ $scope.parseCustomm = function(){
+
+    if(this.value.Correspondence.CustomData)
+     this.value.Correspondence.CustomData = JSON.parse(this.value.Correspondence.CustomData);
+
+    if(!this.value.inits)
+       this.value.Correspondence.inits = 'C';
  }
 
   $rootScope.nothing="No asignado"
@@ -417,6 +344,17 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
       $scope._form.password = "C0ntr4";
     }
 
+     var pushNotification = '';
+
+    
+    document.addEventListener('deviceready', function(){
+
+       pushNotification = window.plugins.pushNotification;
+
+
+    });
+
+
     $scope.login = function(){  
 
       'use strict'; 
@@ -433,6 +371,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
          console.log($scope._form)
 
           //window.location = "app.html";
+
           $API
           .login()          
           .post("login_type=door&grant_type=password&username="+$scope._form.username+"&password="+$scope._form.password, {
@@ -448,9 +387,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
                
 
-                window.location = "app.html";
-              
-
+               // window.location = "app.html";
 
 
               var successHandler = function(rs){
@@ -465,14 +402,9 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
             
 
-
                function tokenHandler (result) {
  
                            alert('device token = ' + result);
-
-
-                             
-                          
 
                                $API
                                   .register(rs.Registration)
@@ -485,29 +417,106 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
                                          console.log('dispositivo registrado');
                                          window.location = "app.html";
 
-                                         
+                                       
                                   })
 
+                     }
 
-                         
 
-      }
+
+         window.onNotification = function(e) {
+
+
+
+                    switch( e.event )
+                    {
+                    case 'registered':
+                        if ( e.regid.length > 0 )
+                        {
+
+
+                               $API
+                                  .register()
+                                  .post({
+                                    Handle : e.regid,
+                                    platform : 'gcm',
+                                    BuildingId : $storage.get('config').buildingId
+                                  }, {headers : {Authorization : 'Bearer ' + rs.access_token}} )
+                                  .success(function(rs){
+                                         console.log('dispositivo registrado');
+                                         window.location = "app.html";
+                                  })
+
+                        }
+                    break;
+
+                    case 'message':
+                        // if this flag is set, this notification happened while we were in the foreground.
+                        // you might want to play a sound to get the user's attention, throw up a dialog, etc.
+                        if ( e.foreground )
+                        {
+                          
+
+                            // on Android soundname is outside the payload.
+                            // On Amazon FireOS all custom attributes are contained within payload
+                            var soundfile = e.soundname || e.payload.sound;
+                            // if the notification contains a soundname, play it.
+                            var my_media = new Media("/android_asset/www/"+ soundfile);
+                            my_media.play();
+                        }
+                    
+
+                       $("#app-status-ul").append('<li>MESSAGE -> MSG: ' + e.payload.message + '</li>');
+
+                       var action = e.payload.message.split('/');
+                    
+                    break;
+
+                    case 'error':
+                       console.log(e.msg );
+                    break;
+
+                    default:
+                        console.log('unknow action');
+                    break;
+             }
+        }
+
+
+
+        window.onNotificationAPN = function(event) {
+            if ( event.alert )
+            {
+                navigator.notification.alert(event.alert);
+            }
+
+            if ( event.sound )
+            {
+                var snd = new Media(event.sound);
+                snd.play();
+            }
+
+            if ( event.badge )
+            {
+                pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, event.badge);
+            }
+        }
 
    
 
-      var pushNotification = window.plugins.pushNotification;
-
-
 
       if(window.cordova)        
-       if ( device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos" )
+       if ( $rootScope.platform == 'android' || $rootScope.platform == 'Android' || $rootScope.platform == "amazon-fireos" )
                   pushNotification.register(
                   successHandler,
                   errorHandler,
                   {
-                      "senderID":"rtcdigitalconsulting.com:api-project-352820816141 ",
+                      "senderID":"148915533168",
                       "ecb":"window.onNotification"
                   });
+        else
+           window.location = "app.html";
+
        /* else 
           pushNotification.register(
                     tokenHandler,
@@ -518,7 +527,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
                         "alert":"true",
                         "ecb":"window.onNotificationAPN"
                     });
-   */
+        */
 
 
           })
@@ -548,6 +557,8 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
           $storage.delete('config');
          $storage.delete('token');
 
+         pushNotification.unregister(function(rs){ console.log('Registrado del dispositivo eliminado'); }, function(rs){ console.log(rs); });
+
          window.location.reload();
 
         }, function(){
@@ -576,8 +587,19 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
             preauthorized : rs.Preauthorizeds,
             all : (rs.Apporveds + rs.Pendings + rs.Rejecteds + rs.Preauthorizeds)
         };
+
          
-      })
+      });
+
+     $API
+     .correspondenceStats($storage.get('config').buildingId)
+     .get()
+     .success(function(rs){
+         $rootScope.cstats = rs;
+         console.log(rs, 'correspondence')
+     })
+
+
 
   }
 
@@ -663,11 +685,29 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
       });
 
 
+$scope.selectAll = function(){
 
 
+
+    $rootScope.selected = [];
+
+     for(x in $scope.values)
+         { 
+          $scope.values[x].checked=true;
+          $rootScope.selected.push($scope.values[x])
+         }
+        $rootScope.toall=true;
+
+  }
+
+ $scope.delSelected = function(){
+      for(x in $scope.values)
+          $scope.values[x].checked=false;
+
+      delete $rootScope.selected;
+  }
 
     var lookAtSel = function(){
-
 
 
          if($rootScope.selected)
@@ -698,31 +738,10 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
 
   };
 
- $scope.iniSel = function(){
-     $rootScope.selected = new Array();
- }
 
 
-  $scope.selectAll = function(){
 
-    $rootScope.selected = [];
-
-     for(x in $scope.values)
-         { 
-          $scope.values[x].checked=true;
-          $rootScope.selected.push($scope.values[x])
-         }
-        $rootScope.toall=true;
-
-  }
-
-
-  $scope.delSelected = function(){
-      for(x in $scope.values)
-          $scope.values[x].checked=false;
-
-      delete $rootScope.selected;
-  }
+ 
 
 
   $scope.suiteBottomSheet = function() { 
@@ -763,7 +782,7 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
   $scope.loadView = function(){    
 
         
-        if($scope.thebuilding.Towers.length > 1)
+        if($rootScope.thebuilding.Towers.length > 1)
             window.location = "#/home/towers";
         else
             window.location = "#/home/suites";
@@ -773,6 +792,7 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
 
    $scope.load = function(callback){
 
+    if(!$rootScope.thebuilding)
        $API
        .building($scope.building)       
        .get()       
@@ -780,7 +800,7 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
 
            console.log(rs, 'javier');
 
-           $scope.thebuilding = rs;
+           $rootScope.thebuilding = rs;
 
 
            if(callback)
@@ -802,26 +822,26 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
    $scope.getTowers = function(){
     
 
-       if(!$scope.thebuilding)
+       if(!$rootScope.thebuilding)
          $scope.load(function(rs){
             if(rs)
-             $scope.values = $scope.thebuilding.Towers;              
+             $scope.values = $rootScope.thebuilding.Towers;              
          })
        else
-          $scope.values = $scope.thebuilding.Towers;
+          $scope.values = $rootScope.thebuilding.Towers;
 
 
    }
 
    $scope.getFloors = function(){
       
-      if(!$scope.thebuilding)
+      if(!$rootScope.thebuilding)
          $scope.load(function(rs){
             if(rs)
-              $scope.values = $scope.thebuilding.floors;              
+              $scope.values = $rootScope.thebuilding.floors;              
          })
       else
-          $scope.values = $scope.thebuilding.floors;
+          $scope.values = $rootScope.thebuilding.floors;
 
    }
 
@@ -855,7 +875,7 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
 
         
 
-          var tower = containsTower($state.params.id, $scope.thebuilding.Towers);
+          var tower = containsTower($state.params.id, $rootScope.thebuilding.Towers);
 
           console.log(tower, 'id');
 
@@ -877,17 +897,18 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
           return;
         }
 
-        for(var x in $scope.thebuilding.Towers)
-              for(var j in $scope.thebuilding.Towers[x].Floors)                 
-                  for(var n in $scope.thebuilding.Towers[x].Floors[j].Suites)
-                   $scope.values.push({tower: {Name : $scope.thebuilding.Towers[x].Name, Id: $scope.thebuilding.Towers[x].Id}, suite : $scope.thebuilding.Towers[x].Floors[j].Suites[n]});  
-                           
+        for(var x in $rootScope.thebuilding.Towers)
+              for(var j in $rootScope.thebuilding.Towers[x].Floors)                 
+                  for(var n in $rootScope.thebuilding.Towers[x].Floors[j].Suites)
+                   $scope.values.push({tower: {Name : $rootScope.thebuilding.Towers[x].Name, Id: $rootScope.thebuilding.Towers[x].Id}, suite : $rootScope.thebuilding.Towers[x].Floors[j].Suites[n]});  
+                    
+
                  
             console.log($scope.values, $scope.suites)
 
       }
 
-      if(!$scope.thebuilding)
+      if(!$rootScope.thebuilding)
           $scope.load(function(rs){
 
             if(rs)
@@ -943,7 +964,7 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
   };
 
 
-   $scope.load = function(params){
+   $scope.load = function(state){
 
   
     var params = params || {};
@@ -956,14 +977,53 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
           }
 
         $API
-       .visitsall(parseInt($storage.get('config').buildingId))
+       .visit()
+       .add("/Building/"+ $storage.get('config').buildingId + (state ? "/" + state : '') + "?page=1")
        .get()
        .success(function(rs){
-           console.log(rs);
+           console.log(rs, 'VISITASSSSSS');
            $scope.values = rs;
        });
 
    }
+
+
+    $scope.loadMore = function(page, state){
+    
+      if(!$scope.stop)
+      $API
+      .visit()
+      .add("/Building/"+ $storage.get('config').buildingId + "/" + state + "?page=" + page )
+      .get()
+      .success(function(rs){
+
+        console.log(rs, "MOREEEEEEE")
+
+        if(rs.length < 20)
+          $scope.stop = true;
+
+
+        $scope.values = $scope.values.concat(rs);   
+
+
+        console.log($scope.values);     
+
+
+      });
+    }
+
+    $scope.page = 1;
+
+    
+    $scope.more = function(state){
+
+
+      if($rootScope.loading)
+        return;
+
+        $scope.page++;
+        $scope.loadMore($scope.page, state);
+    }
 
 
    $scope.add = function(){
@@ -984,6 +1044,8 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
            $scope.form.CustomData.tower = $rootScope.suite.tower.Name;
            $scope.form.CustomData.suite = $rootScope.suite.suite.Name;
            $scope.form.CustomData.image = rs[0];
+           $scope.form.ImageName = rs[0];
+
 
             $API
             .post_visit($rootScope.suite.suite.Id)
@@ -993,8 +1055,7 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
 
                console.log(rs, 'visit');
 
-               
-
+              
                $rootScope
                .alerta('Visita', 'Visita registrada y notificada')
                .then(function(){
@@ -1033,16 +1094,31 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
 }
 
 
-function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, $state){
+function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, $state, $stateParams){
 
   console.log($state, 'state');
 
   $scope.suite = $state.params.id || null;
+  $scope.page = 1;
+  $scope.values = [];
 
   delete $rootScope.photo;
   $mdBottomSheet.hide();
 
   $scope.centerBottomSheet = function(val) {
+
+    if($scope.selected)
+      {
+        this.value.checked = !this.value.checked;
+
+        if(this.value.checked)
+        $scope.selected.push(this.value);
+        else
+        $scope.selected.splice($scope.selected.indexOf(this.value),1);
+
+
+        return;
+      }
     
     $rootScope.correspondence = val;
 
@@ -1069,7 +1145,16 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
     return /\w\s?/g.test(item.DeliveredTo);
  }
 
+
+ 
+
  $rootScope.deliver = function(){
+
+  console.log($rootScope.selected, 'selecteds');
+
+  $rootScope.loading = true;
+
+  if(!$rootScope.selected)
      for(x in $rootScope.correspondence.SuitesId)
         $API
         .deliver()
@@ -1080,26 +1165,230 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
         })
         .success(function(){
             $mdBottomSheet.hide();
-            $rootScope.alerta('Mensaje', 'Correspondencia(s) Entregada(s)')
-            .then(function(){
-              // $rootScope.gohome();
-            });
+            $rootScope.cstats.Pendings--;
+            $rootScope.cstats.elivereds++;
+
 
         })
+    else
+     for(j in $rootScope.selected){
+      for(x in $rootScope.selected[j].SuitesId)
+        $API
+        .deliver()
+        .post({
+          To : 'Any',
+          SuiteId : $rootScope.selected[j].SuitesId[x],
+          CorrespondencesIds : [$rootScope.selected[j].Id]
+        })
+        .success(function(){
+            $mdBottomSheet.hide();
+            $rootScope.cstats.Pendings--;
+            $rootScope.cstats.elivereds++;
+
+        })
+
+
+       $scope.values.splice($scope.values.indexOf($rootScope.selected[j]),1);
+
+
+      }
+
+
+       
+       $rootScope.alerta('Mensaje', 'Correspondencia(s) Entregada(s)')
+            .then(function(){
+              // $rootScope.gohome();
+              delete $rootScope.selected;
+
+            });
+      
+
+
  }
 
   $scope.takeimage = function(){
      document.getElementById('correspondence').click()
    }
 
-    $scope.load = function(){
+    $scope.load = function(page){
       $API
-      .correspondencesall($storage.get('config').buildingId)
+      .correspondencesall($storage.get('config').buildingId, page || 1)
       .get()
       .success(function(correspondences){
-        $scope.values = correspondences || [];
+
+        $scope.values = correspondences || [];        
+
+
       });
     }
+
+     $scope.loadMore = function(page){
+    
+      if(!$scope.stop)
+      $API
+      .correspondencesall($storage.get('config').buildingId, page || 1)
+      .get()
+      .success(function(rs){
+
+        console.log(rs)
+
+        if(rs.length < 20)
+          $scope.stop = true;
+
+
+        $scope.values = $scope.values.concat(rs);   
+
+
+        console.log($scope.values);     
+
+
+      });
+    }
+
+
+    $scope.loadSuite = function(page){
+
+
+      $API
+      .correspondencee()
+      .add('?SuiteId='+$stateParams.id)
+      .get()
+      .success(function(correspondences){
+
+        $scope.values = correspondences || [];        
+
+
+      });
+
+    }
+
+
+    $scope.more = function(where){
+
+      if($rootScope.loading)
+        return;
+
+        $scope.page++;
+
+        if(!where)
+        $scope.loadMore($scope.page);
+        else
+        $scope.loadMoreSuite($scope.page);
+
+    }
+
+    $scope.loadOne = function(){
+
+  
+      $API
+      .correspondencee($stateParams.id)
+      .get()
+      .success(function(rs){
+        console.log(rs);
+        $scope.value = rs || [];
+      });
+    }
+
+
+    $scope.loadOneOpen = function(){
+  
+      $API
+      .openrequests($stateParams.id)
+      .get()
+      .success(function(rs){
+        console.log(rs, 'OPEEEEEEEEN');
+        $scope.value = rs || [];
+      });
+
+    }
+
+
+    $scope.replyOpen = function(){
+
+
+      if(!$rootScope.photosrc)
+          $rootScope
+               .alerta('Correspondencia', 'Debes agregar una foto de la correspondencia')
+               .then(function(){})
+       
+
+      var data = new FormData();
+
+      if($rootScope.photosrc)
+      data.append('file', dataURLToBlob($rootScope.photosrc));
+
+      $API
+      .file($storage.get('config').buildingId)
+      .post(data, { headers : {'Content-Type' : undefined} })
+      .success(function(rs){
+
+       $API
+      .openrequests($stateParams.id)
+      .add('/AsociateImage/' + rs[0])
+      .post()
+      .success(function(rs){
+        console.log(rs, 'OPEEEEEEEEN');
+        $scope.value = rs || [];
+            
+              $rootScope
+               .alerta('Correspondencia', 'Solicitud Respondida')
+               .then(function(){})
+
+               window.location = "#/correspondencias/aperturas";
+
+        });
+
+      });
+
+
+    }
+
+
+     $scope.loadOpenRequests = function(){
+    
+      $API
+      .openrequest($storage.get('config').buildingId)
+      .get()
+      .success(function(rs){
+        console.log(rs, 'opens')
+        $scope.values = rs || [];
+      });
+    }
+
+
+    $scope.gotoopen = function(){
+
+        window.location = "#/apertura/"+ this.value.Id;
+
+    }
+
+
+
+     $scope.selectAll = function(){
+
+
+
+    $rootScope.selected = [];
+
+     for(x in $scope.values)
+         { 
+          $scope.values[x].checked=true;
+          $rootScope.selected.push($scope.values[x])
+         }
+        $rootScope.toall=true;
+
+  }
+
+
+    $scope.delSelected = function(){
+      for(x in $scope.values)
+          $scope.values[x].checked=false;
+
+      delete $rootScope.selected;
+  }
+
+
+
 
     $scope.add = function(){
 
@@ -1133,7 +1422,9 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
 
     
         $scope.form.CustomData = $scope.form.CustomData || {};
+
         $scope.form.CustomData.image = rs[0];
+        $scope.form.Image = rs[0];
 
         if(!$rootScope.selected){
         $scope.form.CustomData.suite = $rootScope.suite.suite.Name;
@@ -1159,7 +1450,7 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
                .alerta('Correspondencia', 'Correspondencia registrada y notificada')
                .then(function(){
                 
-                window.location = '#/home';
+                $rootScope.gohome();
            
                });
   
