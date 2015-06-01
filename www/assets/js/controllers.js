@@ -504,8 +504,8 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
    
 
-
-      if(window.cordova)        
+      if(window.cordova)    
+      {    
        if ( $rootScope.platform == 'android' || $rootScope.platform == 'Android' || $rootScope.platform == "amazon-fireos" )
                   pushNotification.register(
                   successHandler,
@@ -514,8 +514,11 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
                       "senderID":"148915533168",
                       "ecb":"window.onNotification"
                   });
+       }
         else
-           window.location = "app.html";
+
+            window.location = "app.html";
+          
 
        /* else 
           pushNotification.register(
@@ -556,7 +559,8 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
          
           $storage.delete('config');
          $storage.delete('token');
-
+   
+    if(window.cordova)
          pushNotification.unregister(function(rs){ console.log('Registrado del dispositivo eliminado'); }, function(rs){ console.log(rs); });
 
          window.location.reload();
@@ -1438,7 +1442,18 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
         $API
         .correspondence($storage.get('config').buildingId)
         .post($scope.form)
-        .success(function(rs){
+        .success(function(rs, code){
+
+
+              if(code === 500)
+                $rootScope
+               .alerta('Correspondencia', 'No se pudo registrar la correspondencia')
+               .then(function(){
+                
+                $rootScope.gohome();
+           
+               });
+  
               
                console.log(rs, 'correspondence')
               
