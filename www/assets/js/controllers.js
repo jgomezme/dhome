@@ -1,4 +1,6 @@
-
+var map_error = {
+    "invalid_client" : "Usuario o clave no validos"
+}
 
 // controllers 
 function detalleVisitaController($scope,$rootScope, $stateParams, $http, $API, $mdBottomSheet){
@@ -84,8 +86,7 @@ function resizeMe(img, max_width, max_height) {
   ctx.drawImage(img, 0, 0, width, height);
   
   
-  return canvas.toDataURL(); // get the data from canvas as 70% JPG (can be also PNG, etc.)
-
+  return canvas.toDataURL(); 
 }
 
 
@@ -128,6 +129,8 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
   $scope.moment = moment;
   $scope.Home = {};
   $scope.Home.show = true;
+  $scope.Corr = {};
+  $scope.Corr.show = true;
 
   $rootScope.platform = (window.cordova) ? window.cordova.platformId : 'web';
 
@@ -135,10 +138,11 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
       $mdBottomSheet.hide();
   }
 
+
+  $rootScope.selecteds = function(){ if(!$rootScope.selected) return false;  return $rootScope.selected.length > 0;}
+
    $scope.totime = function(){
 
-   if(this.value.CustomData)
-     this.value.CustomData = JSON.parse(this.value.CustomData);
 
      console.log(this.value.VisitName.split(' ')[0].split(''))
 
@@ -152,8 +156,9 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
        this.value.inits = 'V';
 
      console.log(this.CustomData, "custom")
-     this.value.VisitDate = new Date(this.value.RegisterDate).getTime();
- }
+     //this.value.VisitDate = new Date(this.value.RegisterDate).getTime();
+   
+    } 
 
 
     $rootScope.iniSel = function(){
@@ -182,11 +187,9 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
  $scope.parseCustom = function(){
   
-   if(this.value.CustomData)
-     this.value.CustomData = JSON.parse(this.value.CustomData);
 
-   if(this.value.CorrespondenceDate)
-     this.value.CorrespondenceDate = new Date(this.value.CorrespondenceDate).getTime();
+
+  
 
    if(this.value.To)
       this.value.inits = this.value.To.split(' ')[0].split('')[0] || 'C';
@@ -201,9 +204,6 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
  $scope.parseCustomm = function(){
 
-    if(this.value.Correspondence.CustomData)
-     this.value.Correspondence.CustomData = JSON.parse(this.value.Correspondence.CustomData);
-
     if(!this.value.inits)
        this.value.Correspondence.inits = 'C';
  }
@@ -215,14 +215,14 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
     }
 
   $rootScope.resetSuiteTower = function(){
-     delete $rootScope.suite;
-     delete $rootScope.tower;
+     $rootScope.suite = null;
+     $rootScope.tower = null;
   }
 
 
   $rootScope.resetTower = function(){
-     delete $rootScope.tower;
-     delete $rootScope.toall;
+     $rootScope.tower = null;
+     $rootScope.toall = null;
   }
 
 
@@ -265,7 +265,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
                return;
 
            $rootScope.loading = true;                        
-           delete $rootScope.photosrc;
+           $rootScope.photosrc = null;
 
            console.log(n);
            
@@ -282,10 +282,10 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
                $rootScope.$apply(function(){
 
-               $rootScope.photosrc = resizeMe(img,350,350); 
+               $rootScope.photosrc = resizeMe(img,500,500); 
                console.log($rootScope.photosrc, 'resize');
 
-                console.log(dataURLToBlob($rootScope.photosrc), 'blob yeah')
+               console.log(dataURLToBlob($rootScope.photosrc), 'blob yeah')
 
                 $rootScope.loading=false; 
 
@@ -349,7 +349,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
     
     document.addEventListener('deviceready', function(){
 
-       pushNotification = window.plugins.pushNotification;
+       pushNotification = window.plugins.pushNotification || window.cordova.plugins.pushNotification;
 
 
     });
@@ -363,7 +363,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
             {
                $scope.error_login = "Todos los campos son requeridos";
                return;
-            }
+          }
 
         $scope._form.grant_type="password";
         $scope._form.login_type="door";
@@ -377,13 +377,17 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
           .post("login_type=door&grant_type=password&username="+$scope._form.username+"&password="+$scope._form.password, {
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             })
-          .success(function(rs){
+          .success(function(rs, code){
+
+             if(code!=200)
+                alert('error');
+
              
               console.log(rs, 'login');
               $storage.save('config',rs);  
               $storage.save('token', rs.access_token)     
               $rootScope.loged=true;          
-              delete $scope._form;   
+              $scope._form = null;   
 
                
 
@@ -404,21 +408,40 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
                function tokenHandler (result) {
  
-                           alert('device token = ' + result);
+                               console.log('device token '+result); 
 
-                               $API
-                                  .register(rs.Registration)
-                                  .put({
-                                    Handle : e.regid,
-                                    platform : 'apns',
+                               try{
+                                 
+                                  $API
+                                  .register()
+                                  .post({
+                                    Handle : result,
+                                    platform : 'apn',
                                     BuildingId : $storage.get('config').buildingId
-                                  })
-                                  .success(function(rs){
+                                  }, {headers : {Authorization : 'Bearer ' + rs.access_token}})
+                                  .success(function(rs, code){
+
+                                       if(code != 500){
                                          console.log('dispositivo registrado');
                                          window.location = "app.html";
+                                          }
+                                        else
+                                          console.log('error registrando dispositivo ', rs);
 
-                                       
                                   })
+                                  .error(function(err){
+                                         console.log(err)
+                                  })
+
+                                }
+                                catch(e){
+
+                                }
+                                finally{
+                                         window.location = "app.html";
+
+                                }
+
 
                      }
 
@@ -428,7 +451,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
 
 
-                    switch( e.event )
+                switch( e.event )
                     {
                     case 'registered':
                         if ( e.regid.length > 0 )
@@ -442,9 +465,14 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
                                     platform : 'gcm',
                                     BuildingId : $storage.get('config').buildingId
                                   }, {headers : {Authorization : 'Bearer ' + rs.access_token}} )
-                                  .success(function(rs){
+                                  .success(function(rs, code){
+
+                                       if(code != 500){
                                          console.log('dispositivo registrado');
                                          window.location = "app.html";
+                                          }
+                                        else
+                                          console.log('error registrando dispositivo ', rs);
                                   })
 
                         }
@@ -504,8 +532,8 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
    
 
-
-      if(window.cordova)        
+      if(window.cordova)    
+      {    
        if ( $rootScope.platform == 'android' || $rootScope.platform == 'Android' || $rootScope.platform == "amazon-fireos" )
                   pushNotification.register(
                   successHandler,
@@ -514,11 +542,8 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
                       "senderID":"148915533168",
                       "ecb":"window.onNotification"
                   });
-        else
-           window.location = "app.html";
-
-       /* else 
-          pushNotification.register(
+         else
+              pushNotification.register(
                     tokenHandler,
                     errorHandler,
                     {
@@ -527,12 +552,19 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
                         "alert":"true",
                         "ecb":"window.onNotificationAPN"
                     });
-        */
+
+       }
+        else
+            window.location = "app.html";
+
+        
+        
 
 
           })
           .error(function(err){
             console.log(err)
+
               $scope.error_login = map_error[err.error.toLowerCase()];
               $rootScope.loading = false;     
 
@@ -556,7 +588,8 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
          
           $storage.delete('config');
          $storage.delete('token');
-
+   
+    if(window.cordova)
          pushNotification.unregister(function(rs){ console.log('Registrado del dispositivo eliminado'); }, function(rs){ console.log(rs); });
 
          window.location.reload();
@@ -580,12 +613,16 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
      .success(function(rs){
 
 
+      console.log(rs,'hey')
+
+
         $rootScope.vstats = {
             approved : rs.Apporveds,
             pending : rs.Pendings,
             rejected : rs.Rejecteds,
             preauthorized : rs.Preauthorizeds,
-            all : (rs.Apporveds + rs.Pendings + rs.Rejecteds + rs.Preauthorizeds)
+            past : rs.Past,
+            all : (rs.Apporveds + rs.Pendings + rs.Rejecteds + rs.Preauthorizeds + rs.Past)
         };
 
          
@@ -805,8 +842,7 @@ $scope.selectAll = function(){
 
            if(callback)
                callback(rs);
-            else
-              $scope.loadView();
+            
 
        })
        .error(function(err){
@@ -930,8 +966,8 @@ $scope.selectAll = function(){
 
 function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $storage, $location, $state, $API) {
 
-    delete $rootScope.photo;
-                 $rootScope.stats();
+     $rootScope.photo = null;
+    $rootScope.stats();
 
 
   
@@ -1018,6 +1054,7 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
     $scope.more = function(state){
 
 
+
       if($rootScope.loading)
         return;
 
@@ -1060,9 +1097,9 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
                .alerta('Visita', 'Visita registrada y notificada')
                .then(function(){
 
-                 delete $scope.form;
-                 delete $rootScope.selected;
-                 delete $rootScope.photosrc;
+                 $scope.form = null;
+                 $rootScope.selected = null;
+                 $rootScope.photosrc = null;
 
                  $rootScope.stats();
                  $rootScope.gohome();
@@ -1098,11 +1135,11 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
 
   console.log($state, 'state');
 
-  $scope.suite = $state.params.id || null;
-  $scope.page = 1;
+  var suite = $state.params.id || null;
+  var page = 1;
   $scope.values = [];
 
-  delete $rootScope.photo;
+  $rootScope.photo = null;
   $mdBottomSheet.hide();
 
   $scope.centerBottomSheet = function(val) {
@@ -1155,6 +1192,7 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
   $rootScope.loading = true;
 
   if(!$rootScope.selected)
+  {
      for(x in $rootScope.correspondence.SuitesId)
         $API
         .deliver()
@@ -1164,12 +1202,18 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
           CorrespondencesIds : [$rootScope.correspondence.Id]
         })
         .success(function(){
+            
             $mdBottomSheet.hide();
-            $rootScope.cstats.Pendings--;
-            $rootScope.cstats.elivereds++;
 
 
         })
+
+        $rootScope.cstats.Pendings--;
+        $rootScope.cstats.delivereds++;
+
+       $scope.values.splice($scope.values.indexOf($rootScope.correspondence),1);
+
+  }
     else
      for(j in $rootScope.selected){
       for(x in $rootScope.selected[j].SuitesId)
@@ -1181,9 +1225,11 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
           CorrespondencesIds : [$rootScope.selected[j].Id]
         })
         .success(function(){
-            $mdBottomSheet.hide();
+         
             $rootScope.cstats.Pendings--;
-            $rootScope.cstats.elivereds++;
+            $rootScope.cstats.delivereds++;
+            $mdBottomSheet.hide();
+
 
         })
 
@@ -1192,7 +1238,6 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
 
 
       }
-
 
        
        $rootScope.alerta('Mensaje', 'Correspondencia(s) Entregada(s)')
@@ -1210,9 +1255,16 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
      document.getElementById('correspondence').click()
    }
 
-    $scope.load = function(page){
+    var state = null;
+
+    $scope.load = function(state){
+
+     state = state;
+
+
       $API
-      .correspondencesall($storage.get('config').buildingId, page || 1)
+      .correspondencee()
+      .add('/building/' + $storage.get('config').buildingId + '/' + state || 'All')
       .get()
       .success(function(correspondences){
 
@@ -1220,13 +1272,19 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
 
 
       });
+
     }
 
+   //  \"All\", \"Pendings\", \"Delivereds\"
+
      $scope.loadMore = function(page){
-    
+
+
+
       if(!$scope.stop)
       $API
-      .correspondencesall($storage.get('config').buildingId, page || 1)
+      .correspondencee()
+      .add('/building/' + $storage.get('config').buildingId + '/' + (state || 'All') + '?page='+page)
       .get()
       .success(function(rs){
 
@@ -1248,7 +1306,6 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
 
     $scope.loadSuite = function(page){
 
-
       $API
       .correspondencee()
       .add('?SuiteId='+$stateParams.id)
@@ -1268,12 +1325,12 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
       if($rootScope.loading)
         return;
 
-        $scope.page++;
+        page++;
 
         if(!where)
-        $scope.loadMore($scope.page);
+        $scope.loadMore(page);
         else
-        $scope.loadMoreSuite($scope.page);
+        $scope.loadMoreSuite(page);
 
     }
 
@@ -1332,9 +1389,11 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
             
               $rootScope
                .alerta('Correspondencia', 'Solicitud Respondida')
-               .then(function(){})
+               .then(function(){
+                  $rootScope.photosrc = null;
+                  window.location = "#/correspondencias/aperturas";
+               })
 
-               window.location = "#/correspondencias/aperturas";
 
         });
 
@@ -1384,7 +1443,7 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
       for(x in $scope.values)
           $scope.values[x].checked=false;
 
-      delete $rootScope.selected;
+     $rootScope.selected = null;
   }
 
 
@@ -1438,13 +1497,22 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
         $API
         .correspondence($storage.get('config').buildingId)
         .post($scope.form)
-        .success(function(rs){
+        .success(function(rs, code){
+
+
+              if(code === 500)
+                $rootScope
+               .alerta('Correspondencia', 'No se pudo registrar la correspondencia')
+               .then(function(){
+                
+                $rootScope.gohome();
+           
+               });
+  
               
                console.log(rs, 'correspondence')
               
-               delete $scope.form;
-               delete $rootScope.selected;
-               delete $rootScope.photosrc;
+                
 
                $rootScope
                .alerta('Correspondencia', 'Correspondencia registrada y notificada')

@@ -43,6 +43,9 @@
 </platform>
 
 <platform name="ios">
+
+    <access origin="*" />
+
   
     <preference name="StatusBarOverlaysWebView" value="true"/>
 
@@ -51,6 +54,10 @@
     <preference name="StatusBarStyle" value="lightcontent" />   
 
     <preference name="DisallowOverscroll" value="true" />
+
+    <feature name="PushPlugin">
+     <param name="ios-package" value="PushPlugin" />
+    </feature>
 
     <feature name="Camera">
         <param name="ios-package" value="CDVCamera" />

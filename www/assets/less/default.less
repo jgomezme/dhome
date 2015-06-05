@@ -207,13 +207,12 @@ p.p-aligned{
   transform: transale3d(0,0,0);
   }
 
-.selected, .selected span, .selected button{
-  background: #f5f5f5 !important;
+.selected, .selected span{
+  //background: #f5f5f5 !important;
 }
 
 .noscroll{
   overflow:hidden !important;
-  
 }
 
 .overlay{
@@ -230,5 +229,35 @@ p.p-aligned{
          margin:0 auto;
          margin-top:1rem;
     }
+
+}
+
+.opt_bar{
+   position:fixed; bottom:0;left:0; width:100%; background:white; border-top:1px solid #ccc;
+}
+
+.chip{
+    background-color: #ebebeb;
+  padding: 7px;
+  border-radius: 99em;
+  font-size: 12px;
+  margin: 0 7px;
+  display: inline-block;
+  margin-top: 10px;
+
+     i.del{
+         display: block;
+  float: right;
+  padding: 3px;
+  background-color: #8B8B8B;
+  border-radius: 99em;
+  margin-left: 3px;
+
+          ng-md-icon{
+              position:relative;
+              top:0;
+          }
+
+     }
 
 }

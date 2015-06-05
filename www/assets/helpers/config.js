@@ -3,19 +3,18 @@
 window.config = {
 	env : "dev",
 	dev : {
-	    apiUrlBase : "http://138.91.189.179:82",
+	    apiUrlBase : "http://dhmysqlserver.cloudapp.net:82",
 	    apiBaseUri : "/api"
 	},
 	qa : {
-	    apiUrlBase : "http://52.5.119.144", 
+	    apiUrlBase : "http://dhmysqlserver.cloudapp.net", 
 	    apiBaseUri : "/api"
 	},
 	prod : {
-	    apiUrlBase : "http://52.5.119.144:83",
+	    apiUrlBase : "http://dhmysqlserver.cloudapp.net:83",
 	    apiBaseUri : "/api"   	    
 	}
 }
-
 
 /*
 window.config = {

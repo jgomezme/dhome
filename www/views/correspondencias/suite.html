@@ -24,7 +24,7 @@
       
       <div class="md-list-item-text" flex ng-click="centerBottomSheet(value)" aria-label="profile" ng-click="goToProfile()">
           
-          <h3>{{ value.CustomData.suite ? 'APTO. ' + value.CustomData.suite + ' (' + value.CustomData.tower + ')' : 'Masivo'  }} {{ value.To ? ' -  ' + value.To : '' }}</h3>          
+          <h3>{{ value.CustomData.suite ? 'APTO. ' + value.CustomData.suite + ' (' + value.CustomData.tower + ')' : 'Masivo'  }} {{ value.To ? ' -  ' + value.To : '' }} - {{value.State}}</h3>          
           <p class="p-aligned">
           fecha: {{ moment(value.CorrespondenceDate).format("MMMM Do YYYY, h:mm a") }} <br>
            {{ value.CustomData.de ?  'de: ' + value.CustomData.de : '' }}
@@ -45,9 +45,6 @@ left: 25px;">
       </div>
       </div>
  
-      <br>
-  
-
 
      </md-list-item> 
 
@@ -57,7 +54,7 @@ left: 25px;">
 
     </section>
 
-      <div layout="row" ng-if="$root.selected.length > 0" flex style="position:fixed; bottom:0;left:0; width:100%; background:white; border-top:1px solid #ccc">
+      <div layout="row" class="opt_bar"  ng-if="$root.selected.length > 0" style="width:{{$root.bbw+'px'}}" flex >
 <div layout="row" flex>
    <md-button ng-click="deliver()" flex>Entregar Correspondencias</md-button>
    </div>

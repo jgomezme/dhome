@@ -52,10 +52,6 @@ angular.module('dhome')
 
                 console.log(config, 'request')
 
-                if(config.data)
-                if(config.data.CustomData)
-                      config.data.CustomData = JSON.stringify(config.data.CustomData);
-
 
 
                 for (x in config.data) {
@@ -76,10 +72,7 @@ angular.module('dhome')
 
                 rootScope.loading = false;
 
-                if(response.data)
-                if(response.data.CustomData)
-                      response.data.CustomData = JSON.parse(response.data.CustomData);
-                
+               
 
                 return response;
 
@@ -125,6 +118,12 @@ angular.module('dhome')
             templateUrl: "views/visitas/prealertadas.html",
             controller: visitasCtrl,
             data : {title:'Prealertadas'}
+        })
+        .state('visitas.caducadas', {
+            url: "/caducadas",
+            templateUrl: "views/visitas/past.html",
+            controller: visitasCtrl,
+            data : {title:'Caducadas'}
         })
         .state('visitas.rechazadas', {
             url: "/rechazadas",
@@ -288,12 +287,21 @@ angular.module('dhome')
            
     });
 
+
+
+   
+
     $rootScope.$on('$viewContentLoaded',
         function(event, toState, toParams, fromState, fromParams) {
 
-            console.log($state);
+             console.log($state);
+
+             $content = $("[ui-view]")[0] || $("[ui-view]");
+
 
             $rootScope.state = $state.current.name;
+            $rootScope.bbw = $($content).width();
+               
   
 
     /**

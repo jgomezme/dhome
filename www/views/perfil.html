@@ -9,19 +9,35 @@
   margin-top: 15px;
   height: 120px;
   width: 120px; background-color:#ebebeb"></div>
-            <form>
+            <form layout="row" >
 
-            <p style="text-align:center">
+            <table style="margin:0 auto;">
 
-            <span ng-cloak flex layout-align="center">{{username}} (Yo)</span>
-            <input ng-model='username' ng-if='editing'>
-            &nbsp;
-            <ng-md-icon ng-click="editing=!editing" ng-if="!editing" icon="edit" style="color:#ccc"></ng-md-icon>
-            <ng-md-icon icon="check" ng-if="editing" ng-click="editing=!editing"></ng-md-icon>
+            <tbody>
+            <tr>
+            <td style="padding-top:10px">
+            <span ng-cloak style="" flex layout-align="center" ng-if="!editing">{{username}}</span>
+            <md-input-container style="margin-top: 10px;" flex ng-if='editing'>
+            <input autofocus ng-model='username' >
+            </md-input-container>
+            </td>
+           
+            <td>
+             &nbsp;
+      
+
+            <span ng-click="console.log('hola');editing=!editing">
+            <ng-md-icon  ng-if="!editing" icon="edit" style="color:#ccc"></ng-md-icon>
+            <ng-md-icon icon="check" ng-if="editing" ></ng-md-icon>
+            </span>
+            </td>
+              </tr>
+            </tbody>
+            </table>
             </form>
     
             <br>    
-            </p>                   
+                              
 
            <md-button class="md-raised md-primary" layout-align="center center" style="  margin: 0 auto;
   display: flex;

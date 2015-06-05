@@ -1,6 +1,6 @@
 
  
- <section on-scroll-bottom='more()' ng-init="load()"  style="overflow:auto; height:100%">
+ <section on-scroll-bottom='more()' ng-init="load('Pendings')"  style="overflow:auto; height:100%">
  
    <div layout="row" >
   <md-button style="" class="md-raised subtlebtn" ng-if="!$root.selected" ng-click="$root.iniSel()" flex>Seleccionar varios</md-button>
@@ -16,7 +16,7 @@
       </md-lis-item>   
      
 
-     <md-list-item class="md-3-line"  ng-init="parseCustom()"  ng-repeat="value in values  | filter:search || '' | orderBy:'-CorrespondenceDate' track by $index" >
+     <md-list-item class="md-3-line"  ng-init="parseCustom()"  ng-repeat="value in values  | filter:search || ''  track by $index" >
 
 
 
@@ -26,7 +26,7 @@
       
       <div class="md-list-item-text" flex  ng-click="centerBottomSheet(value)" aria-label="profile" ng-click="goToProfile()">
           
-            <h3>{{ value.CustomData.suite ? 'APTO. ' + value.CustomData.suite + ' (' + value.CustomData.tower + ')' : 'Masivo'  }} {{ value.To ? ' -  ' + value.To : '' }}</h3>          
+            <h3>{{ value.CustomData.suite ? 'APTO. ' + value.CustomData.suite + ' (' + value.CustomData.tower + ')' : 'Masivo'  }} {{ value.To ? ' -  ' + value.To : '' }} - {{value.State}}</h3>          
           <p class="p-aligned">
           fecha: {{ moment(value.CorrespondenceDate).format("MMMM Do YYYY, h:mm a") }} <br>
            {{ value.CustomData.de ?  'de: '+ value.CustomData.de : ''}}
@@ -48,7 +48,7 @@ left: 25px;">
       </div>
       </div>
  
-      <br>
+<md-divider md-inset ng-if="!$last"></md-divider>
       
 
      </md-list-item> 
@@ -62,7 +62,7 @@ left: 25px;">
 
     </section>
 
-      <div layout="row" ng-if="$root.selected.length > 0" flex style="position:fixed; bottom:0;left:0; width:100%; background:white; border-top:1px solid #ccc">
+      <div layout="row" class="opt_bar"  ng-if="$root.selected.length > 0" style="width:{{$root.bbw+'px'}}" flex >
 <div layout="row" flex>
    <md-button ng-click="deliver()" flex>Entregar Correspondencias</md-button>
    </div>

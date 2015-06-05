@@ -12,7 +12,7 @@
 </div>
      
      
-     <md-list-item class="md-3-line" ng-init="totime()"  ng-repeat="value in values | filter:search || '' | orderBy : '-VisitDate' track by $index" aria-label="swipe">
+     <md-list-item class="md-3-line" ng-init="totime()"  ng-repeat="value in values | filter:search || ''  track by $index" aria-label="swipe">
 
 
 
@@ -30,6 +30,8 @@
           </p>  
                 
     </div>
+
+
     <div layout="column">
         <div layout="row">
               <md-button  class="md-icon-button" ng-click="centerBottomSheet(value)" aria-label="more-center" style="position: relative;
@@ -38,8 +40,8 @@
               </md-button>
         </div>
     </div>
-  <br>
-   <md-divider inset></md-divider>
+<md-divider md-inset ng-if="!$last"></md-divider>
+
 </md-list-item> 
 </md-list>
 

@@ -118,6 +118,5 @@ angular.module('dhome')
         });
       }
     };
-});
-
+})
 ;

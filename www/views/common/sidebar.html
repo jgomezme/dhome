@@ -1,14 +1,14 @@
-<md-sidenav class="md-sidenav-right colored" layout="column" md-component-id="right" md-is-locked-open="$mdMedia('gt-sm')">
-    <md-toolbar hide-gt-sm class="md-theme-light md-whiteframe-glow-z2">
+<md-sidenav class="md-sidenav-right colored" md-swipe-right="menu_right()" layout="column" md-component-id="right" md-is-locked-open="$mdMedia('gt-sm')">
+    <md-toolbar hide-gt-sm class="md-theme-light ">
         <h1 class="md-toolbar-tools">Opciones</h1>
     </md-toolbar>
-    <md-content style="overflow: auto;
-  height: 100%; " >
-        <md-list  flex>
+    <md-content style="overflow:auto; height:95%;">
+    <br>
+        <md-list class="clearfix"  flex>
             <md-item layout="row" flex>
-                <md-item-content  class="docs-menu">
-                    <md-button class="md-button-toggle md-button md-default-theme docs-menu" ng-click="gohome()"   class="docs-menu">
-                      <div  layout="row" > 
+                <md-item-content flex class="docs-menu">
+                    <md-button flex class="md-button-toggle md-button md-default-theme docs-menu" ui-sref="home.suites"  class="docs-menu">
+                      <div  layout="row" flex> 
                        <ng-md-icon icon="home" style="fill:gray;top:5px;position:relative"></ng-md-icon> &nbsp;<span>Home</span>
                       </div>
                     </md-button>                    
@@ -36,7 +36,7 @@
                     <li>
                       <menu-link>
                         <md-button class="md-button md-button-toggle md-default-theme docs-menu" ui-sref="visitas.prealertadas" ng-class="{'active' : Home.selected}">
-                          <span >Prealertadas ({{$root.vstats.preauthorized || 0}})
+                          <span >Prealertadas ({{$root.vstats.preauthorized || 0}})</font> 
                           </span>
                         <div class="md-ripple-container"></div>
                       </md-button>
@@ -66,6 +66,15 @@
                       <menu-link>
                         <md-button class="md-button md-button-toggle md-default-theme docs-menu" ui-sref="visitas.rechazadas" ng-class="{'active' : Home.selected}">
                           <span >Rechazadas ({{$root.vstats.rejected || 0}})
+                          </span>
+                        <div class="md-ripple-container"></div>
+                      </md-button>
+                    </menu-link>
+                  </li>
+
+                   <menu-link>
+                        <md-button class="md-button md-button-toggle md-default-theme docs-menu" ui-sref="visitas.caducadas" ng-class="{'active' : Home.selected}">
+                          <span >Caducadas ({{$root.vstats.past || 0}})
                           </span>
                         <div class="md-ripple-container"></div>
                       </md-button>
@@ -108,7 +117,7 @@
                     <li >
                       <menu-link>
                         <md-button ui-sref="correspondencias.aperturas" class="md-button md-button-toggle md-default-theme docs-menu" ui-sref="" ng-class="{'active' : Home.selected}">
-                          <span >Solicitudes de Apertura ({{$root.cstats.OpenRequests}})
+                          <span >Solicitudes de Apertura ({{$root.cstats.OpenRequests || 0}})
                           </span>
                         <div class="md-ripple-container"></div>
                       </md-button>
@@ -118,7 +127,7 @@
                     <li>
                       <menu-link>
                         <md-button class="md-button md-button-toggle md-default-theme docs-menu" ui-sref="correspondencias.porentregar" ng-class="{'active' : Home.selected}">
-                          <span >Correspondencia por entregar ({{$root.cstats.Pendings}})
+                          <span >Correspondencia por entregar ({{$root.cstats.Pendings || 0}})
                           </span>
                         <div class="md-ripple-container"></div>
                       </md-button>
@@ -129,7 +138,7 @@
                      <li>
                       <menu-link>
                         <md-button class="md-button md-button-toggle md-default-theme docs-menu"  ui-sref="correspondencias.todas" ng-class="{'active' : Home.selected}">
-                          <span>Todas ({{$root.cstats.Pendings + $root.cstats.Delivereds}})
+                          <span>Todas ({{$root.cstats.Pendings + $root.cstats.Delivereds || 0}})
                           </span>
                         <div class="md-ripple-container"></div>
                       </md-button>

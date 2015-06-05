@@ -17,7 +17,7 @@
 
         <md-list-item ng-class="{'selected':this.value.checked}"  aria-label="item"  class="md-3-line" aria-label="suite" ng-repeat="value in values | filter:search || '' track by $index">
         <div  flex>
-          <h3 style="font-weight:normal" ng-click="suiteBottomSheet()" flex>APTO. {{value.suite.Name}}</h3>
+          <h3 style="font-weight:normal" ng-click="suiteBottomSheet()" flex>{{value.suite.Name.match("Admin") ? '' : 'APTO.' }} {{value.suite.Name}}</h3>
 
           </div>
             <div>
@@ -33,12 +33,14 @@ left: 25px;">
       </md-button>
       </div>
             </div>
+<md-divider md-inset ng-if="!$last"></md-divider>
+
         </md-list-item>
      </md-list>
 </div>
 <br>
 <br>
-<div layout="row" ng-if="$root.selected.length > 0" flex style="position:fixed; bottom:0;left:0; width:100%; background:white; border-top:1px solid #ccc">
+<div layout="row"  class="opt_bar" ng-if="$root.selected.length > 0" style="width:{{$root.bbw+'px'}}" flex >
 <div layout="row" flex>
    <md-button ui-sref="nueva-correspondencia" flex>Correspondencia a seleccionados</md-button>
    </div>

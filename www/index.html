@@ -32,6 +32,7 @@
           
           <form ng-submit="login()"  hide-sm layout-align="center" style="margin:0 auto" flex="33" aria-label="login" ng-model="_form" autocomplete='off' >
 
+      
 
           <br>
           <br>
@@ -43,9 +44,16 @@
           <br>
           <md-content  style="padding:4rem; border-radius:1rem;   background-color: rgba(255, 255, 255, 0.83);" >
 
-            <div layout="row" layout-align="space-around" ng-show="loading">
-              <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-            </div>
+               <div  layout-align="space-around" ng-show="loading">
+              <md-progress-circular md-mode="indeterminate" style="margin: 0 auto;
+  left: 5px;"></md-progress-circular>
+               <br>
+      
+            <p style="text-align: center;
+  position: relative;">  Cargando... </p>
+
+        </div>
+
             <div ng-show="!loading">
               <md-input-container flex>
 
@@ -76,7 +84,7 @@
 </md-content>
               </form>
 
-                        <form hide-gt-sm layout-align="center" ng-submit="login()" style="margin:0 auto" ng-model="form" autocomplete='off'>
+                        <form hide-gt-sm layout-align="center" ng-submit="login()" style="margin:0 auto" ng-model="_form" autocomplete='off'>
           <br>
           <br>
           <br>
@@ -86,17 +94,25 @@
           </label>
           <br>
           <md-content  style="padding:4rem; border-radius:1rem;   background-color: rgba(255, 255, 255, 0.83);" >
-            <div layout="row" layout-align="space-around" ng-show="loading">
-              <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-            </div>
+            
+            <div  layout-align="space-around" ng-show="loading">
+              <md-progress-circular md-mode="indeterminate" style="margin: 0 auto;
+  left: 5px;"></md-progress-circular>
+               <br>
+      
+            <p style="text-align: center;
+  position: relative;">  Cargando... </p>
+
+        </div>
+
             <div ng-show="!loading">
               <md-input-container flex>
                 <label>Nombre de Usuario *</label>
-                <input ng-model="form.username"  placeholder="Usuario">
+                <input ng-model="_form.username"  placeholder="Usuario">
               </md-input-container>
                <md-input-container flex>
                 <label>Contraseña *</label>
-                <input type="password" ng-model="form.password" >
+                <input type="password" ng-model="_form.password" >
               </md-input-container>
 
              
