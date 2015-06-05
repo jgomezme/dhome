@@ -5,39 +5,31 @@
             <br>
             <h4>Notificar Visita</h4>
             <br>
-            <form ng-model="form">
+            
+            <form name="formm" ng-model="_form">
+              
                 <md-input-container flex>
                     <label>Nombre del Visitante *</label>
-                    <input required ng-model="form.VisitName">
+                    <input required ng-model="_form.VisitName">
                 </md-input-container>
                 <md-input-container flex>
                     <label>Nombre del la Empresa </label>
-                    <input ng-model="form.Empresa">
+                    <input ng-model="_form.Empresa">
                 </md-input-container>
                 <md-input-container flex>
-                    <label>No. Documento del Visitante *</label>
-                    <input required ng-model="form.VisitIdentification" layout="column" flex>
+                    <label>No. Documento del Visitante </label>
+                    <input  ng-model="_form.VisitIdentification" layout="column" flex>
                 </md-input-container>
                 <md-input-container>
                     <label>Mótivo u Observación de la Visita</label>
-                    <textarea ng-model="form.Reason" columns="1" md-maxlength="150"></textarea>
-                </md-input-container>
-
-                <md-input-container flex>
-                    <label>Fecha del la Visita *</label>
-                    <input type="date" required ng-model="form.Fecha">
-                </md-input-container>
-
-                <md-input-container flex>
-                    <label>Hora del la Visita</label>
-                    <input type="time"  ng-model="form.Hora">
-                </md-input-container>
+                    <textarea ng-model="_form.Reason" columns="1" md-maxlength="150"></textarea>
+                </md-input-container>   
           
                
         </md-content>
         <br>
         <md-content layout="row" flex layout-align="end">
-            <md-button class="md-raised md-primary" ng-disabled="form.$invalid || $root.loading" ng-click="add()">Enviar</md-button>
+            <md-button class="md-raised md-primary" ng-disabled="formm.$invalid || $root.loading" ng-click="prealertar()">Enviar</md-button>
         </md-content>
         </form>
     </div>

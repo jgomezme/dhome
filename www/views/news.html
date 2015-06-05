@@ -1,7 +1,7 @@
 <!-- bloque - aptos -->
+<div on-scroll-bottom='more()' style="overflow:auto; height:95%; ">
 
-
-<section >
+<section  style="overflow:auto">
 <br>
 <br>
  <md-content class="nobg">
@@ -34,7 +34,7 @@
 
               <md-input-container style="  padding-bottom: 7px;">
                  <label> Qué deseas publicar? </label>
-                <textarea required style="line-height:1.4" ng-model="formm.Notice.Description" columns="1" ></textarea>
+                <textarea style="line-height:1.4" ng-model="formm.Notice.Description" columns="1" ></textarea>
                  
               </md-input-container>
             </fieldset>
@@ -67,30 +67,33 @@
    <section ng-init="load()">
    <div ng-init="parseCustom()" ng-repeat="value in values | orderBy : '-RegisterDate' ">
    <md-card >
-      <md-card-content class="post-title" >
+      <md-card-content class="post-title" style="padding-bottom: 0px;">
      <h4 >
       <div class="post-photo" style="background:url({{value.Notice.CustomData.userpic || 'http://success.grownupgeek.com/wp-content/uploads/2013/01/no-avatar.png'}}) no-repeat; background-position: center; background-size: cover;">
      
       </div>
 
-     {{value.Notice.CustomData.userfullname || 'Sergio Giraldo'}} </h4>
+     {{value.CustomData.userfullname || 'Pedro Perea'}} </h4>
      <small class="post-date">{{moment(value.RegisterDate).fromNow()}}</small>
      </md-card-content>
-      <img ng-if="value.Notice.CustomData.image" ng-src="{{$root.apiurl + '/images?buildingid='+ $root.building + '&name=' + value.Notice.CustomData.image}}" class="md-card-image" alt="Washed Out">
-      <md-card-content>
-        <h3 class="md-title" ng-if="value.Notice.CustomData.title">{{value.Notice.CustomData.title}}</h3>
-        <p>
-          {{value.Description}}
+
+        <md-card-content style="  padding-bottom: 0;">
+        <h3 class="md-title" ng-if="value.Notice.CustomData.title">{{value.CustomData.title}}</h3>
+        <p style="padding:0">
+          {{ value.Description}}
            <br>
            <br>
-          <md-button class="md-primary" style="text-transform: initial;" ng-if="value.Notice.CustomData.file" tartget="_blank" ng-click="viewFile()">Archivo <ng-md-icon icon="attach_file" class="gray" size="18"></ng-md-icon></md-button>
+          <md-button class="md-primary" style="text-transform: initial;" ng-if="value.CustomData.file" tartget="_blank" ng-click="viewFile()">Archivo <ng-md-icon icon="attach_file" class="gray" size="18"></ng-md-icon></md-button>
         </p>
 
-      </md-card-content>
+      </md-card-content> 
+
+      <img ng-if="value.CustomData.image" ng-src="{{$root.apiurl + '/images?buildingid='+ $root.building + '&name=' + value.CustomData.image}}" class="md-card-image" alt="Washed Out">
+   
       <md-divider></md-divider>
       <md-card-content>
 
-      <small>{{value.Notice.CustomData.agree || 0}} Recibido · {{value.Notice.CustomData.comments || 0}} Comentarios</small>
+      <small>{{value.CustomData.agree || 0}} Recibido · {{value.CustomData.comments || 0}} Comentarios</small>
       </md-card-content>
       <md-divider></md-divider>
       <div class="md-actions" layout="row" layout-align="end center">
@@ -113,9 +116,9 @@
     <br>
 </div>
 
-  </section>
- </md-content>
 
+   </section>
+   </div>
 
 <br>
 <br>

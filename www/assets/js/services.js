@@ -37,15 +37,17 @@ function API($http,$rootScope){
 	  this.post_visit = function(id){  this.url = this.baseUrl + "/visitis?suiteid=" + id; return this; }
 	 
 	  this.correspondence = function(id){ this.url = this.baseUrl + "/correspondence?BuildingId="+id; return this; }
-	  this.correspondence = function(id){ this.url = this.baseUrl + "/correspondence?BuildingId="+id; return this; }
+	  this.correspondencee = function(id){ if(!id)this.url = this.baseUrl + "/correspondence"; else this.url = this.baseUrl + "/correspondence/"+id; return this; }
+	  
 	  this.visitsall = function(id){ this.url = this.baseUrl + "/visitis/bybuilding/" + id+"?page=1&pageSize=500"; return this; }
 	  this.correspondencesall = function(id){ this.url = this.baseUrl + "/correspondence/ByBuilding/" + id+"?page=1&pageSize=500"; return this; }
 	  this.user = function(){ this.url = this.baseUrl + "/account/userinfo"; return this; }
 	  this.file = function(id){ this.url = this.baseUrl + "/images?buildingid="+id; return this; }
 	  this.notices = function(id){ this.url = this.baseUrl + "/notices?buildingid="+id; return this; }
 	  this.noticess = function(id){ this.url = this.baseUrl + "/notices/"+id; return this; }
+	  this.noticesss = function(){ this.url = this.baseUrl + "/notices"; return this; }
 	  this.deliver = function(){ this.url = this.baseUrl + "/deliveries"; return this; }
-	
+	  this.correspondenceStats = function(id){ this.url = this.baseUrl + "/correspondence/summary/" + id;  return this; }
 
 
 

@@ -1,80 +1,344 @@
-<!-- menu visitas -->
-<section class="white">
-    <div layout="row">
-        <md-content class="white" layout-padding flex>
-         
-            <div class="menu-toggle">
+  <section>
+<md-content class="responsive">
+    <br>
+
+     <md-list  flex>
+          
+            <md-item ng-if="$root.userRole=='Administrador'" layout="row" flex>
+                   <md-item-content flex class="docs-menu">
+                <div class="menu-toggle">
                 <ul class="docs-menu" >
                   <li>
-                    <md-button class="md-button-toggle md-button md-default-theme docs-menu"   aria-controls="docs-menu-Demos"  class="docs-menu">
+                    <md-button class="md-button-toggle md-button md-default-theme docs-menu"  ng-click="Myv= !Myv; loadMy();"   aria-controls="docs-menu-Demos" aria-expanded="true" class="docs-menu">
+                      <div flex layout="row" > 
+                       <span>Mis Visitas Pendientes</span>
+                        <span flex=""></span>
+                        <span aria-hidden="true" class="md-toggle-icon" ng-class="{'toggled' : Myv}">
+                          <md-icon md-svg-src="md-toggle-arrow" class="ng-isolate-scope md-default-theme" style="height:40px;"></md-icon>
+                        </span>
+                      </div>
                       <div class="md-ripple-container"></div>
                     </md-button>                    
                   </li>
                 </ul>
-                <ul ng-show="true" id="docs-menu-Demos" class="menu-toggle-list">
-               
-                  <li>
-                      <menu-link style="margin-left:0.7em;" >
-                        <md-button class="md-button md-button-toggle md-default-theme docs-menu" ui-sref="correspondencias.porentregar" ng-class="{'active' : Home.selected}">
-                          <span >En Espera (3)
-                          </span>
-                        <div class="md-ripple-container"></div>
-                      </md-button>
-                    </menu-link>
-                  </li>
-         
+                <md-content style="margin-left:20px" ng-show="Myv" id="docs-menu-Demos" class="menu-toggle-list">
+              
 
-                      <li>
-                        <menu-link style="margin-left:0.7em;" >
-                        <md-button class="md-button md-button-toggle md-default-theme docs-menu" ui-sref="correspondencias.porentregar" ng-class="{'active' : Home.selected}">
-                          <span >Pre-Alertadas (4)
-                          </span>
-                        <div class="md-ripple-container"></div>
-                      </md-button>
-                    </menu-link>
-                  </li>
+                  <md-list>
 
-                        <li>
-                        <menu-link style="margin-left:0.7em;" >
-                        <md-button class="md-button md-button-toggle md-default-theme docs-menu" ui-sref="correspondencias.porentregar" ng-class="{'active' : Home.selected}">
-                          <span >Rechazadas (3)
-                          </span>
-                        <div class="md-ripple-container"></div>
-                      </md-button>
-                    </menu-link>
-                  </li>
-
-                        <li>
-                        <menu-link style="margin-left:0.7em;" >
-                        <md-button class="md-button md-button-toggle md-default-theme docs-menu" ui-sref="correspondencias.porentregar" ng-class="{'active' : Home.selected}">
-                          <span >Recibidas (2)
-                          </span>
-                        <div class="md-ripple-container"></div>
-                      </md-button>
-                    </menu-link>
-                  </li>
+          <md-list-item class="md-3-line" ng-init="totime()"  ng-repeat="value in values | filter:search || '' track by $index" aria-label="swipe">
 
 
-                        <li>
-                        <menu-link style="margin-left:0.7em;" >
-                        <md-button class="md-button md-button-toggle md-default-theme docs-menu" ui-sref="correspondencias.porentregar" ng-class="{'active' : Home.selected}">
-                          <span >Historico (12)
-                          </span>
-                        <div class="md-ripple-container"></div>
-                      </md-button>
-                    </menu-link>
-                  </li>
-    
-                </ul>                  
-                </div>
-      <md-button style="position:fixed; bottom:12%; left:80% ;background-color: rgb(13, 1, 192); right: 10px;" class="md-fab md-default-theme" ui-sref="notificar_visita" >
-    <ng-md-icon icon="add" style="fill:white; top: 15px; "></ng-md-icon>
-    </md-button>
-        </md-content>
-        <br>
-       
-        </form>
+
+      <div class="md-avatar" style="background:#ebebeb; text-align:center; line-height:2.5; text-transform:uppercase"  aria-label="profile">
+       {{value.inits}}
+      </div>
+      
+      <div class="md-list-item-text" flex  aria-label="profile" ng-click='true' ui-sref="detalle_visitas({id:this.value.Id})">
+          
+<h3>{{ (value.CustomData.suite ?  'APTO.' + value.CustomData.suite: '') + ( value.CustomData.tower  ? ' ('+value.CustomData.tower + ') - ' : ' ' ) + value.VisitName }}</h3>          
+            <p class="p-aligned">
+          {{ 'Fecha: ' + moment(value.VisitDate).format("MMMM Do YYYY, h:mm a") }}
+          <br>
+          {{ 'Residente: ' + (value.LookingFor || $root.nothing) }}
+          </p>  
+                
     </div>
 
+       <div layout="column" ng-if="$root.userRole === 'Administrador'">
+        <md-button ng-click="autorize(this.value.Id, true)">
+         <ng-md-icon icon="check" style="fill:gray"></ng-md-icon>
+        
+        </md-button>
 
-</section>
+        <md-button ng-click="autorize(this.value.Id)">
+         <ng-md-icon icon="close" style="fill:gray"></ng-md-icon>
+        </md-button>
+    </div>
+
+</md-list-item> 
+
+</md-list>
+
+                  
+                </md-content>                
+                </div>
+                </md-item-content>
+            </md-item>
+
+    <md-list  flex>
+          
+            <md-item layout="row" flex>
+                   <md-item-content flex class="docs-menu">
+                <div class="menu-toggle">
+                <ul class="docs-menu" >
+                  <li>
+                    <md-button class="md-button-toggle md-button md-default-theme docs-menu"  ng-click="Myv= false;values=[];Preshow  = !Preshow;load('Prealerteds',true);"   aria-controls="docs-menu-Demos" aria-expanded="true" class="docs-menu">
+                      <div flex layout="row" > 
+                       <span>Prealertadas ({{$root.vstats.preauthorized}})</span>
+                        <span flex=""></span>
+                        <span aria-hidden="true" class="md-toggle-icon" ng-class="{'toggled' : Preshow}">
+                          <md-icon md-svg-src="md-toggle-arrow" class="ng-isolate-scope md-default-theme" style="height:40px;"></md-icon>
+                        </span>
+                      </div>
+                      <div class="md-ripple-container"></div>
+                    </md-button>                    
+                  </li>
+                </ul>
+                <md-content style="margin-left:20px" ng-show="Preshow" id="docs-menu-Demos" class="menu-toggle-list">
+              
+
+                  <md-list>
+
+          <md-list-item class="md-3-line" ng-init="totime()"  ng-repeat="value in values | filter:search || '' track by $index" aria-label="swipe">
+
+
+
+      <div class="md-avatar" style="background:#ebebeb; text-align:center; line-height:2.5; text-transform:uppercase"  aria-label="profile">
+       {{value.inits}}
+      </div>
+      
+      <div class="md-list-item-text" flex  aria-label="profile" ng-click='true' ui-sref="detalle_visitas({id:this.value.Id})">
+          
+<h3>{{ (value.CustomData.suite ?  'APTO.' + value.CustomData.suite: '') + ( value.CustomData.tower  ? ' ('+value.CustomData.tower + ') - ' : ' ' ) + value.VisitName }}</h3>          
+            <p class="p-aligned">
+          {{ 'Fecha: ' + moment(value.VisitDate).format("MMMM Do YYYY, h:mm a") }}
+          <br>
+          {{ 'Residente: ' + (value.LookingFor || $root.nothing) }}
+          </p>  
+                
+    </div>
+
+</md-list-item> 
+
+</md-list>
+
+                  
+                </md-content>                
+                </div>
+                </md-item-content>
+            </md-item>
+
+
+     
+
+             <md-item layout="row" flex>
+                   <md-item-content flex class="docs-menu">
+                <div class="menu-toggle">
+                <ul class="docs-menu" >
+                  <li>
+                    <md-button class="md-button-toggle md-button md-default-theme docs-menu"  ng-click="Myv= false;values=[];Pendshow  = !Pendshow; load('Pendings',true)"   aria-controls="docs-menu-Demos" aria-expanded="true" class="docs-menu">
+                      <div flex layout="row" > 
+                       <span>Pendiente Aprobación ({{$root.vstats.pending}})</span>
+                        <span flex=""></span>
+                        <span aria-hidden="true" class="md-toggle-icon" ng-class="{'toggled' : Pendshow}">
+                          <md-icon md-svg-src="md-toggle-arrow" class="ng-isolate-scope md-default-theme" style="height:40px;"></md-icon>
+                        </span>
+                      </div>
+                      <div class="md-ripple-container"></div>
+                    </md-button>                    
+                  </li>
+                </ul>
+                <md-content style="margin-left:20px" ng-show="Pendshow" id="docs-menu-Demos" class="menu-toggle-list">
+              
+                  <md-list>
+
+          <md-list-item class="md-3-line" ng-init="totime()"  ng-repeat="value in values | filter:search || '' track by $index" aria-label="swipe">
+
+
+
+      <div class="md-avatar" style="background:#ebebeb; text-align:center; line-height:2.5; text-transform:uppercase"  aria-label="profile">
+       {{value.inits}}
+      </div>
+      
+      <div class="md-list-item-text" flex  aria-label="profile" ng-click='true' ui-sref="detalle_visitas({id:this.value.Id})">
+          
+<h3>{{ (value.CustomData.suite ?  'APTO.' + value.CustomData.suite: '') + ( value.CustomData.tower  ? ' ('+value.CustomData.tower + ') - ' : ' ' ) + value.VisitName }}</h3>          
+            <p class="p-aligned">
+          {{ 'Fecha: ' + moment(value.VisitDate).format("MMMM Do YYYY, h:mm a") }}
+          <br>
+          {{ 'Residente: ' + (value.LookingFor || $root.nothing) }}
+          </p>  
+                
+    </div>
+
+    <div layout="column" ng-if="$root.userRole === 'Residente'">
+        <md-button ng-click="autorize()">
+         <ng-md-icon icon="check" style="fill:gray"></ng-md-icon>
+        </md-button>
+
+        <md-button ng-click="decline()">
+         <ng-md-icon icon="close" style="fill:gray"></ng-md-icon>
+        </md-button>
+    </div>
+
+</md-list-item> 
+
+</md-list>
+                  
+                </md-content>                
+                </div>
+                </md-item-content>
+            </md-item>
+
+
+             <md-item layout="row" flex>
+                   <md-item-content flex class="docs-menu">
+                <div class="menu-toggle">
+                <ul class="docs-menu" >
+                  <li>
+                    <md-button class="md-button-toggle md-button md-default-theme docs-menu"  ng-click="Myv= false;values = []; Aproshow  = !Aproshow; load('Aproveds',true);"   aria-controls="docs-menu-Demos" aria-expanded="true" class="docs-menu">
+                      <div flex layout="row" > 
+                       <span>Aprobadas ({{$root.vstats.approved}})</span>
+                        <span flex=""></span>
+                        <span aria-hidden="true" class="md-toggle-icon" ng-class="{'toggled' : Aproshow}">
+                          <md-icon md-svg-src="md-toggle-arrow" class="ng-isolate-scope md-default-theme" style="height:40px;"></md-icon>
+                        </span>
+                      </div>
+                      <div class="md-ripple-container"></div>
+                    </md-button>                    
+                  </li>
+                </ul>
+                <md-content style="margin-left:20px" ng-show="Aproshow" id="docs-menu-Demos" class="menu-toggle-list">
+              
+               <md-list>
+
+          <md-list-item class="md-3-line" ng-init="totime()"  ng-repeat="value in values | filter:search || '' track by $index" aria-label="swipe">
+
+
+
+      <div class="md-avatar" style="background:#ebebeb; text-align:center; line-height:2.5; text-transform:uppercase"  aria-label="profile">
+       {{value.inits}}
+      </div>
+      
+      <div class="md-list-item-text" flex  aria-label="profile" ng-click='true' ui-sref="detalle_visitas({id:this.value.Id})">
+          
+<h3>{{ (value.CustomData.suite ?  'APTO.' + value.CustomData.suite: '') + ( value.CustomData.tower  ? ' ('+value.CustomData.tower + ') - ' : ' ' ) + value.VisitName }}</h3>          
+            <p class="p-aligned">
+          {{ 'Fecha: ' + moment(value.VisitDate).format("MMMM Do YYYY, h:mm a") }}
+          <br>
+          {{ 'Residente: ' + (value.LookingFor || $root.nothing) }}
+          </p>  
+                
+    </div>
+
+</md-list-item> 
+
+</md-list>
+                  
+                </md-content>                
+                </div>
+                </md-item-content>
+            </md-item>
+
+
+            <md-item layout="row" flex>
+                   <md-item-content flex class="docs-menu">
+                <div class="menu-toggle">
+                <ul class="docs-menu" >
+                  <li>
+                    <md-button class="md-button-toggle md-button md-default-theme docs-menu"  ng-click="Myv= false;values = []; Decshow  = !Decshow; load('Denieds', true);"   aria-controls="docs-menu-Demos" aria-expanded="true" class="docs-menu">
+                      <div flex layout="row" > 
+                       <span>Rechazadas ({{$root.vstats.rejected}})</span>
+                        <span flex=""></span>
+                        <span aria-hidden="true" class="md-toggle-icon" ng-class="{'toggled' : Decshow}">
+                          <md-icon md-svg-src="md-toggle-arrow" class="ng-isolate-scope md-default-theme" style="height:40px;"></md-icon>
+                        </span>
+                      </div>
+                      <div class="md-ripple-container"></div>
+                    </md-button>                    
+                  </li>
+                </ul>
+                <md-content style="margin-left:20px" ng-show="Decshow" id="docs-menu-Demos" class="menu-toggle-list">
+              
+               <md-list>
+
+          <md-list-item class="md-3-line" ng-init="totime()"  ng-repeat="value in values | filter:search || '' track by $index" aria-label="swipe">
+
+
+
+      <div class="md-avatar" style="background:#ebebeb; text-align:center; line-height:2.5; text-transform:uppercase"  aria-label="profile">
+       {{value.inits}}
+      </div>
+      
+      <div class="md-list-item-text" flex  aria-label="profile" ng-click='true' ui-sref="detalle_visitas({id:this.value.Id})">
+          
+<h3>{{ (value.CustomData.suite ?  'APTO.' + value.CustomData.suite: '') + ( value.CustomData.tower  ? ' ('+value.CustomData.tower + ') - ' : ' ' ) + value.VisitName }}</h3>          
+            <p class="p-aligned">
+          {{ 'Fecha: ' + moment(value.VisitDate).format("MMMM Do YYYY, h:mm a") }}
+          <br>
+          {{ 'Residente: ' + (value.LookingFor || $root.nothing) }}
+          </p>  
+                
+    </div>
+
+</md-list-item> 
+
+</md-list>
+                  
+                </md-content>                
+                </div>
+                </md-item-content>
+            </md-item>
+
+
+            <md-item layout="row" flex>
+                   <md-item-content flex class="docs-menu">
+                <div class="menu-toggle">
+                <ul class="docs-menu" >
+                  <li>
+                    <md-button class="md-button-toggle md-button md-default-theme docs-menu"  ng-click="Myv= false;values = []; Pastshow  = !Pastshow; load('Past', true);"   aria-controls="docs-menu-Demos" aria-expanded="true" class="docs-menu">
+                      <div flex layout="row" > 
+                       <span>Caducadas ({{$root.vstats.past}})</span>
+                        <span flex=""></span>
+                        <span aria-hidden="true" class="md-toggle-icon" ng-class="{'toggled' : Pastshow}">
+                          <md-icon md-svg-src="md-toggle-arrow" class="ng-isolate-scope md-default-theme" style="height:40px;"></md-icon>
+                        </span>
+                      </div>
+                      <div class="md-ripple-container"></div>
+                    </md-button>                    
+                  </li>
+                </ul>
+                <md-content layout-pading style="margin-left:20px" ng-show="Pastshow" id="docs-menu-Demos" class="menu-toggle-list">
+                  
+                <md-list>
+
+          <md-list-item class="md-3-line" ng-init="totime()"  ng-repeat="value in values | filter:search || '' track by $index" aria-label="swipe">
+
+
+
+      <div class="md-avatar" style="background:#ebebeb; text-align:center; line-height:2.5; text-transform:uppercase"  aria-label="profile">
+       {{value.inits}}
+      </div>
+      
+      <div class="md-list-item-text" flex  aria-label="profile" ng-click='true' ui-sref="detalle_visitas({id:this.value.Id})">
+          
+<h3>{{ (value.CustomData.suite ?  'APTO.' + value.CustomData.suite: '') + ( value.CustomData.tower  ? ' ('+value.CustomData.tower + ') - ' : ' ' ) + value.VisitName }}</h3>          
+            <p class="p-aligned">
+          {{ 'Fecha: ' + moment(value.VisitDate).format("MMMM Do YYYY, h:mm a") }}
+          <br>
+          {{ 'Residente: ' + (value.LookingFor || $root.nothing) }}
+          </p>  
+                
+    </div>
+
+</md-list-item> 
+
+</md-list>
+                  
+                </md-content>                
+                </div>
+                </md-item-content>
+            </md-item>
+          
+
+        </md-list>
+
+        </md-content>
+          </section>
+
+
+            <md-button ui-sref="notificar_visita" style="position:fixed; right:10px; bottom:10%" class="md-fab md-primary" aria-label="Eat cake">
+            <ng-md-icon icon="add" style="position: relative;
+    top: 15px; fill:white"></ng-md-icon>
+        </md-button>

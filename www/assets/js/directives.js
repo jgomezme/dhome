@@ -165,4 +165,21 @@ angular.module('dhome')
 .directive('fileModel', fileModel)
 .directive('mdPhotoCapture', photo)
 .directive('ngMdSearch', search)
+.directive('onScrollBottom', function() {
+    return {
+      restrict: 'A',
+      link: function(scope, elem, attrs) {
+        elem.on('scroll', function(){
+
+          /* If reached bottom */
+          if ( elem[0].scrollHeight == elem[0].scrollTop + elem[0].clientHeight ) {
+            /* Do what is specified by onScrollBottom */
+            scope.$apply(function(){
+              scope.$eval(attrs.onScrollBottom);
+            });
+          }
+        });
+      }
+    };
+})
 ;

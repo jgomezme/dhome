@@ -46,18 +46,11 @@ angular.module('dhome')
                 if (!window.localStorage.token)
                     window.location = "index.html";
 
+
+                
+
                 console.log(config, 'request')
 
-                if(config.data){
-                
-                if(config.data.CustomData)
-                      config.data.CustomData = JSON.stringify(config.data.CustomData);
-
-                if(config.data.Notice)
-                      config.data.Notice.CustomData = JSON.stringify(config.data.Notice.CustomData);
-
-
-                   }
 
 
                 $httpProvider.defaults.headers.common['Authorization'] = 'Bearer ' + window.localStorage.token; // common
@@ -80,9 +73,9 @@ angular.module('dhome')
 
                 rootScope.loading = false;
 
-                if(response.data)
-                if(response.data.CustomData)
-                      response.data.CustomData = JSON.parse(response.data.CustomData);
+               // if(response.data)
+                //if(response.data.CustomData)
+                     // response.data.CustomData = JSON.parse(response.data.CustomData);
                 
 
                 return response;
@@ -146,12 +139,13 @@ angular.module('dhome')
             controller: visitasCtrl,
             data : {title:'Todas'}
         })
+        */
         .state('detalle_visitas', {
             url: "/detalle_visita/:id",
             templateUrl: "views/detalle_visita.html",
             controller: detalleVisitaController,
             data : {title:'Visita'}
-        }) */
+        }) 
         .state('detalle_correspondencia', {
             url: "/detalle_correspondencia/{value}",
             templateUrl: "views/detalle_correspondencia.html",
@@ -194,12 +188,19 @@ angular.module('dhome')
             controller: visitasCtrl,
             data : {title:'Mensajes'}            
         })      
-      /*   .state('correspondencias', {
+       .state('correspondencias', {
             url: "/correspondencias",
             templateUrl: "views/correspondencias.html",
             controller: correspondenceCtrl,
             data : {title:'Correspondencias'}            
         })
+        .state('correspondencias.detalle', {
+            url: "/detalle/:id",
+            templateUrl: "views/correspondencias/detalle.html",
+            controller: correspondenceCtrl,
+            data : {title:'Correspondencias'}            
+        })
+       /*
         .state('correspondencias.todas', {
             url: "/todas",
             templateUrl: "views/correspondencias/todas.html",
@@ -233,7 +234,7 @@ angular.module('dhome')
          .state('notificar_visita', {
             url: "/notificar_visita",
             templateUrl: "views/visitas/notificar_visita.html",
-            controller: mainCtrl,
+            controller: visitasCtrl,
             data : {title: 'Visitas' }                             
         })    
          .state('areas', {
@@ -259,13 +260,13 @@ angular.module('dhome')
         .state('menu_correspondencias', {
             url: "/menu_correspondencias",
             templateUrl: "views/correspondencias/menu_correspondencias.html",
-            controller: mainCtrl,
+            controller: correspondenceCtrl,
             data : {title: 'Correspondencias' }                             
         })
          .state('menu_visitas', {
             url: "/menu_visitas",
             templateUrl: "views/visitas/menu_visitas.html",
-            controller: mainCtrl,
+            controller: visitasCtrl,
             data : {title: 'Visitas' }                             
         })
         .state('home.towers', {
