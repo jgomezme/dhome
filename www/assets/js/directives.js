@@ -182,4 +182,16 @@ angular.module('dhome')
       }
     };
 })
+.directive('mdPoster', function(){
+       return {
+          restrict : 'E',
+          replace : true,
+          controller : newsCtrl,
+          link : function(scope){
+              scope.$parent.search = scope.search;
+          },
+          templateUrl : 'views/components/poster.html'
+      }
+})
+
 ;

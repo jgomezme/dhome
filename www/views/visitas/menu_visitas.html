@@ -163,11 +163,12 @@
     </div>
 
     <div layout="column" ng-if="$root.userRole === 'Residente'">
-        <md-button ng-click="autorize()">
+        <md-button ng-click="autorize(this.value.Id, true)">
          <ng-md-icon icon="check" style="fill:gray"></ng-md-icon>
+        
         </md-button>
 
-        <md-button ng-click="decline()">
+        <md-button ng-click="autorize(this.value.Id)">
          <ng-md-icon icon="close" style="fill:gray"></ng-md-icon>
         </md-button>
     </div>

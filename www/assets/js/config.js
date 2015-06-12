@@ -87,10 +87,10 @@ angular.module('dhome')
                     console.log('Error: ', err, 'Codigo: ', err.status);
                 }
 
-                if (err.status === 401) { //manejamos autorizacion
-                    window.localStorage.clear();
-                    window.location = 'index.html';
-                }
+               // if (err.status === 401) { //manejamos autorizacion
+                 //   window.localStorage.clear();
+                   // window.location = 'index.html';
+                // }
 
                 rootScope.loading = false;
                 
@@ -149,7 +149,7 @@ angular.module('dhome')
         .state('detalle_correspondencia', {
             url: "/detalle_correspondencia/{value}",
             templateUrl: "views/detalle_correspondencia.html",
-            controller: detalleCorrespondenciaController,
+            controller: correspondenceCtrl,
             data : {title:'Correspondecia'}
         })
         .state('dashboard', {
@@ -240,7 +240,7 @@ angular.module('dhome')
          .state('areas', {
             url: "/areas",
             templateUrl: "views/areas/areas.html",
-            controller: mainCtrl,
+            controller: spaceCtrl,
             data : {title: 'Areas' }                             
         })
              .state('reservar_area', {

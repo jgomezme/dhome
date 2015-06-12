@@ -1,8 +1,10 @@
-<md-content layout-padding ng-init="load()">
+<md-content class="responsive" layout-padding ng-init="load()">
 	<md-content>
 		<h3> APTO. {{$root.correspondence.CustomData.suite || $root.nothing}} ( {{$root.correspondence.CustomData.tower || $root.nothing}})</h3>
 	<md-content>
 	<md-input-container flex="">
+		<h4>De</h4>
+		<span>{{$root.correspondence.CustomData.de || $root.nothing }}</span>
 		<h4>Para el Residente</h4>
 		<span>{{$root.correspondence.To || $root.nothing }}</span>
 		<h4>Observación</h4>
@@ -10,5 +12,20 @@
 		<h4>Foto de la Correspondecia</h4>
 		<span ng-if="!$root.correspondence.CustomData.image">{{$root.nothing }}</span>
 		<img width="350" ng-if="$root.correspondence.CustomData.image" src="{{$root.apiurl + '/images?buildingid='+ $root.building + '&name=' + $root.correspondence.CustomData.image}}" alt="image">
+     <br>
+	    <div ng-if="$root.correspondence.OpenImage">
+	     <h4 >Foto Apertura</h4>
+		 <img width="350"  src="{{$root.correspondence.OpenImage}}" alt="image">
+        </div>
+
 	</md-input-container>
 </md-content>
+
+<md-content ng-if="$root.userRole!='Administrador' && !$root.correspondence.OpenImage && !opensent && $root.correspondence.State != 'Entregada'">
+   <md-button class="md-raised md-primary" ng-click="open()">
+     Solicitar Apertura de correspondencia
+   </md-button>
+
+</md-content>
+<br>
+<br>

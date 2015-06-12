@@ -5,11 +5,11 @@
       </md-lis-item>   
      
 
-     <md-list-item class="md-2-line" ng-click="gotoschedule(1)" aria-label="swipe">
+     <md-list-item class="md-2-line" ng-click="gotoschedule(value.Id)" aria-label="swipe" ng-repeat="value in values">
 
       <div class="md-list-item-text" flex  aria-label="profile" >
           
-            <h3>Piscina</h3>          
+            <h3>{{value.Name}}</h3>          
           <p class="p-aligned">
           Disponbible Ahora
           </p>                       
@@ -30,32 +30,6 @@ left: 25px;">
 
      </md-list-item> 
 
-
-       <md-list-item class="md-2-line" ng-click="gotoschedule(1)" aria-label="swipe">
-
-      
-      <div class="md-list-item-text" flex  aria-label="profile" >
-          
-            <h3>Salon Social</h3>          
-          <p class="p-aligned _disable">
-          No disponbible Ahora
-          </p>                       
-        </div>
-
-        <div layout="column">
-        <div layout="row">
-      <md-button  class="md-icon-button ng-hide"  aria-label="more-center" style="position: relative;
-left: 25px;">
-          <md-icon md-svg-icon="assets/icons/more_vert.svg"></md-icon>    
-      </md-button>
-      </div>
-      </div>
- 
-      <br>
-       <md-divider inset></md-divider>
-
-
-     </md-list-item> 
 
 
      

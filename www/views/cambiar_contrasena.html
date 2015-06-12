@@ -1,31 +1,31 @@
 <!-- cambiar contrasena -->
 
-<section>
+<section >
     <div layout="row">
-    	<md-content layout-padding flex>
+    	<md-content class="responsive" layout-padding flex>
             <br>      
             <h4>Cambiar Contraseña </h4>
             <br>            
 
-            <form ng-model="form">
+            <form name="formm" ng-model="form">
             
               <md-input-container flex>
                 <label>Contraseña Anterior *</label>
-                <input type="password" ng-required  ng-model="form.contrasena_anterior">
+                <input type="password" required  ng-model="form.OldPassword">
               </md-input-container>
 
               <md-input-container flex>
                 <label>Nueva Contraseña *</label>
-                <input type="password" ng-required  ng-model="form.contrasena_nueva">
+                <input type="password" required  ng-model="form.NewPassword">
               </md-input-container>
 
               <md-input-container flex>
                 <label>Confirmar Nueva Contraseña *</label>
-                <input type="password" ng-required  ng-model="form.confirmar_contrasena_nueva">
+                <input type="password" required  ng-model="form.ConfirmPassword">
               </md-input-container>
 
              <md-content layout="row" flex layout-align="end">
-                <md-button class="md-raised md-primary" ng-disabled="form.$invalid"  ng-click="create()">Cambiar Contraseña</md-button>
+                <md-button class="md-raised md-primary" ng-disabled="formm.$invalid"  ng-click="changePassword()">Cambiar Contraseña</md-button>
               </md-content>
             </form>
           </md-content>

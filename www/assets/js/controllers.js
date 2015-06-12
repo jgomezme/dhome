@@ -258,7 +258,7 @@ function newsCtrl($scope, $rootScope, $API, $storage){
 
       console.log(rs, 'file')
 
-      $scope.formm.Notice.CustomData = $scope.CustomData || {};
+      $scope.formm.Notice.CustomData = $scope.formm.Notice.CustomData || {};
       $scope.formm.SuiteIds = [];
      
       if(!$scope.file && code != 500)
@@ -280,16 +280,17 @@ function newsCtrl($scope, $rootScope, $API, $storage){
          .post($scope.formm)
          .success(function(rs){
 
-             console.log($scope.formm.Notice, 'Noticee')
+               console.log($scope.formm.Notice, 'Noticee')
 
                 $scope.formm.Notice.RegisterDate = new Date();
                 $scope.values.push($scope.formm.Notice);
+                
                 delete $scope.formm;
                 delete $rootScope.photosrc;
                 delete $scope.file;
+
                 console.log(rs, 'news');
                 window.scrollTo($('md-content md-card:first-child').scrollTop() - 10);
-
 
          })
 
@@ -384,7 +385,13 @@ function newsCtrl($scope, $rootScope, $API, $storage){
                   {
                   
                    if($rootScope.platform != 'ios')
-                   navigator.camera.getPicture(success, error); 
+                    navigator.camera.getPicture(
+                      success, 
+                      null, 
+                      { quality: 50,
+                        destinationType: Camera.DestinationType.FILE_URI,
+                        sourceType: Camera.PictureSourceType.PHOTOLIBRARY 
+                     }); 
                    else 
                    document.getElementById('iphoto').click();   
 
@@ -898,6 +905,7 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
   $scope.page = 1;
   $scope.values = [];
 
+
   delete $rootScope.photo;
   $mdBottomSheet.hide();
 
@@ -942,6 +950,27 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
  }
 
 
+ $scope.open = function(){
+     $API
+     .openrequests()
+     .post({CorrespondenceId:$rootScope.correspondence.Id})
+     .success(function(rs, code){
+         console.log(rs,'openn request send');
+
+             if(code === 500)
+               {
+         $rootScope.alerta('Correspondencia', 'No se pudo enviar la solicitud de apertura');
+         return;
+                  
+               }
+
+         $rootScope.alerta('Correspondencia', 'Solicitud de apertura enviada')
+         .then(function(){
+              $scope.opensent = true;
+               window.location = "#/menu_correspondencias";
+         })
+     })
+ }
  
 
  $rootScope.deliver = function(){
@@ -1289,6 +1318,22 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
 
 }
 
+function spaceCtrl($scope, $rootScope, $API, $storage){
+
+
+   $scope.load = function(){
+           
+            $API
+            .space()
+            .add('?SuiteId='+$rootScope.suite)
+            .get()
+            .success(function(rs){
+                console.log(rs, 'SPACESSS');
+                $scope.values = rs;
+            })
+   }
+
+}
 
 function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdMedia, $mdBottomSheet, $state, $API, $storage, $location, $mdToast){
 
@@ -1310,6 +1355,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
   $scope.Preshow = false;
 
   $rootScope.platform = (window.cordova) ? window.cordova.platformId : 'web';
+  console.log($rootScope.platform)
 
   $rootScope.hideBS = function(){
       $mdBottomSheet.hide();
@@ -1317,8 +1363,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
    $scope.totime = function(){
 
-   if(this.value.CustomData)
-     this.value.CustomData = JSON.parse(this.value.CustomData);
+
 
      console.log(this.value.VisitName.split(' ')[0].split(''))
 
@@ -1371,14 +1416,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
    if(this.value.To)
       this.value.inits = this.value.To.split(' ')[0].split('')[0] || 'C';
    
- 
-   try{
-     this.value.CustomData = JSON.parse(this.value.CustomData);
-   }
-   catch(e)
-   {
-      this.value.CustomData = this.value.CustomData;
-   }
+
    
 
     if(!this.value.inits)
@@ -1390,8 +1428,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
  $scope.parseCustomm = function(){
 
-    if(this.value.Correspondence.CustomData)
-     this.value.Correspondence.CustomData = JSON.parse(this.value.Correspondence.CustomData);
+    
 
     if(!this.value.inits)
        this.value.Correspondence.inits = 'C';
@@ -1546,7 +1583,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
       if(window.config.env.match('dev'))
     {
-      $scope._form.username = 'sergiogirado@nativapps.com';
+      $scope._form.username = 'sergiogirado@hotmail.com';
       $scope._form.password = "C0ntr4";
     }
 
@@ -1678,9 +1715,8 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
                         }
                     
 
-                       $("#app-status-ul").append('<li>MESSAGE -> MSG: ' + e.payload.message + '</li>');
 
-                       var action = e.payload.message.split('/');
+                       //var action = e.payload.message.split('/');
                     
                     break;
 
@@ -1689,6 +1725,8 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
                     break;
 
                     default:
+
+                       
                         console.log('unknow action');
                     break;
              }
@@ -1718,6 +1756,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
       if(window.cordova)    
       {    
+ 
        if ( $rootScope.platform == 'android' || $rootScope.platform == 'Android' || $rootScope.platform == "amazon-fireos" )
                   pushNotification.register(
                   successHandler,
@@ -1782,6 +1821,28 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
       ;
 
         
+    }
+
+
+    $scope.changePassword = function(){
+
+         $API
+         .account()
+         .add('/ChangePassword')
+         .post($scope.form)
+         .success(function(rs){
+               console.log(rs);
+
+               $rootScope
+               .alerta('Información', 'Contraseña cambiada')
+               .then(function(){
+
+                   window.location = '#/home'
+
+               }, null )
+         })
+
+
     }
 
 
@@ -1853,7 +1914,6 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
   }, 500)
 
-  
 
 
 }
@@ -1869,11 +1929,12 @@ function logedCtrl($rootScope, $storage, $API){
 
 angular.module('dhome')
 .controller('mainCtrl', mainCtrl)
-.controller('entityCtrlBase', entityCtrlBase)
 .controller('buildingCtrl', buildingCtrl)
 .controller('correspondenceCtrl', correspondenceCtrl)
 .controller('dashboardController', dashboardController)
 .controller('detalleVisitaController', detalleVisitaController)
 .controller('detalleCorrespondenciaController', detalleCorrespondenciaController)
+.controller('detalleCorrespondenciaController', detalleCorrespondenciaController)
 .controller('logedCtrl', logedCtrl)
+.controller('spaceCtrl', spaceCtrl)
 ;

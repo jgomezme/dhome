@@ -35,6 +35,7 @@ function API($http,$rootScope){
 	  this.building = function(id){ if(!id) this.url = this.baseUrl + "/building"; else this.url = this.baseUrl + "/building/" + id; return this; }
 	  this.visit = function(id){ if(!id) this.url = this.baseUrl + "/visitis"; else this.url = this.baseUrl + "/visits/" + id; return this; }
 	  this.post_visit = function(id){  this.url = this.baseUrl + "/visitis?suiteid=" + id; return this; }
+	  this.register = function(id){ if(!id) this.url = this.baseUrl + "/register"; else this.url = this.baseUrl + "/register/" + id; return this; }
 	 
 	  this.correspondence = function(id){ this.url = this.baseUrl + "/correspondence?BuildingId="+id; return this; }
 	  this.correspondencee = function(id){ if(!id)this.url = this.baseUrl + "/correspondence"; else this.url = this.baseUrl + "/correspondence/"+id; return this; }
@@ -48,8 +49,9 @@ function API($http,$rootScope){
 	  this.noticesss = function(){ this.url = this.baseUrl + "/notices"; return this; }
 	  this.deliver = function(){ this.url = this.baseUrl + "/deliveries"; return this; }
 	  this.correspondenceStats = function(id){ this.url = this.baseUrl + "/correspondence/summary/" + id;  return this; }
-
-
+	  this.openrequests = function(id){ if(!id) this.url = this.baseUrl + "/openrequests"; else this.url = this.baseUrl + "/openrequests/" + id;  return this; }
+	  this.account = function(){ this.url = this.baseUrl + "/Account"; return this; }
+	  this.space = function(){ this.url = this.baseUrl + "/Spaces"; return this; }
 
 	  this.add = function(comp){ this.url += comp; return this;  }
 	  this.reset = function(){ this.url = ""; }

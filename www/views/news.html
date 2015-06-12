@@ -2,66 +2,16 @@
 <div on-scroll-bottom='more()' style="overflow:auto; height:95%; ">
 
 <section  style="overflow:auto">
+
+
+ <md-content class="nobg" >
+
+   <div ng-if="$root.userRole==='Administrador'">
+   <br>
 <br>
-<br>
- <md-content class="nobg">
-   <div class="post" layout-padding  style="padding-bottom: 0 !important;">
-       <md-content   layout-align="center center" style="border-radius: 5px; margin-bottom:0; padding-bottom: 0 !important;" flex>
-            <form name="form" ng-model="formm" flex>
+     <md-poster></md-poster>
+    </div>
 
-              <div layout="row">
-
-              <md-button  ng-click="takei()"  flex>
-                   Imagen <ng-md-icon icon="image" style="fill:gray"></ng-md-icon>
-                </md-button>
-
-                      <input  type="file" style="display:none" accept="image/*;capture=camera"  id="iphoto" file-model="$root.photo">
-              
-                 <md-button ng-click="takef()" ng-if="$root.platform != 'ios'" flex>
-                   Documento <ng-md-icon style="fill:gray" icon="attach_file"></ng-md-icon>
-                 </md-button>
-
-                      <input  type="file" style="display:none"  id="ifile" file-model="file">
-                 
-                 
-
-              </div>
-
-              <md-divider></md-divider>
-
-
-              <fieldset layout="row">
-
-              <md-input-container style="  padding-bottom: 7px;">
-                 <label> Qué deseas publicar? </label>
-                <textarea style="line-height:1.4" ng-model="formm.Notice.Description" columns="1" ></textarea>
-                 
-              </md-input-container>
-            </fieldset>
-
-
-              <div ng-if="$root.photosrc" layout="row" style="height:50px; overflow:auto; position:relative">
-                  <span style="position:absolute; top:0; left:60px" ng-click="$root.photosrc=null"><ng-md-icon class="gray" size="18" icon="close"></ng-md-icon></span>
-                   <img ng-src="{{$root.photosrc}}" width="50px">
-              </div>
-
-              <div ng-if="file" layout="row" style="height:50px; overflow:auto; position:relative">
-                  <span  ><ng-md-icon class="gray" size="18" icon="attach_file"></ng-md-icon> {{file.name}} <ng-md-icon class="gray" ng-click="delfile()" size="18" icon="close"></ng-md-icon></span>
-                   
-              </div>
-            
-
-              <div layout="row" >
-                <md-button  ng-disabled="form.$invalid" ng-click="post()"  style="margin-bottom:0 !importat" flex>
-                   Publicar 
-                </md-button>
-              </div>
-        
-
-
-            </form>
-       </md-content>
-   </div>
    </section>
    <br>
    <section ng-init="load()">
@@ -73,7 +23,7 @@
      
       </div>
 
-     {{value.CustomData.userfullname || 'Pedro Perea'}} </h4>
+       {{value.CustomData.userfullname || 'Pedro Perea'}} </h4>
      <small class="post-date">{{moment(value.RegisterDate).fromNow()}}</small>
      </md-card-content>
 
@@ -83,7 +33,7 @@
           {{ value.Description}}
            <br>
            <br>
-          <md-button class="md-primary" style="text-transform: initial;" ng-if="value.CustomData.file" tartget="_blank" ng-click="viewFile()">Archivo <ng-md-icon icon="attach_file" class="gray" size="18"></ng-md-icon></md-button>
+          <md-button class="md-primary" style="text-transform: initial;" ng-if="value.CustomData.file" tartget="_blank" ng-click="viewFile()">Ver Archivo <ng-md-icon icon="attach_file" class="gray" size="18"></ng-md-icon></md-button>
         </p>
 
       </md-card-content> 

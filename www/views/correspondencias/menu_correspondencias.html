@@ -34,13 +34,14 @@
        {{value.inits}}
       </div>
       
-      <div class="md-list-item-text" flex ng-click="centerBottomSheet(value)" aria-label="profile" ng-click="goToProfile()">
+      <div class="md-list-item-text" flex  aria-label="profile" ui-sref="detalle_correspondencia()" ng-click="$root.correspondence=this.value">
           
           <h3>{{ value.CustomData.suite ? 'APTO. ' + value.CustomData.suite + ' (' + value.CustomData.tower + ')' : 'Masivo'  }} {{ value.To ? ' -  ' + value.To : '' }} - {{value.State}}</h3>          
           <p class="p-aligned">
           fecha: {{ moment(value.CorrespondenceDate).format("MMMM Do YYYY, h:mm a") }} <br>
            {{ value.CustomData.de ?  'de: '+ value.CustomData.de : ''}}
-          </p>                       
+          </p>
+
         </div>
 
 
@@ -86,7 +87,7 @@
        {{value.inits}}
       </div>
       
-      <div class="md-list-item-text"  ng-click="centerBottomSheet(value)" flex  aria-label="profile" ng-click="goToProfile()">
+      <div class="md-list-item-text"  flex  aria-label="profile" ui-sref="detalle_correspondencia()" ng-click="$root.correspondence=this.value">
           
           <h3>{{ value.CustomData.suite ? 'APTO. ' + value.CustomData.suite + ' (' + value.CustomData.tower + ')' : 'Masivo'  }} {{ value.To ? ' -  ' + value.To : '' }} - {{value.State}}</h3>          
           <p class="p-aligned">

@@ -94,7 +94,9 @@
                             "xml": "false",
                             "count": 1
                         }
-                    ]
+                    ],
+                    "EventKit.framework": [],
+                    "EventKitUI.framework": []
                 }
             },
             "*-Info.plist": {
