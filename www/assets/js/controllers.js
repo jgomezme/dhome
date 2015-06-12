@@ -468,7 +468,8 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
                                   .success(function(rs, code){
 
                                        if(code != 500){
-                                         console.log('dispositivo registrado');
+                                         console.log('dispositivo registrado',rs);
+                                      
                                          window.location = "app.html";
                                           }
                                         else
@@ -600,6 +601,35 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
       ;
 
         
+    }
+
+
+    $scope.changePassword = function(){
+
+         $API
+         .account()
+         .add('/ChangePassword')
+         .post($scope.form)
+         .success(function(rs){
+               console.log(rs);
+
+               $rootScope
+               .alerta('Información', 'Contraseña cambiada')
+               .then(function(){
+
+                   window.location = '#/home'
+
+               }, null )
+         })
+
+
+    }
+
+
+    $scope.profilePicture = function(){
+
+          alert('hello')  
+
     }
 
 
@@ -1517,6 +1547,9 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
                $rootScope
                .alerta('Correspondencia', 'Correspondencia registrada y notificada')
                .then(function(){
+
+                 $scope.form = null;
+                 $scope.photosrc = null;
                 
                 $rootScope.gohome();
            

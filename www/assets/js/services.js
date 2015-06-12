@@ -48,6 +48,7 @@ function API($http,$rootScope){
 	  this.correspondenceStats = function(id){ this.url = this.baseUrl + "/correspondence/summary/" + id;  return this; }
 	  this.openrequest = function(id){ this.url = this.baseUrl + "/openrequests/building/" + id;  return this; }
 	  this.openrequests = function(id){ this.url = this.baseUrl + "/openrequests/" + id;  return this; }
+	  this.account = function(){ this.url = this.baseUrl + "/Account"; return this; }
 
 
 	  this.add = function(comp){ this.url += comp; return this;  }
