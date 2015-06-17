@@ -3,6 +3,7 @@ angular.module('ui.rCalendar', ['ui.rCalendar.tpls'])
     .constant('calendarConfig', {
         formatDay: 'dd',
         formatDayHeader: 'EEE',
+        days: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sun'],
         formatDayTitle: 'MMMM dd, yyyy',
         formatWeekTitle: 'MMMM yyyy, Week w',
         formatMonthTitle: 'MMMM yyyy',
@@ -343,6 +344,9 @@ angular.module('ui.rCalendar', ['ui.rCalendar.tpls'])
                             secondary: days[i].getMonth() !== month
                         });
                     }
+
+
+                    console.log(ctrl.days, 'DAYYYYYS')
 
                     scope.labels = new Array(7);
                     for (var j = 0; j < 7; j++) {
@@ -776,8 +780,7 @@ angular.module('ui.rCalendar', ['ui.rCalendar.tpls'])
                 ctrl.refreshView();
             }
         };
-    }])
-    .directive('dayview', ['dateFilter', '$timeout', function (dateFilter, $timeout, $API) {
+    }]).directive('dayview', ['dateFilter', '$timeout', function (dateFilter, $timeout) {
         'use strict';
         return {
             restrict: 'EA',
@@ -793,40 +796,41 @@ angular.module('ui.rCalendar', ['ui.rCalendar.tpls'])
                     step: {days: 1}
                 };
 
+
                 scope.toMonth = function(){
                       scope.$parent.calendarMode="month";
                 }
 
-                var inihour = null;
-                var finhour = null;
+                scope.inihour = null;
+                scope.finhour = null;
                 var iniindex = null;
                 var finindex = null;
 
                 scope.hour = function(elem){    
 
-                        console.log(this, elem)
+                   
 
                         function cleanhours(){
-                               inihour = null;
-                               finhour = null;
+                               scope.inihour = null;
+                               scope.finhour = null;
                                $('*').removeClass('selectedhour')
 
                         }
 
-                        if(inihour && finhour)
+                        if(scope.inihour && scope.finhour)
                             cleanhours();
 
 
-                        if(inihour && !finhour)
+                        if(scope.inihour && !scope.finhour)
                            {
-                            finhour = this.tm.time;
+                            scope.finhour = this.tm.time;
                             finindex = this.$index;
                            }
 
-                        if(!inihour)
+                        if(!scope.inihour)
                         {
                            
-                            inihour = this.tm.time;
+                            scope.inihour = this.tm.time;
                             iniindex = this.$index;
                             $("#"+iniindex).addClass('selectedhour');
 
@@ -834,18 +838,21 @@ angular.module('ui.rCalendar', ['ui.rCalendar.tpls'])
 
                         var i = 0;
 
-                        if(inihour && finhour)
+                        if(scope.inihour && scope.finhour)
                             for(i=iniindex; i<finindex+1; i++)
                                     $('#'+i).addClass('selectedhour')
                                 
 
 
-                        console.log(inihour, finhour, iniindex, finindex);
+                        console.log(scope.inihour, scope.finhour, iniindex, finindex);
+
 
                 }
 
                 scope.reserve = function(){
 
+                     
+                   rootScope.reserve(scope.inihour,scope.finhour);
 
 
                 }
@@ -870,7 +877,6 @@ angular.module('ui.rCalendar', ['ui.rCalendar.tpls'])
                         }
                     }
                 }
-
 
                 function createDateObjects(startTime) {
                     var rows = [],
@@ -1000,17 +1006,18 @@ angular.module('ui.rCalendar', ['ui.rCalendar.tpls'])
             }
         };
     }]);
+   
 angular.module("template/rcalendar/calendar.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("template/rcalendar/calendar.html",
-    "<div ng-switch=\"calendarMode\">\n" +
+    "<div class='noselect' ng-switch=\"calendarMode\">\n" +
     "    <div class=\"row calendar-navbar\">\n" +
     "        <div class=\"nav-left col-xs-2\">\n" +
-    "            <button type=\"button\" class=\"btn btn-default btn-sm\" ng-click=\"move(-1)\"><i\n" +
+    "            <button type=\"button\" style='margin-left:25%;background: transparent;color: gray;' class=\"btn  btn-sm\" ng-click=\"move(-1)\"><i\n" +
     "                    class=\"glyphicon glyphicon-chevron-left\"></i></button>\n" +
     "        </div>\n" +
     "        <div class=\"calendar-header col-xs-8\"><strong>{{title}}</strong></div>\n" +
     "        <div class=\"nav-right col-xs-2\">\n" +
-    "            <button type=\"button\" class=\"btn btn-default btn-sm\" ng-click=\"move(1)\"><i\n" +
+    "            <button type=\"button\" style='margin-right:25%;background: transparent;color: gray;' class=\"btn  btn-sm\" ng-click=\"move(1)\"><i\n" +
     "                    class=\"glyphicon glyphicon-chevron-right\"></i></button>\n" +
     "        </div>\n" +
     "    </div>\n" +
@@ -1022,15 +1029,18 @@ angular.module("template/rcalendar/calendar.html", []).run(["$templateCache", fu
 
 angular.module("template/rcalendar/day.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("template/rcalendar/day.html",
-    "<div>\n" +
-    "<p class=\"text-center\"><md-button class='md-raised ' ng-click='toMonth()'>Volver al calendario</md-button><md-button class='md-raised md-primary'>Reservar</md-button></p>" +
-    "<p class=\"text-center\">Para reservar toque una hora de inicio y una hora fin</p>" +
-    "    <div class=\"ng-hide dayview-allday-table\">\n" +
+    "<div >\n" +
+    "<div style='display: table;margin: 0 auto;padding: 20px 0;'>\n" +
+    "<md-button class='md-raised' ng-click='toMonth()' >Volver</md-button>" +
+    "<md-button class='md-raised md-primary' ng-click='reserve()' ng-disabled='!inihour || !finhour'>Reservar</md-button>" +
+    "<small style='display:block;padding: 10px 0;'>Seleccione un rango de horas para reservar</small>" +
+    "</div >\n" +
+    "    <div class=\"dayview-allday-table ng-hide\">\n" +
     "        <div class=\"dayview-allday-label\">\n" +
     "            all day\n" +
     "        </div>\n" +
-    "        <div class=\"dayview-allday-content-wrapper\">\n" +
-    "            <table class=\"table table-bordered\" style=\"height: 100%; margin-bottom: 0px\">\n" +
+    "        <div class=\"dayview-allday-content-wrapper\" class='ng-hide'>\n" +
+    "            <table class=\"table table-striped\" style=\"height: 100%; margin-bottom: 0px\">\n" +
     "                <tbody>\n" +
     "                <tr>\n" +
     "                    <td class=\"calendar-cell\" ng-class=\"{'calendar-event-wrap':allDayEvents}\">\n" +
@@ -1047,12 +1057,11 @@ angular.module("template/rcalendar/day.html", []).run(["$templateCache", functio
     "        </div>\n" +
     "    </div>\n" +
     "    <div class=\"scrollable\" style=\"height: 400px\">\n" +
-    "        <table class=\"table table-bordered table-fixed\">\n" +
-    "        </tr>\n" +
+    "        <table class=\"table table-fixed\">\n" +
     "            <tbody>\n" +
-    "            <tr ng-repeat=\"tm in rows track by $index\" id=\"{{$index}}\" ng-click=\"hour(element)\">\n" +
-    "                <td class=\"calendar-hour-column text-center\" >\n" +
-    "                   {{$index<12?($index === 0?12:$index)+':00 am':($index === 12?$index:$index-12)+':00 pm'}}\n" +
+    "            <tr ng-repeat=\"tm in rows track by $index\" id='{{$index}}' ng-click='hour()'>\n" +
+    "                <td class=\"calendar-hour-column text-center\">\n" +
+    "                    {{$index<12?($index === 0?12:$index)+'am':($index === 12?$index:$index-12)+'pm'}}\n" +
     "                </td>\n" +
     "            </tr>\n" +
     "            </tbody>\n" +
@@ -1063,8 +1072,8 @@ angular.module("template/rcalendar/day.html", []).run(["$templateCache", functio
 
 angular.module("template/rcalendar/month.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("template/rcalendar/month.html",
-    "<div>\n" +
-    "    <table class=\"table table-bordered monthview-datetable monthview-datetable\">\n" +
+    "<div class='noselect'>\n" +
+    "    <table md-swipe-left='move(1)' md-swipe-right='move(-1)' class=\"table calendeer monthview-datetable monthview-datetable\">\n" +
     "        <thead>\n" +
     "        <tr>\n" +
     "            <th ng-show=\"showWeeks\" class=\"calendar-week-column text-center\">#</th>\n" +
@@ -1080,7 +1089,7 @@ angular.module("template/rcalendar/month.html", []).run(["$templateCache", funct
     "            </td>\n" +
     "            <td ng-repeat=\"dt in row track by dt.date\" class=\"monthview-dateCell\" ng-click=\"select(dt.date)\"\n" +
     "                ng-class=\"{'text-center':true, 'monthview-current': dt.current&&!dt.selected&&!dt.hasEvent,'monthview-secondary-with-event': dt.secondary&&dt.hasEvent, 'monthview-primary-with-event':!dt.secondary&&dt.hasEvent&&!dt.selected, 'monthview-selected': dt.selected}\">\n" +
-    "                <div ng-class=\"{'text-muted':dt.secondary}\">\n" +
+    "                <div class='aday' ng-class=\"{'text-muted':dt.secondary}\">\n" +
     "                   {{dt.label}}\n" +
     "                </div>\n" +
     "            </td>\n" +
@@ -1094,7 +1103,7 @@ angular.module("template/rcalendar/month.html", []).run(["$templateCache", funct
 angular.module("template/rcalendar/week.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("template/rcalendar/week.html",
     "<div>\n" +
-    "    <table class=\"table table-bordered table-fixed weekview-header\">\n" +
+    "    <table class=\"table calender table-fixed weekview-header\">\n" +
     "        <thead>\n" +
     "        <tr>\n" +
     "            <th class=\"calendar-hour-column\"></th>\n" +
@@ -1127,7 +1136,7 @@ angular.module("template/rcalendar/week.html", []).run(["$templateCache", functi
     "        </div>\n" +
     "    </div>\n" +
     "    <div class=\"scrollable\" style=\"height: 400px\">\n" +
-    "        <table class=\"table table-bordered table-fixed\">\n" +
+    "        <table class=\"table calender table-fixed\">\n" +
     "            <tbody>\n" +
     "            <tr ng-repeat=\"row in rows track by $index\">\n" +
     "                <td class=\"calendar-hour-column text-center\">\n" +

@@ -1,4 +1,6 @@
 
+@import url(http://fonts.googleapis.com/css?family=Lato);
+
 .docs-menu,
 .docs-menu ul {
   list-style: none;
@@ -203,8 +205,12 @@ p.p-aligned{
   outline:none !important;
   }
 
-  body{
-  transform: transale3d(0,0,0);
+  body,html{
+    transform: translate3d(0, 0, 0);
+    font-family: 'Lato', sans-serif;
+
+  -webkit-transform: translate3d(0,0,0);
+
   }
 
 .selected, .selected span, .selected button{
@@ -289,7 +295,8 @@ ng-md-icon.gray{
 }
 
 .responsive{
-   height:100%;
+   padding-bottom:20px;
+   background:white;
 }
 
 .calendar-navbar .nav-right{
@@ -303,7 +310,63 @@ ng-md-icon.gray{
 }
 
 
+.orangee{
+   background:#FEAF00;
+   color:white;
+}
+
 .selectedhour{
-   background:rgb(121, 211, 116);
-   color:rgb(44, 38, 38);
+  .orangee;
+}
+
+.md-fab{
+   background:#FEAF00 !important;
+}
+
+
+.monthview-selected{
+  background:none !important;
+    div{
+     .orangee;
+       background: #FEAF00;
+  color: white;
+  border-radius: 99em !important;
+  width: 27px;
+  margin: 0 auto;
+  height: 27px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 2;
+    }
+}
+
+.calendeer{
+      
+      *{
+       border:none !important;
+       font-size:13px;
+      }
+
+
+      tbody{
+
+           td{
+             padding:25px;
+               .aday{
+            
+                           line-height: 2;
+  width: 27px;
+  height: 27px;
+  margin: auto;
+                     
+               }
+           }
+      }
+
+
+}
+
+.nooverflow{
+   overflow:hidden !important;
+   
 }

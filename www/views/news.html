@@ -15,7 +15,7 @@
    </section>
    <br>
    <section ng-init="load()">
-   <div ng-init="parseCustom()" ng-repeat="value in values | orderBy : '-RegisterDate' ">
+   <div ng-init="parseCustom()" ng-repeat="value in values | filter:$root.search || '' ">
    <md-card >
       <md-card-content class="post-title" style="padding-bottom: 0px;">
      <h4 >

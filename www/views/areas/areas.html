@@ -5,14 +5,17 @@
       </md-lis-item>   
      
 
-     <md-list-item class="md-2-line" ng-click="gotoschedule(value.Id)" aria-label="swipe" ng-repeat="value in values">
+     <md-list-item class="md-2-line" ng-click="root.space=value;gotoschedule(value.Id)" aria-label="swipe" ng-repeat="value in values">
 
       <div class="md-list-item-text" flex  aria-label="profile" >
           
             <h3>{{value.Name}}</h3>          
-          <p class="p-aligned">
+          <p class="p-aligned" ng-if="value.IsFreeNow">
           Disponbible Ahora
-          </p>                       
+          </p>   
+          <p class="p-aligned" style="color:red" ng-if="!value.IsFreeNow">
+          No disponible ahora
+          </p>                      
         </div>
 
         <div layout="column">

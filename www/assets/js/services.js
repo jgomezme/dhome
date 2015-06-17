@@ -52,6 +52,9 @@ function API($http,$rootScope){
 	  this.openrequests = function(id){ if(!id) this.url = this.baseUrl + "/openrequests"; else this.url = this.baseUrl + "/openrequests/" + id;  return this; }
 	  this.account = function(){ this.url = this.baseUrl + "/Account"; return this; }
 	  this.space = function(){ this.url = this.baseUrl + "/Spaces"; return this; }
+	  this.reservation = function(){ this.url = this.baseUrl + "/Reservations"; return this; }
+
+	  
 
 	  this.add = function(comp){ this.url += comp; return this;  }
 	  this.reset = function(){ this.url = ""; }

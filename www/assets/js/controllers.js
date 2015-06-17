@@ -1,15 +1,14 @@
 
 var map_error = {
-    "invalid_client" : "Usuario o clave no validos"
+    "invalid_client" : "Usuario o clave no validos",
+     "invalid_grant" : "Usuario o clave no validos"
 }
 
 window.isme = function(data){
     console.log(data || 'is me');
 }
 
-var map_error = {
-    "invalid_client" : "Usuario o clave no validos"
-}
+
 
 
 
@@ -1311,9 +1310,6 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
           })
         })
 
-     
-
-
     }
 
 }
@@ -1325,17 +1321,21 @@ function spaceCtrl($scope, $rootScope, $API, $storage){
            
             $API
             .space()
-            .add('?SuiteId='+$rootScope.suite)
+            .add('?BuildingId='+$rootScope.building)
             .get()
             .success(function(rs){
                 console.log(rs, 'SPACESSS');
                 $scope.values = rs;
             })
+   
    }
+
+
+  
 
 }
 
-function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdMedia, $mdBottomSheet, $state, $API, $storage, $location, $mdToast){
+function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdMedia, $mdBottomSheet, $state, $API, $storage, $location, $mdToast, $stateParams){
 
        //handling device ready
         $mdBottomSheet.hide();
@@ -1360,6 +1360,40 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
   $rootScope.hideBS = function(){
       $mdBottomSheet.hide();
   }
+
+   $rootScope.reserve = function(ini,fin){
+
+                 $API
+                   .reservation()
+                   .add('/building/'+$rootScope.building)
+                   .post({
+                        ReservationInitDate: (new Date(ini).getTime() / 1000),
+                        ReservationEndDate: (new Date(fin).getTime() / 1000),
+                        SpaceId: parseInt($stateParams.id)
+                   })
+                   .success(function(rs, code){
+                       console.log(rs, 'RESERVEEE');
+                       if(code === 200)
+                         {
+                          $rootScope.alerta('Reserva','Espacio reservado exitosamente')
+                          .then(function(){
+                              window.location.reload();
+                          }, null)
+                          
+                         }
+                      else 
+                        if(rs.Message)
+                         $rootScope.alerta('Reserva', rs.Message);
+
+                   })
+                   .error(function(err){
+                        console.log(err);
+
+                   })
+
+       
+
+   }
 
    $scope.totime = function(){
 
@@ -1584,7 +1618,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
       if(window.config.env.match('dev'))
     {
       $scope._form.username = 'sergiogirado@hotmail.com';
-      $scope._form.password = "C0ntr4";
+      $scope._form.password = "1234567";
     }
 
         if(!$scope._form.username || !$scope._form.password)
