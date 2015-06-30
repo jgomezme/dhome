@@ -289,7 +289,6 @@ angular.module('ui.rCalendar', ['ui.rCalendar.tpls'])
                 scope.select = function (selectedDate) {
 
                     scope.$parent.calendarMode = 'day';
-            
                   
 
                     var rows = scope.rows;
@@ -838,6 +837,23 @@ angular.module('ui.rCalendar', ['ui.rCalendar.tpls'])
 
                         var i = 0;
 
+
+                    if(finindex)
+                        if(iniindex > finindex)
+                        {
+                            var temp = iniindex;
+                            iniindex = finindex;
+                            finindex = temp;
+
+                        
+                            temp = scope.inihour;
+                            scope.inihour = scope.finhour;
+                            scope.finhour = temp;
+                           
+
+                        }
+
+
                         if(scope.inihour && scope.finhour)
                             for(i=iniindex; i<finindex+1; i++)
                                     $('#'+i).addClass('selectedhour')
@@ -1087,7 +1103,7 @@ angular.module("template/rcalendar/month.html", []).run(["$templateCache", funct
     "            <td ng-show=\"showWeeks\" class=\"calendar-week-column text-center\">\n" +
     "                <small><em>{{ weekNumbers[$index] }}</em></small>\n" +
     "            </td>\n" +
-    "            <td ng-repeat=\"dt in row track by dt.date\" class=\"monthview-dateCell\" ng-click=\"select(dt.date)\"\n" +
+    "            <td ng-repeat=\"dt in row track by dt.date\" class=\"monthview-dateCell\" id='{{$id}}' ng-click=\"select(dt.date)\"\n" +
     "                ng-class=\"{'text-center':true, 'monthview-current': dt.current&&!dt.selected&&!dt.hasEvent,'monthview-secondary-with-event': dt.secondary&&dt.hasEvent, 'monthview-primary-with-event':!dt.secondary&&dt.hasEvent&&!dt.selected, 'monthview-selected': dt.selected}\">\n" +
     "                <div class='aday' ng-class=\"{'text-muted':dt.secondary}\">\n" +
     "                   {{dt.label}}\n" +

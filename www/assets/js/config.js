@@ -9,7 +9,7 @@ angular.module('dhome')
         '200': 'ef9a9a',
         '300': 'e57373',
         '400': 'ef5350',
-        '500': '02A04C',
+        '500': '375C77',
         '600': 'e53935',
         '700': 'd32f2f',
         '800': 'c62828',
@@ -34,20 +34,28 @@ angular.module('dhome')
     $httpProvider.interceptors.push(function($injector) {
 
         rootScope = $injector.get('$rootScope');
+        
+
 
         return {
             'request': function(config) {
                 
                 rootScope.loading = true;
+
+
+                console.log(config, 'CONFIGGG')
                 
 
                 $httpProvider.defaults.withCredentials = true;
 
                 if (!window.localStorage.token)
+                  if(!window.location.hash.match('invited')){
                     window.location = "index.html";
+                   }
+                    else
+                {rootScope.loading = false; rootScope.invited = true;}
 
 
-                
 
                 console.log(config, 'request')
 
@@ -87,10 +95,20 @@ angular.module('dhome')
                     console.log('Error: ', err, 'Codigo: ', err.status);
                 }
 
-               // if (err.status === 401) { //manejamos autorizacion
-                 //   window.localStorage.clear();
-                   // window.location = 'index.html';
-                // }
+
+              if (err.status === 401) { //manejamos autorizacion
+
+                if(!window.location.hash.match('invited')){
+                   
+                    window.localStorage.clear();
+                    window.location = 'index.html';
+
+                  }else
+                   {rootScope.loading = false; rootScope.invited = true;}
+
+                 
+
+                 }
 
                 rootScope.loading = false;
                 
@@ -257,6 +275,20 @@ angular.module('dhome')
             data : {title: 'Agenda' }                             
         })
 
+         .state('invite', {
+            url: "/invite",
+            templateUrl: "views/invite.html",
+            controller: inviteCtrl,
+            data : { title: 'Invitar' }                             
+        })
+
+         .state('invited', {
+            url: "/invited/:id",
+            templateUrl: "views/invited.html",
+            controller: inviteCtrl,
+            data : { title: 'Invitado' }                             
+        })
+
         .state('menu_correspondencias', {
             url: "/menu_correspondencias",
             templateUrl: "views/correspondencias/menu_correspondencias.html",
@@ -289,7 +321,7 @@ angular.module('dhome')
         })
 
 
-    $urlRouterProvider.otherwise("/home"); //aqui va?
+    $urlRouterProvider.otherwise("/home"); 
 
 
 

@@ -1,1 +1,1 @@
-angular.module('dhome', ['ngMaterial', 'ui.router', 'ngMdIcons','ui.rCalendar']);
+angular.module('dhome', ['ngMaterial', 'ui.router', 'ngMdIcons','ui.rCalendar', 'monospaced.qrcode']);

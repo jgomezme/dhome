@@ -53,6 +53,7 @@ function API($http,$rootScope){
 	  this.account = function(){ this.url = this.baseUrl + "/Account"; return this; }
 	  this.space = function(){ this.url = this.baseUrl + "/Spaces"; return this; }
 	  this.reservation = function(){ this.url = this.baseUrl + "/Reservations"; return this; }
+	  this.suites = function(){ this.url = this.baseUrl + "/Suites"; return this; }
 
 	  
 

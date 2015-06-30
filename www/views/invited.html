@@ -1,0 +1,66 @@
+
+<section ng-init="password=false">
+    <div layout="row">
+        <md-content layout-padding flex>
+            <br>
+
+            <h4 ng-cloak>Vincularse a un APTO.</h4>
+            <br>
+            <form name="formm" ng-model="form">
+
+
+                  <md-input-container>
+             <label>Nombre *</label>
+            <input required ng-model="form.FirstName" layout="column" flex>             
+          </md-input-container>
+    
+                <md-input-container flex>
+                    <label>Apellidos *</label>
+                    <input required ng-model="form.LastName" layout="column" flex>
+                </md-input-container>
+         
+
+                <md-input-container flex>
+                    <label>Correo Electronico *</label>
+                    <input type="email" ng-model="form.Email" layout="column" flex>
+                </md-input-container>
+                <md-input-container flex>
+                
+                <label>Confirmar Correo Electronico *</label>
+                    <input type="email" ng-model="form.ConfirmEmail" layout="column" flex>
+                </md-input-container>
+            
+                <md-input-container flex>
+                    <label>Contraseña *</label>
+                    <input type="{{!password ? 'password' : 'text'}}" required ng-blur="typed=true" ng-model="form.Password" layout="column" flex>
+                </md-input-container>
+
+                <md-input-container flex>
+                    <label>Confirmar Contraseña *</label>
+                    <input type="{{!password ? 'password' : 'text'}}" ng-blur="typed=true" required ng-model="form.ConfirmPassword" layout="column" flex>
+                </md-input-container>
+
+                <p>
+
+                <small ng-if="form.Password.length < 6 || form.ConfirmPassword.length < 6"><ng-md-icon icon="close"></ng-md-icon> La contraseña debe contener al menos 6 caracteres.</small>
+
+                 <small ng-if="(form.Password === form.COnfirmPassword) && (typed) && (form.Password.length > 0 && form.ConfirmPassword.length > 0)"><ng-md-icon icon="check"></ng-md-icon> Las constraseñas coinciden</small>
+             
+              <br>
+                 </p>
+
+                  <md-checkbox ng-model="password" class="md-primary" aria-label="Checkbox 1">
+                      Mostrar Constraseña
+                  </md-checkbox>
+                                 
+  
+    </md-content>
+
+    <br>
+    <md-content layout="row" flex layout-align="end">
+        <md-button class="md-raised md-primary" ng-disabled="formm.$invalid || $root.loading || (form.Password.length < 6 || form.ConfirmPassword.length < 6)" ng-click="join()">Ingresar</md-button>
+    </md-content>
+    </form>    
+    </div>
+    <br>
+</section>

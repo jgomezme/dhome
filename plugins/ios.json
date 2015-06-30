@@ -35,6 +35,10 @@
                         {
                             "xml": "<preference name=\"StatusBarStyle\" value=\"lightcontent\" />",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Badge\"><param name=\"ios-package\" value=\"APPBadge\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -124,7 +128,14 @@
         },
         "org.apache.cordova.statusbar": {
             "PACKAGE_NAME": "com.digitalhomes.residente.app"
+        },
+        "de.appplant.cordova.plugin.badge": {
+            "PACKAGE_NAME": "com.digitalhomes.residente.app"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "de.appplant.cordova.common.registerusernotificationsettings": {
+            "PACKAGE_NAME": "com.digitalhomes.residente.app"
+        }
+    }
 }

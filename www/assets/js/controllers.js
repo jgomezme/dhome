@@ -1335,15 +1335,71 @@ function spaceCtrl($scope, $rootScope, $API, $storage){
 
 }
 
+function inviteCtrl($scope, $rootScope, $API, $stateParams){
+
+
+   $scope.invite = function(){
+
+    $API
+    .suites()
+    .add('/'+$rootScope.suite+'/AssociationCode')
+    .get()
+    .success(function(rs){
+
+         console.log(rs, 'innitacioinssssss');
+
+         $scope.qrcode = rs.AssociationCode;
+
+
+    })
+
+
+   }
+
+
+   $scope.join = function(){
+
+
+     
+     $API
+     .account()
+     .add('/RegisterResident?AssociationCode='+$stateParams.id)
+     .post($scope.form)
+     .success(function(rs, code){
+         console.log(rs, 'success');
+
+         if(code === 200)
+         {
+              $rootScope.alerta("Vinculación", "Se ha vinculado exitosamente.")
+              .then(function(){
+                  $rootScope.login($scope.form.Email, $scope.form.Password);
+              }, null);
+
+         }else
+          console.log(rs)
+
+     })
+
+
+
+   }
+
+    
+
+}
+
+var unregistered = true;
+var platform = (window.cordova) ? window.cordova.platformId : 'web';
+
+
+
+
 function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdMedia, $mdBottomSheet, $state, $API, $storage, $location, $mdToast, $stateParams){
 
        //handling device ready
         $mdBottomSheet.hide();
 
-      document.addEventListener('deviceready', function(){
-         console.log(cordova.plugins)
-         
-      })
+
 
   moment.locale('es');
   $scope.moment = moment;
@@ -1355,11 +1411,14 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
   $scope.Preshow = false;
 
   $rootScope.platform = (window.cordova) ? window.cordova.platformId : 'web';
+
   console.log($rootScope.platform)
 
   $rootScope.hideBS = function(){
       $mdBottomSheet.hide();
   }
+
+
 
    $rootScope.reserve = function(ini,fin){
 
@@ -1600,61 +1659,40 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
     
 
-     var pushNotification = '';
+     window.pushNotification = '';
 
     
     document.addEventListener('deviceready', function(){
 
-       pushNotification = window.plugins.pushNotification || window.cordova.plugins.pushNotification;
+       window.pushNotification = window.plugins.pushNotification || window.cordova.plugins.pushNotification;
 
 
-    });
+
+    var pushs = function(){
 
 
-    $scope.login = function(){  
+      var route = function(uri){
 
-      'use strict'; 
-
-      if(window.config.env.match('dev'))
-    {
-      $scope._form.username = 'sergiogirado@hotmail.com';
-      $scope._form.password = "1234567";
-    }
-
-        if(!$scope._form.username || !$scope._form.password)
-            {
-               $scope.error_login = "Todos los campos son requeridos";
-               return;
-            }
-
-        $scope._form.grant_type="password";
-        $scope._form.login_type="admin";
-   
-         console.log($scope._form)
-
-          //window.location = "app.html";
-
-          $API
-          .login()          
-          .post("login_type=admin&grant_type=password&username="+$scope._form.username+"&password="+$scope._form.password, {
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-            })
-          .success(function(rs){
-             
-                $storage.save('config',rs);  
-              $storage.save('token', rs.access_token)     
-              $rootScope.loged=true; 
-              $storage.save('user', rs.user);  
-              $storage.save('buildings', JSON.parse(rs.user).Buildings);     
-              delete $scope._form;   
-
-               
-
-               // window.location = "app.html";
+        uri = uri.toLowerCase();
 
 
-              var successHandler = function(rs){
+        console.log(uri.split('/'))
+     
 
+           if(uri.match('visit'))
+              {window.location = "#/detalle_visita/" + uri.split('/')[1]; return;}
+
+
+           if(uri.match('correspondencia'))
+              {window.location = "#/correspondencias/detalle/" + uri.split('/')[1]; return;}
+
+              window.location = "#/home";
+
+
+      }
+
+ var successHandler = function(rs){
+                console.log(rs, 'success handler')
                 
               }
 
@@ -1669,20 +1707,22 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
  
                                console.log('device token '+result); 
 
+
                                try{
                                  
                                   $API
                                   .register()
                                   .post({
                                     Handle : result,
-                                    platform : 'apn',
-                                    BuildingId : $storage.get('config').buildingId
-                                  }, {headers : {Authorization : 'Bearer ' + rs.access_token}})
+                                    platform : 'apns',
+                                    BuildingId : $storage.get('buildings')[0].BuildingId
+                                  }, {headers : {Authorization : 'Bearer ' + window.localStorage.token}})
                                   .success(function(rs, code){
 
-                                       if(code != 500){
+                                       if(code === 200){
                                          console.log('dispositivo registrado');
-                                         window.location = "app.html";
+                                         unregistered = false;
+                                         //window.location = "app.html";
                                           }
                                         else
                                           console.log('error registrando dispositivo ', rs);
@@ -1697,7 +1737,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
                                 }
                                 finally{
-                                         window.location = "app.html";
+                                        // window.location = "app.html";
                                     
                                 }
 
@@ -1723,11 +1763,13 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
                                   .post({
                                     Handle : e.regid,
                                     platform : 'gcm',
-                                    BuildingId : $storage.get('config').buildingId
-                                  }, {headers : {Authorization : 'Bearer ' + rs.access_token}} )
+                                    BuildingId : $storage.get('buildings')[0].BuildingId
+                                  }, {headers : {Authorization : 'Bearer ' +  window.localStorage.token}} )
                                   .success(function(rs){
                                          console.log('dispositivo registrado');
-                                         window.location = "app.html";
+                                         unregistered = false;
+
+                                         //window.location = "app.html";
                                   })
 
                         }
@@ -1738,7 +1780,11 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
                         // you might want to play a sound to get the user's attention, throw up a dialog, etc.
                         if ( e.foreground )
                         {
-                          
+
+                  $rootScope.alerta("Notificación", event.alert)
+                    .then(function(){
+                      route(e.payload.message.Uri || e.payload.Uri);
+                    }, null)
 
                             // on Android soundname is outside the payload.
                             // On Amazon FireOS all custom attributes are contained within payload
@@ -1747,9 +1793,13 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
                             var my_media = new Media("/android_asset/www/"+ soundfile);
                             my_media.play();
                         }
-                    
-
-
+                        else
+                       {
+                          window.localStorage.badge = window.localStorage.badge || 0;
+                          window.localStorage.badge++;
+                          cordova.plugins.notification.badge.set(window.localStorage.badge);
+                          route(e.payload.message.Uri || e.payload.Uri);
+                       }
                        //var action = e.payload.message.split('/');
                     
                     break;
@@ -1769,9 +1819,27 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
 
         window.onNotificationAPN = function(event) {
+        
+          console.log('hey hello', event);
+
+            
+
             if ( event.alert )
             {
-                navigator.notification.alert(event.alert);
+
+
+                if(event.foreground === "1"){
+                    $rootScope.alerta("Notificación", event.alert)
+                    .then(function(){
+                      route(event.Uri);
+                    }, null)
+                }else{
+                  window.localStorage.badge = window.localStorage.badge || 0;
+                  window.localStorage.badge++;
+                  cordova.plugins.notification.badge.set(window.localStorage.badge);
+                  route(event.Uri);
+
+                }
             }
 
             if ( event.sound )
@@ -1791,7 +1859,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
       if(window.cordova)    
       {    
  
-       if ( $rootScope.platform == 'android' || $rootScope.platform == 'Android' || $rootScope.platform == "amazon-fireos" )
+       if ( platform == 'android' || platform == 'Android' || platform == "amazon-fireos" )
                   pushNotification.register(
                   successHandler,
                   errorHandler,
@@ -1811,7 +1879,75 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
                     });
         
        }
-        else
+    
+
+}
+
+
+         if(unregistered)
+            if(window.location.pathname.match('app.html'))
+              pushs();
+
+
+
+    });
+
+
+
+
+
+    $rootScope.login = function(username, password){  
+
+      'use strict'; 
+
+      if(window.config.env.match('dev'))
+    {
+      $scope._form.username = 'sergiogirado@hotmail.com';
+      $scope._form.password = "1234567";
+    }
+
+        if(!$scope._form.username || !$scope._form.password)
+            {
+               $scope.error_login = "Todos los campos son requeridos";
+               return;
+            }
+
+        $scope._form.grant_type="password";
+        $scope._form.login_type="admin";
+
+        if(username && password)
+        {
+          $scope._form.username = username;
+          $scope._form.password = password;
+
+        }
+
+   
+         console.log($scope._form);
+
+          //window.location = "app.html";
+
+          $API
+          .login()          
+          .post("login_type=admin&grant_type=password&username="+$scope._form.username+"&password="+$scope._form.password, {
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            })
+          .success(function(rs){
+             
+              $storage.save('config',rs);  
+              $storage.save('token', rs.access_token)     
+              $rootScope.loged=true; 
+              $storage.save('user', rs.user);  
+              $storage.save('buildings', JSON.parse(rs.user).Buildings);     
+
+              console.log( $storage.get('buildings')[0].BuildingId)
+              delete $scope._form;   
+
+               
+               // window.location = "app.html";
+
+
+             
             window.location = "app.html";
           
 
@@ -1878,6 +2014,13 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
 
     }
+
+
+     $scope.scanasoc = function(){
+        cordova.plugins.barcodeScanner.scan( function(result){
+           window.location = "app.html#/invited/" + result.text;
+        }, null);
+     }
 
 
   $rootScope.stats = function(){
@@ -1971,4 +2114,5 @@ angular.module('dhome')
 .controller('detalleCorrespondenciaController', detalleCorrespondenciaController)
 .controller('logedCtrl', logedCtrl)
 .controller('spaceCtrl', spaceCtrl)
+.controller('inviteCtrl', inviteCtrl)
 ;

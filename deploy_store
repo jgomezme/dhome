@@ -1,0 +1,84 @@
+echo 'Debes tener en cuenta que deben estar previamente instalados el sdk de android, cordova y jdk de JAVA, así como los PATHS correspondientes a cada uno \n'
+echo 'Preparando APK ...'
+
+sudo rm appSigned.apk
+
+echo "Desea generar el APK? [y-n]"
+read generate
+
+
+
+if [ "$generate" = "y" ]
+	then
+sudo cordova build --release android
+fi
+
+Keyname="signerkey" #remplazar por el nombre por defecto de la llave generada
+Appid="com.pilotosbarranquilla.pilotos"  #remplazar por el id de la aplicacion que compilaremos
+_Alias="soluntech"
+
+echo "Deseas generar una llave para firmar la APK? [y -n]"
+read cond
+
+if [ "$cond" = "y" ]
+	then	
+	echo "Ingresa un alias para tu llave: [o Enter para autogenerarlo]"
+	read Alias
+	if [ "$Alias" = "" ]
+		then
+		Alias="$_Alias"
+	fi 
+		
+	keytool -genkey -v -keystore "$keyname.keystore" -alias "$Alias" -keyalg RSA -keysize 2048 -validity 10000
+    else
+    echo "Ingresa el nombre de tu llave: (sin la extension .keystore) [o Enter para usar el nombre por defecto]"
+    read keyname
+
+    if [ "$keyname" = "" ]
+    	then 
+    	keyname="$Keyname"
+    	echo $keyname
+    fi
+
+    echo "Ingresa el Alias de tu llave: [o Enter para usar el alias por defecto]"
+    read Alias
+
+    if [ "$Alias" = "" ]
+    	then 
+    	Alias="$_Alias"
+    	echo $Alias
+    fi
+  	
+fi
+
+
+sudo jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore "$keyname.keystore" platforms/android/ant-build/CordovaApp-release-unsigned.apk "$Alias"
+zipalign -v 4 ./platforms/android/ant-build/CordovaApp-release-unsigned.apk appSigned.apk
+zipalign -c -v 4 appSigned.apk
+
+echo "Desea instalar la APP en un dispositivo de prueba? [y - n]"
+read cond
+
+
+if [ "$cond" = "y" ] 
+then 
+    echo 'Ingresa el id de tu app ej. com.app.miapp [o Enter para usar id por defecto]'
+    read appid
+
+    if [ "appid" != "" ]
+  	  then
+      appid="$Appid"
+    fi
+
+
+	echo 'Se intentará desinstalar la APP, revisa la pantalla del dispositivo y acepta la desinstalación'
+	adb shell am start -a android.intent.action.DELETE -d package:"$appid"
+	
+	echo 'Instalando APP en el dispositivo'
+	adb install appSigned.apk
+	
+	echo 'Listo'
+	adb logcat CordovaLog:D *:S
+else
+  echo 'APP lista para la Play Store - RTC'
+fi

@@ -14,13 +14,24 @@
     html, body{
       background: url(assets/img/bg-2.jpg) no-repeat;
       background-size: cover;
+      background-position: center right;
       /**/
+    }
+
+    md-input-container label{
+       color:white !important;
+    }
+
+    md-input-container input{
+       color: white !important;
+       border-color:white !important;
     }
     </style> 
   </head>
   <body layout="column" >
     <div ng-controller="mainCtrl" layout="column" layout-fill>
 
+             
 <div ng-init="checkLogin()" >
 
 <div layout="row" flex class="content-wrapper" ng-if='nolog' ng-cloak>
@@ -30,18 +41,16 @@
     <md-content layout   class="" flex style="background:transparent" >
 
           
-          <form ng-submit="login()"  hide-sm layout-align="center" style="margin:0 auto" flex="33" aria-label="login" ng-model="_form" autocomplete='off' >
+          <form   hide-sm layout-align="center" style="margin:0 auto" flex="33" aria-label="login" ng-model="_form" autocomplete="off" >
 
 
           <br>
           <br>
           <br>
           <label>
-          <h2 style="text-align:center;color: white;
-  text-shadow: 1px 1px black;">Digital Homes</h2>
           </label>
           <br>
-          <md-content  style="padding:4rem; border-radius:1rem;   background-color: rgba(255, 255, 255, 0.83);" >
+          <md-content  style="padding:4rem; border-radius:1rem;   background-color: rgba(0, 0, 0, 0.41);color: white;" >
 
               <div  layout-align="space-around" ng-show="loading">
               <md-progress-circular md-mode="indeterminate" style="margin: 0 auto;
@@ -58,18 +67,19 @@
 
 
                 <label>Nombre de Usuario *</label>
-                <input ng-model="_form.username" placeholder="Usuario">
+                <input type="email" ng-model="_form.username" placeholder="Usuario" autocomplete="off">
               </md-input-container>
                <md-input-container flex>
                 <label>Contraseña *</label>
-                <input type="password" ng-model="_form.password" >
+                <input type="password" ng-model="_form.password" autocomplete="off">
               </md-input-container>
              
-             <div layout="row">
+              <div layout="row">
                   <span style="color:red">{{error_login || ''}}</span>
               </div>
 
              <br>
+             <div>
               <div layout="row">
                   
 
@@ -77,22 +87,33 @@
                  Ingresar
               </md-button>
 
+
+              </div>
+
+                 <div layout="row" >
+              <p style="text-align:center;   width: 100%;">
+               Ó
+               <br>
+               <br>
+        
+               <span ng-click='scanasoc()'> Ingresar como invitado </span>
+              </p>
+                </div>
+
               </div>
             </div>
             
 </md-content>
               </form>
 
-                        <form hide-gt-sm layout-align="center" ng-submit="login()" style="margin:0 auto" ng-model="_form" autocomplete='off'>
+                        <form hide-gt-sm layout-align="center" ng-submit="login()" style="margin:0 auto" ng-model="_form" autocomplete="off">
           <br>
           <br>
           <br>
             <label>
-          <h2 style="text-align:center;color: white;
-  text-shadow: 1px 1px black;">Digital Homes</h2>
           </label>
           <br>
-          <md-content  style="padding:4rem; border-radius:1rem;   background-color: rgba(255, 255, 255, 0.83);" >
+          <md-content  style="padding:4rem; border-radius:1rem;   background-color: rgba(0, 0, 0, 0.41);color: white;" >
              <div  layout-align="space-around" ng-show="loading">
               <md-progress-circular md-mode="indeterminate" style="margin: 0 auto;
   left: 5px;"></md-progress-circular>
@@ -105,11 +126,11 @@
             <div ng-show="!loading">
               <md-input-container flex>
                 <label>Nombre de Usuario *</label>
-                <input ng-model="_form.username"  placeholder="Usuario">
+                <input type="email" ng-model="_form.username"  placeholder="Usuario" autocomplete="off">
               </md-input-container>
                <md-input-container flex>
                 <label>Contraseña *</label>
-                <input type="password" ng-model="_form.password" >
+                <input type="password" ng-model="_form.password" autocomplete="off">
               </md-input-container>
 
              
@@ -121,15 +142,26 @@
               <div>
 
           <div layout="row">
-                <md-button flex class="md-raised md-primary" style="float:right;display:block">
+                <md-button flex ng-click="login()" class="md-raised md-primary" style="float:right;display:block">
                  Ingresar
               </md-button>
+
+                </div>
+
+                <div layout="row" >
+              <p style="text-align:center;   width: 100%;">
+               Ó
+               <br>
+               <br>
+        
+               <span ng-click='scanasoc()'> Ingresar como invitado </span>
+              </p>
                 </div>
 
               </div>
               </div>
 
-</md-content>
+      </md-content>
               </form>
 
     </md-content>
@@ -151,6 +183,7 @@
     <script src='assets/libs/lodash/dist/lodash.min.js'></script>
     <script src='assets/libs/ng-responsive-calendar/dist/js/calendar-tpls.min.js'></script>    
     <script src="cordova.js"></script>
+    <script src='assets/libs/angular-qrcode/qrcode.js'></script>    
   
     
     <!-- core scripts -->      
