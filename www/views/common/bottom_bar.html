@@ -3,7 +3,8 @@
       <table class="bottom-bar" ng-show="!$root.invited">
         <tbody >
           <tr layout="row">
-            <td style="width:25%; text-align:center" ui-sref="home" layout="column">
+
+            <td ng-click='' style="width:20%; text-align:center" ui-sref="home" ng-class="{'opt-active' : $root.state.toLowerCase().match('home')}"  layout="column">
                
 
                 <ng-md-icon icon="home" style="fill:gray;display: block;"></ng-md-icon>
@@ -11,7 +12,7 @@
                
             </td>
 
-            <td style="width:25%; text-align:center" ui-sref="menu_visitas"  layout="column">
+            <td style="width:20%; text-align:center" ui-sref="menu_visitas" ng-class="{'opt-active' : $root.state.toLowerCase().match('visitas')}"  layout="column">
           
                <ng-md-icon icon="group" style="fill:gray;display: block;"></ng-md-icon>
                <small>Visitas</small>
@@ -19,18 +20,26 @@
           
             </td>
 
-            <td style="width:25%; text-align:center" ui-sref="menu_correspondencias"  layout="column">
+            <td style="width:20%; text-align:center" ui-sref="menu_correspondencias" ng-class="{'opt-active' : $root.state.toLowerCase().match('correspondencia')}"   layout="column">
        
            <ng-md-icon icon="archive" style="fill:gray;display: block;"></ng-md-icon> 
-           <small>Corres/cia</small>
+           <small>Casillero</small>
 
         
             </td>
 
-            <td style="width:25%; text-align:center"  ui-sref="areas" layout="column">
+            <td style="width:20%; text-align:center" ng-class="{'opt-active' : $root.state.toLowerCase().match('area|schedule')}"  ui-sref="areas" layout="column">
 
                    <ng-md-icon icon="domain" style="fill:gray;display: block;"></ng-md-icon>
-              <small>Areas</small>
+              <small>Áreas</small>
+
+                
+            </td>
+
+            <td style="width:20%; text-align:center"  ng-click="sos()" layout="column">
+
+                   <ng-md-icon icon="hearing" style="fill:red;display: block;"></ng-md-icon>
+              <small style="color:red !important">SOS</small>
 
                 
             </td>

@@ -1,9 +1,56 @@
-<div class="post" layout-padding  style="padding-bottom: 0 !important;" >
-       <md-content   layout-align="center center" style="border-radius: 5px; margin-bottom:0; padding-bottom: 0 !important;" flex>
+<div l>
+<div class="post" layout="row">
+       <md-content   layout-align="center center" style=" margin-bottom:0; padding: 8px !important;" flex>
             <form name="form" ng-model="formm" flex>
  
 
-              <div layout="row" >
+
+          
+
+
+              <fieldset layout="row">
+              <div style="border-bottom:1px solid #ccc; border-bottom: 1px solid #ccc;
+  padding-bottom: 6px; position:relative">
+              <md-input-container style="padding-bottom:0;border:none;padding-bottom: 0;
+  border: none;
+  width: 87%;" flex>
+                
+                 <label> Qué deseas publicar? </label>
+                <textarea style="line-height:1.4; border:none" ng-model="formm.Notice.Description" columns="1" ></textarea>  
+                
+              </md-input-container>
+              <ng-md-icon icon="send" ng-click="post()"  style="position: absolute;
+  right: 18px;
+  top: 49px;
+  fill: gray;"></ng-md-icon>
+              </div>
+
+             </fieldset>
+
+
+              <div ng-if="$root.photosrc" layout="row" style="height:50px; overflow:auto; position:relative">
+                  <span style="position:absolute; top:0; left:60px" ng-click="$root.photosrc=null"><ng-md-icon class="gray" size="18" icon="close"></ng-md-icon></span>
+                   <img ng-src="{{$root.photosrc}}" width="50px">
+              </div>
+
+              <div ng-if="file" layout="row" style="height:50px; overflow:auto; position:relative">
+                  <span  ><ng-md-icon class="gray" size="18" icon="attach_file"></ng-md-icon> {{file.name}} <ng-md-icon class="gray" ng-click="delfile()" size="18" icon="close"></ng-md-icon></span>
+                   
+              </div>
+
+
+            </form>
+
+
+
+
+       </md-content>
+
+
+
+   </div>
+
+   <div layout="row" style="background:rgba(213, 213, 213, 0.55)">
 
               <md-button  ng-click="takei()"  flex>
                    Imagen <ng-md-icon icon="image" style="fill:gray"></ng-md-icon>
@@ -21,38 +68,6 @@
 
               </div>
 
-              <md-divider></md-divider>
+          
 
-
-              <fieldset layout="row">
-
-              <md-input-container style="  padding-bottom: 7px;">
-                 <label> Qué deseas publicar? </label>
-                <textarea style="line-height:1.4" ng-model="formm.Notice.Description" columns="1" ></textarea>
-                 
-              </md-input-container>
-            </fieldset>
-
-
-              <div ng-if="$root.photosrc" layout="row" style="height:50px; overflow:auto; position:relative">
-                  <span style="position:absolute; top:0; left:60px" ng-click="$root.photosrc=null"><ng-md-icon class="gray" size="18" icon="close"></ng-md-icon></span>
-                   <img ng-src="{{$root.photosrc}}" width="50px">
               </div>
-
-              <div ng-if="file" layout="row" style="height:50px; overflow:auto; position:relative">
-                  <span  ><ng-md-icon class="gray" size="18" icon="attach_file"></ng-md-icon> {{file.name}} <ng-md-icon class="gray" ng-click="delfile()" size="18" icon="close"></ng-md-icon></span>
-                   
-              </div>
-            
-
-              <div layout="row" >
-                <md-button  ng-disabled="form.$invalid" ng-click="post()"  style="margin-bottom:0 !importat" flex>
-                   Publicar 
-                </md-button>
-              </div>
-        
-
-
-            </form>
-       </md-content>
-   </div>

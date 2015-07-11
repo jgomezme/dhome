@@ -3,33 +3,39 @@
 
 <section  style="overflow:auto">
 
-
  <md-content class="nobg" >
 
    <div ng-if="$root.userRole==='Administrador'">
    <br>
 <br>
      <md-poster></md-poster>
+         <br>
     </div>
 
    </section>
    <br>
    <section ng-init="load()">
-   <div ng-init="parseCustom()" ng-repeat="value in values | filter:$root.search || '' ">
-   <md-card >
+   <div ng-init="parseCustom()" ng-repeat="value in values | filter:$root.search || '' | orderBy: '-RegisterDate'">
+   <md-card  style="margin:0;border-radius: 0;" >
       <md-card-content class="post-title" style="padding-bottom: 0px;">
-     <h4 >
-      <div class="post-photo" style="background:url({{value.Notice.CustomData.userpic || 'http://success.grownupgeek.com/wp-content/uploads/2013/01/no-avatar.png'}}) no-repeat; background-position: center; background-size: cover;">
+
+     
+     <h4 style=" display: inline;
+  line-height: 2.5;
+  font-size: 16px;">
+      <div class="post-photo" style="background:url({{value.Notice.CustomData.userpic || 'http://success.grownupgeek.com/wp-content/uploads/2013/01/no-avatar.png'}}) no-repeat; background-position: center; background-size: cover; background-color: #ebebeb;">
      
       </div>
 
-       {{value.CustomData.userfullname || 'Pedro Perea'}} </h4>
-     <small class="post-date">{{moment(value.RegisterDate).fromNow()}}</small>
+       {{value.CustomData.userfullname || 'Pedro Perea'}} 
+       </h4>
+     <small class="post-date" style="display:inline; float:right; margin-top: 13px;">{{moment(value.RegisterDate).fromNow()}}</small>
+
      </md-card-content>
 
-        <md-card-content style="  padding-bottom: 0;">
+        <md-card-content style="  padding-bottom: 0 !important;">
         <h3 class="md-title" ng-if="value.Notice.CustomData.title">{{value.CustomData.title}}</h3>
-        <p style="padding:0">
+        <p style="padding:0; font-size:13px;margin-top: 6px;">
           {{ value.Description}}
            <br>
            <br>
@@ -38,28 +44,43 @@
 
       </md-card-content> 
 
+      <div flex style="max-height: 200px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  display: block;">
       <img ng-if="value.CustomData.image" ng-src="{{$root.apiurl + '/images?buildingid='+ $root.building + '&name=' + value.CustomData.image}}" class="md-card-image" alt="Washed Out">
-   
-      <md-divider></md-divider>
-      <md-card-content>
+     </div>
 
-      <small>{{value.CustomData.agree || 0}} Recibido · {{value.CustomData.comments || 0}} Comentarios</small>
-      </md-card-content>
-      <md-divider></md-divider>
       <div class="md-actions" layout="row" layout-align="end center">
-           <md-button ng-click="agree(value)" flex><ng-md-icon icon="thumb_up"  style="fill:gray"></ng-md-icon> Recibido</md-button>
-           <md-button ng-click="comment=!comment" flex><ng-md-icon icon="comment" style="fill:gray" ></ng-md-icon> Comentar </md-button>
+           <md-button ng-click="agree(value)" ng-disabled="agreed()" ><ng-md-icon class="circle-icon" ng-class="{'disabled': agreed() }" icon="thumb_up"  style="fill:gray"></ng-md-icon> <small class="counter-text">{{value.CustomData.agrees.length || 0}}</small></md-button>
+           <md-button ng-click="comment=!comment; getComments(value)" ><ng-md-icon icon="comment" class="circle-icon" ></ng-md-icon> <small class="counter-text">{{ value.CommentsCount || 0}}</small></md-button>
       </div>
 
       <div  ng-if="comment" layout-padding>
       <form layout="row">
        <md-input-container flex>
          <label>Escribir comentario...</label>
-          <textarea ng-model="commentext" autofocus="{{comment}}"></textarea>
+          <textarea ng-model="value.commentext" autofocus="{{comment}}"></textarea>
        </md-input-container>
   
         <ng-md-icon class="gray" ng-click="docomment()" style="padding:8px; position:relative; top: 37px;" icon="send"></ng-md-icon>
        </form>
+
+       <div layout="row">
+            <md-list>
+               <md-list-item class="md-2-lines" ng-repeat="comment in value.comments">
+                 <div class="md-avatar" style="background:url({{value.Notice.CustomData.userpic || 'http://success.grownupgeek.com/wp-content/uploads/2013/01/no-avatar.png'}}) no-repeat; background-position: center; background-size: cover; background-color: #ebebeb;"></div>
+                 
+                 <p layout-padding flex>
+                <b>{{comment.Name}}</b> &nbsp;<small>{{moment(comment.RegisterDate).fromNow()}}</small><br>
+                 {{comment.Body}}
+                 </p>
+
+               </md-list-item>
+            </md-list>
+         
+       </div>
+
       </div>
      
     </md-card>

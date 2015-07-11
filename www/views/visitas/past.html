@@ -1,18 +1,13 @@
- <section on-scroll-bottom='more("All")' style="overflow:auto; height:100%; backgroung:white">
+ <section on-scroll-bottom='more("Past")' style="overflow:auto; height:100%;backgroung:white">
 
 <!-- visitas -->
 
-     <md-list ng-init="load('All')" style="position:relative" layout-padding>
+     <md-list ng-init="load('Past')" style="position:relative" layout-padding>
 
   <div ng-if="values">
-  <md-lis-item ng-if="values && values.length == 0 && !$root.loading">
 
-        <p>Parece que no tienes visitas por el momento.</p>
-       </md-lis-item>   
-</div>
-     
-     
-     
+
+
 <md-card ng-init="totime()" layout="column" ng-repeat="value in values  | filter:$root.search || ''   track by $index" aria-label="swipe" style="  margin-bottom: 20px !important;   position: relative;">
   <md-card-content >
 <small layout="row">Visita de</small>
@@ -26,7 +21,8 @@
      {{value.VisitName || 'Pedro Perez'}}</strong>
 
   </md-card-content>
-   <md-card-content  ng-if="value.Reason" style="  padding-bottom: 0;
+  
+    <md-card-content  ng-if="value.Reason" style="  padding-bottom: 0;
   padding-top: 0;">
   <small layout="row">Motivo</small>
   <p layout="row">{{value.Reason}}</p>
@@ -35,5 +31,11 @@
   <br>
 </md-card>
 
-</section>
-  
+       <md-lis-item ng-if="values && values.length == 0 && !$root.loading">
+
+        <p>Parece que no tienes visitas Caducadas por el momento.</p>
+       </md-lis-item>   
+</div>
+ 
+
+  </section>

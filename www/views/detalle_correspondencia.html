@@ -1,4 +1,4 @@
-<md-content class="responsive" layout-padding ng-init="load()">
+<md-content class="responsive " layout-padding ng-init="load()">
 	<md-content>
 		<h3> APTO. {{$root.correspondence.CustomData.suite || $root.nothing}} ( {{$root.correspondence.CustomData.tower || $root.nothing}})</h3>
 	<md-content>
@@ -22,6 +22,7 @@
 </md-content>
 
 <md-content ng-if="$root.userRole!='Administrador' && !$root.correspondence.OpenImage && !opensent && $root.correspondence.State != 'Entregada'">
+
    <md-button class="md-raised md-primary" ng-click="open()">
      Solicitar Apertura de correspondencia
    </md-button>

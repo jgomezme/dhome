@@ -1,6 +1,6 @@
-<md-content ng-cloak layout-padding ng-init="load()">
-	<md-content ng-cloak>
-		<h3>APTO {{current_visit.CustomData.suite}} ({{current_visit.CustomData.tower}})</h3>
+<md-content  class="scrollable" ng-cloak layout-padding ng-init="load()">
+	<md-content  ng-cloak>
+		<h3 ng-if="$root.userRole == 'Administrador' ">APTO {{current_visit.CustomData.suite}} ({{current_visit.CustomData.tower}})</h3>
 	<md-content>
 	<md-input-container flex="">
 		<h4>Fecha</h4>
@@ -19,5 +19,13 @@
 		<span ng-if="!current_visit.CustomData.image">{{ $root.nothing }}</span>
 		<img width="350" ng-if="current_visit.CustomData.image" src="{{$root.apiurl + '/images?buildingid='+ $root.building + '&name=' + current_visit.CustomData.image}}" alt="image">
 	</md-input-container>
+
+	<md-content ng-show="$root.suite == current_visit.SuiteId && current_visit.State == 'Pendiente'" >
+
+      <md-button ng-click="autorize()">Rechazar</md-button>
+     <md-button ng-click="autorize(true)">Aceptar</md-button>
+
+  </md-content>
+
 </md-content>
 

@@ -22,10 +22,39 @@ function detalleVisitaController($scope,$rootScope, $stateParams, $http, $API, $
         .get()
         .success(function(visita){
             $scope.current_visit = visita || [];
-            $scope.current_visit.CustomData = JSON.parse($scope.current_visit.CustomData);
+      
             console.log(visita)
         });
     }
+
+    $scope.autorize = function(state){
+
+
+     var self = $scope.current_visit;
+
+     console.log("Id aaAAA", $scope.current_visit)
+
+
+      $API
+      .visit()
+      .add('/SetAuth?VisitId='+ self.Id + '&State=' + (state ? 'true' : 'false'))  
+      .post()
+      .success(function(rs,code){
+         
+  
+          
+          if(code === 200)
+            $rootScope.alerta('Visita', 'Visita '+ ((state) ? 'Aceptada' : 'Rechazada'))
+            .then(function(){
+                window.location = "#/menu_visitas";
+                $rootScope.stats();
+            }, null);
+
+
+
+      });
+
+  }
 
 }
 
@@ -271,7 +300,7 @@ function newsCtrl($scope, $rootScope, $API, $storage){
       $scope.formm.Notice.CustomData.comments = 0;
       $scope.formm.Notice.CustomData.agree   = 0;
       $scope.formm.Notice.CustomData.user = $rootScope.user;
-      $scope.formm.Notice.CustomData.userfullname = $rootScope.user.FirstName + ' ' + $rootScope.user.LastName;
+      $scope.formm.Notice.CustomData.userfullname = $rootScope.username;
 
 
          $API
@@ -289,6 +318,7 @@ function newsCtrl($scope, $rootScope, $API, $storage){
                 delete $scope.file;
 
                 console.log(rs, 'news');
+                 $rootScope.alerta('Noticia', 'Noticia publicada');
                 window.scrollTo($('md-content md-card:first-child').scrollTop() - 10);
 
          })
@@ -296,34 +326,78 @@ function newsCtrl($scope, $rootScope, $API, $storage){
        });
    }
 
-   $scope.agree = function(value){
+   $scope.getComments = function(value){
 
-       value.CustomData = this.value.CustomData || {};
-       value.CustomData.agree = this.value.CustomData.agree || 0;
-       value.CustomData.agree++;
-
-        $API
-       .noticess(value.Id)
-       .add("/CustomData")
-       .put({CustomData:this.value.CustomData})
+       $API
+       .messages()
+       .add("/"+($rootScope.userRole.match("Administrador") ? "AsAdmin" : "AsResident") +"/Notice/"+this.value.Id)
+       .get()
        .success(function(rs){
-         console.log(rs);
+          console.log("Comments",rs);
+          value.comments = rs;
        })
 
    }
 
-   $scope.docomment = function(){
+   $scope.agreed = function(){
 
+      if(this.value.CustomData)
+          if(this.value.CustomData.agrees){
+           // console.log($rootScope.userid, this.value.CustomData.agrees)
+            if(this.value.CustomData.agrees.indexOf($rootScope.userid) != -1)
+                { return true; }
+
+          }
+
+
+         return false;
+
+   }
+
+   $scope.agree = function(){
+
+
+       
        this.value.CustomData = this.value.CustomData || {};
-       this.value.CustomData.comments = this.value.CustomData.comments || [];
-       this.value.CustomData.comments.push({user:$root.username,text: $scope.commentext});
+       this.value.CustomData = this.value.CustomData || {};
+       this.value.CustomData.agree = this.value.CustomData.agree || 0;
+       this.value.CustomData.agree++;
+       this.value.CustomData.agrees = this.value.CustomData.agrees || [];
+       this.value.CustomData.agrees.push($rootScope.userid);
 
-       $API
+        $API
        .noticess(this.value.Id)
        .add("/CustomData")
        .put({CustomData:this.value.CustomData})
        .success(function(rs){
+         console.log(rs);
+
+
+
+       })
+
+   }
+
+   $scope.docomment = function(value){
+
+       var custom = {username:$rootScope.username};
+       var value = this.value;
+
+
+       $API
+       .messages()
+       .add( ($rootScope.userRole === "Administrador") ? "/AsAdmin" : "/AsResident")
+       .post({body: this.value.commentext, noticeid: this.value.Id, CustomData : custom})
+       .success(function(rs){
+         
           console.log(rs);
+
+          value.comments = value.comments || [];
+          value.comments.push(rs);
+
+          value.commentext = "";
+          value.CommentsCount ++;
+
        })
 
 
@@ -704,6 +778,10 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
 
 
   $scope.prealertar = function(){
+
+     $scope._form.CustomData = $scope._form.CustomData || {};
+     $scope._form.CustomData.prealerted = true;
+     $scope._form.CustomData.suiteName = $storage.get("config").lastSuiteName;
      
       $API
       .visit()
@@ -725,20 +803,23 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
 
   }
 
-  $scope.autorize = function(id,state){
+  $scope.autorize = function(value,state){
+
 
      var self = this;
+
+     console.log("Id aaAAA", this)
 
 
       $API
       .visit()
-      .add('/SetAuth?VisitId='+ id + '&State=' + (state ? 'true' : 'false'))  
+      .add('/SetAuth?VisitId='+ self.value.Id + '&State=' + (state ? 'true' : 'false'))  
       .post()
       .success(function(rs,code){
          
-          if(code === 500)
-            $rootScope.alerta('Error', 'No se pudo aceptar la visita');
-
+  
+          
+          if(code === 200)
             $rootScope.alerta('Visita', 'Visita '+ ((state) ? 'Aceptada' : 'Rechazada'))
             .then(function(){
                 $scope.values.splice($scope.values.indexOf(self.value),1);
@@ -948,11 +1029,20 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
     return /\w\s?/g.test(item.DeliveredTo);
  }
 
+ $scope.canOpen = function(value){
 
- $scope.open = function(){
+  if(!value || !value.SuitesId)
+     return;
+
+   console.log(value.SuitesId.indexOf(parseInt($rootScope.suite)), "CAN OPEN?");
+
+   return value.SuitesId.indexOf(parseInt($rootScope.suite));
+ }
+
+ $scope.open = function(value){
      $API
      .openrequests()
-     .post({CorrespondenceId:$rootScope.correspondence.Id})
+     .post({CorrespondenceId:value.Id})
      .success(function(rs, code){
          console.log(rs,'openn request send');
 
@@ -1104,12 +1194,14 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
 
     $scope.more = function(state){
 
+     if($scope.values.length < 20)
+      return;
+
       if($rootScope.loading)
         return;
 
         $scope.page++;
 
-        if(!where)
         $scope.loadMore(state, $scope.page);
    
 
@@ -1125,6 +1217,7 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
         console.log(rs);
         $scope.value = rs || [];
       });
+
     }
 
 
@@ -1314,14 +1407,37 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
 
 }
 
-function spaceCtrl($scope, $rootScope, $API, $storage){
+function spaceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet){
 
+    $scope.centerBottomSheet = function(val) {  
+    $rootScope.currentVisit = val;
+     
+    $rootScope.center = $rootScope.center || this.value;  
+    $mdBottomSheet.show({
+      templateUrl: 'views/bottom_sheet/reservation.html',
+      scope : $scope,
+      preserveScope : true
+    })
+    .then(function(){ 
+         if(!$state.current.name.match('profile'))    
+       delete $rootScope.center;
+
+       $mdBottomSheet.hide();
+    }, function(){
+         if(!$state.current.name.match('profile'))          
+      delete $rootScope.center; 
+      
+      $mdBottomSheet.hide();
+    })
+    ;
+
+  };
 
    $scope.load = function(){
            
             $API
             .space()
-            .add('?BuildingId='+$rootScope.building)
+            .add('?BuildingId='+$storage.get('buildings')[0].BuildingId)
             .get()
             .success(function(rs){
                 console.log(rs, 'SPACESSS');
@@ -1330,6 +1446,37 @@ function spaceCtrl($scope, $rootScope, $API, $storage){
    
    }
 
+
+   $rootScope.cancelReservation = function(){
+
+        $API
+        .reservation()
+        .add("/"+$rootScope.reservation.Id+"/cancel")
+        .put()
+        .success(function(rs, code){
+             console.log("cancel", rs)
+             if(code === 200)
+                $rootScope.alerta("Reservas", "Se ha cancelado la reserva.");
+
+              $rootScope.hideBS();
+        })
+
+   }
+
+
+
+   $scope.loadReservations = function(){
+
+        $API
+        .reservation()
+        .add("?SuiteId="+$storage.get("config").lastSuiteId)
+        .get()
+        .success(function(rs){
+            console.log("reservations", rs);
+              $scope.valuess = rs;
+        })
+
+   }
 
   
 
@@ -1407,6 +1554,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
   $scope.Home.show = true;
   $scope.Corr = {};
   $scope.Corr.show = true;
+  $rootScope.state = $state;
 
   $scope.Preshow = false;
 
@@ -1417,6 +1565,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
   $rootScope.hideBS = function(){
       $mdBottomSheet.hide();
   }
+
 
 
 
@@ -1436,9 +1585,8 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
                          {
                           $rootScope.alerta('Reserva','Espacio reservado exitosamente')
                           .then(function(){
-                              window.location.reload();
+                              window.location = "#/areas";
                           }, null)
-                          
                          }
                       else 
                         if(rs.Message)
@@ -1453,6 +1601,36 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
        
 
    }
+
+
+    $rootScope.getMonthSpace = function(id, month, callback){
+
+
+    $API
+    .space()
+    .add("/"+id+"?month="+month)
+    .get()
+    .success(callback || function(rs){
+         console.log("Days ", rs);
+    });
+
+ }
+
+
+   $rootScope.getDaySpace = function(id, day, callback){
+
+
+    $API
+    .space()
+    .add("/"+id+"/Hours?UnixDay="+(new Date(day).getTime() / 1000))
+    .get()
+    .success(callback || function(rs){
+         console.log("Days ", rs);
+    });
+
+ }
+
+
 
    $scope.totime = function(){
 
@@ -1637,6 +1815,22 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
         }
 
+
+
+         $rootScope.confirm = function(title, content, ok, cancel){
+
+
+            return $mdDialog.show(
+              $mdDialog.confirm()
+              .title(title || 'Mensaje')
+              .content(content || '')
+              .ariaLabel('alerta')
+              .ok(ok || 'Ok')
+              .cancel(cancel || 'Cancelar')
+              );
+
+        }
+
          
             $scope.menu_right = function(){
               $mdSidenav("right").toggle();
@@ -1667,7 +1861,6 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
        window.pushNotification = window.plugins.pushNotification || window.cordova.plugins.pushNotification;
 
 
-
     var pushs = function(){
 
 
@@ -1685,6 +1878,13 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
            if(uri.match('correspondencia'))
               {window.location = "#/correspondencias/detalle/" + uri.split('/')[1]; return;}
+
+           if(uri.match('reserva'))
+              {window.location = "#/area/reserva/" + uri.split('/')[1]; return;}
+
+             if(uri.match('noticia'))
+               {window.location = "#/noticia/" + uri.split('/')[1]; return;}
+
 
               window.location = "#/home";
 
@@ -1719,9 +1919,13 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
                                   }, {headers : {Authorization : 'Bearer ' + window.localStorage.token}})
                                   .success(function(rs, code){
 
+
+
                                        if(code === 200){
                                          console.log('dispositivo registrado');
                                          unregistered = false;
+                                         $storage.save('hub', rs.Registration);
+
                                          //window.location = "app.html";
                                           }
                                         else
@@ -1767,6 +1971,8 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
                                   }, {headers : {Authorization : 'Bearer ' +  window.localStorage.token}} )
                                   .success(function(rs){
                                          console.log('dispositivo registrado');
+                                         $storage.save('hub', rs.Registration);
+
                                          unregistered = false;
 
                                          //window.location = "app.html";
@@ -1781,7 +1987,9 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
                         if ( e.foreground )
                         {
 
-                  $rootScope.alerta("Notificación", event.alert)
+                          console.log(e)
+
+                  $rootScope.alerta("Notificación", e.payload.message)
                     .then(function(){
                       route(e.payload.message.Uri || e.payload.Uri);
                     }, null)
@@ -1977,13 +2185,35 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
       $mdDialog.show(confirm)
         .then(function(){
-         
-          window.localStorage.clear();
+          
+          var hub = $storage.get("hub");
    
-     if(window.cordova)
+     if(window.cordova){
+         
          pushNotification.unregister(function(rs){ console.log('Registrado del dispositivo eliminado'); }, function(rs){ console.log(rs); });
 
+          $API
+          .register()
+          .add("/" +  hub)
+          .delete()
+          .success(function(rs, code){
+
+          window.localStorage.clear();
+           
+         if(code === 200)
+            {
+            console.log(rs)
+           window.location = 'index.html';
+            }
+          
+          return;
+
+          });
+
+          }else{
+          window.localStorage.clear();
           window.location = 'index.html';
+          }
          
         }, function(){
            
@@ -2061,18 +2291,28 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
        window.location = "#/schedule/"+id;
    }
 
-  $scope.userinfo = function(){
 
-    if(!$rootScope.user)
-      $API
-       .user()
-       .get()
-       .success(function(rs){
-           $rootScope.user = rs;
-           console.log(rs, 'user');
-           $rootScope.username = rs.FirstName + ' ' + rs.LastName;
-       });
-     }
+   $scope.sos = function(){
+
+       $rootScope.
+       confirm("SOS", "Esta seguro que desea enviar un SOS a toda la comunidad?", "Si", "Cancelar")
+       .then(function(){
+          
+          $API
+          .panic()
+          .add("/Building/"+$rootScope.building+"?FileName=8ab7fb7d-ed2f-433e-96b3-f8843db5140c")
+          .post()
+          .success(function(rs){
+                 console.log("panic", rs);
+                 $rootScope.alerta("SOS", "Se enviado SOS a toda la comunidad");
+          })
+
+       }, null);
+       ;
+
+   }
+
+
 
      var configg = window.config[window.config.env];
      $rootScope.apiurl  = configg.apiUrlBase + configg.apiBaseUri;
@@ -2083,10 +2323,13 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
   if(window.localStorage.token)
      $scope.stats();
-     $scope.userinfo();
+     var Config = $storage.get('config');
      $rootScope.building = $storage.get('buildings')[0].BuildingId;
      $rootScope.userRole = $storage.get('buildings')[0].RoleName;
-     $rootScope.suite = $storage.get('config').lastSuiteId === "0" ? 1 : $storage.get('config').lastSuiteId ;
+     $rootScope.suite = Config.lastSuiteId === "0" ? 1 : $storage.get('config').lastSuiteId ;
+     var userinfo = JSON.parse(Config.user)
+     $rootScope.username = userinfo.FirstName + " " + userinfo.LastName;
+     $rootScope.userid = userinfo.UserName;
 
 
   }, 500)
@@ -2097,7 +2340,6 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
 
 function logedCtrl($rootScope, $storage, $API){
-
      
 
 

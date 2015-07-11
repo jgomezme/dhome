@@ -5,52 +5,25 @@
 
     <md-list  >
           
-            <md-item layout="row" flex>
+            <md-item layout="row" ui-sref="correspondencias.porentregar" flex>
                    <md-item-content flex class="docs-menu">
                 <div class="menu-toggle">
                 <ul class="docs-menu" >
                   <li>
-                    <md-button class="md-button-toggle md-button md-default-theme docs-menu"  ng-click="values=[]; Pendshow=false;Preshow  = !Preshow;load('Pendings',true);"   aria-controls="docs-menu-Demos" aria-expanded="true" class="docs-menu">
+                    <md-button class="md-button-toggle md-button md-default-theme docs-menu"    aria-controls="docs-menu-Demos" aria-expanded="true" class="docs-menu">
                       <div flex layout="row" > 
-                          <span >Correspondencia por entregar ({{$root.cstats.Pendings || 0}})
+                          <span >Correspondencia pendiente 
                           </span>
                         <span flex=""></span>
-                        <span aria-hidden="true" class="md-toggle-icon" ng-class="{'toggled' : Preshow}">
-                          <md-icon md-svg-src="md-toggle-arrow" class="ng-isolate-scope md-default-theme" style="height:40px;"></md-icon>
+                        <span aria-hidden="true" >
+                        <span class="badge orange-badge">{{$root.cstats.Pendings || 0}}</span>
                         </span>
                       </div>
                       <div class="md-ripple-container"></div>
                     </md-button>                    
                   </li>
                 </ul>
-                <md-content style="margin-left:20px" ng-show="Preshow" id="docs-menu-Demos" class="menu-toggle-list">
-              
-
-                  <md-list>
- <md-list-item class="md-2-line"  ng-init="parseCustom()"  ng-repeat="value in values | filter:search || '' track by $index" >
-
-
-      <div class="md-avatar"   style="background:#ebebeb; text-align:center; line-height:2.5; text-transform:uppercase;margin-top: -76px;"  aria-label="profile">
-       {{value.inits}}
-      </div>
-      
-      <div class="md-list-item-text" flex  aria-label="profile" ui-sref="detalle_correspondencia()" ng-click="$root.correspondence=this.value">
-          
-          <h3>{{ value.CustomData.suite ? 'APTO. ' + value.CustomData.suite + ' (' + value.CustomData.tower + ')' : 'Masivo'  }} {{ value.To ? ' -  ' + value.To : '' }} - {{value.State}}</h3>          
-          <p class="p-aligned">
-          fecha: {{ moment(value.CorrespondenceDate).format("MMMM Do YYYY, h:mm a") }} <br>
-           {{ value.CustomData.de ?  'de: '+ value.CustomData.de : ''}}
-          </p>
-
-        </div>
-
-
-     </md-list-item> 
-
-</md-list>
-
-                  
-                </md-content>                
+                               
                 </div>
                 </md-item-content>
             </md-item>
@@ -58,53 +31,27 @@
 
      
 
-             <md-item layout="row" flex>
+             <md-item layout="row" ui-sref="correspondencias.todas" flex>
                    <md-item-content flex class="docs-menu">
                 <div class="menu-toggle">
                 <ul class="docs-menu" >
                   <li>
-                    <md-button class="md-button-toggle md-button md-default-theme docs-menu"  ng-click="values=[];Preshow=false;Pendshow  = !Pendshow; load('All',true)"   aria-controls="docs-menu-Demos" aria-expanded="true" class="docs-menu">
+                    <md-button class="md-button-toggle md-button md-default-theme docs-menu"  aria-controls="docs-menu-Demos" aria-expanded="true" class="docs-menu">
                       <div flex layout="row" > 
-                        <span>Todas ({{$root.cstats.Pendings + $root.cstats.Delivereds || 0}})
+                        <span>Todas
                           </span>
                         <span flex=""></span>
-                        <span aria-hidden="true" class="md-toggle-icon" ng-class="{'toggled' : Pendshow}">
-                          <md-icon md-svg-src="md-toggle-arrow" class="ng-isolate-scope md-default-theme" style="height:40px;"></md-icon>
+                        <span aria-hidden="true">
+                        <span class="badge orange-badge">{{$root.cstats.Pendings + $root.cstats.Delivereds || 0}}</span>
+                          
+
                         </span>
                       </div>
                       <div class="md-ripple-container"></div>
                     </md-button>                    
                   </li>
                 </ul>
-                <md-content style="margin-left:20px" ng-show="Pendshow" id="docs-menu-Demos" class="menu-toggle-list">
-              
-                  <md-list>
-
-           <md-list-item class="md-2-line"   ng-init="parseCustom()"  ng-repeat="value in values | filter:search || '' track by $index" >
-
-
-      <div class="md-avatar" style="background:#ebebeb; text-align:center; line-height:2.5; text-transform:uppercase;margin-top: -76px;"  aria-label="profile">
-       {{value.inits}}
-      </div>
-      
-      <div class="md-list-item-text"  flex  aria-label="profile" ui-sref="detalle_correspondencia()" ng-click="$root.correspondence=this.value">
-          
-          <h3>{{ value.CustomData.suite ? 'APTO. ' + value.CustomData.suite + ' (' + value.CustomData.tower + ')' : 'Masivo'  }} {{ value.To ? ' -  ' + value.To : '' }} - {{value.State}}</h3>          
-          <p class="p-aligned">
-          fecha: {{ moment(value.CorrespondenceDate).format("MMMM Do YYYY, h:mm a") }} <br>
-           {{ value.CustomData.de ?  'de: '+ value.CustomData.de : ''}}
-          </p>                       
-        </div>
-
- 
-      <br>
-
-
-     </md-list-item> 
-
-</md-list>
-                  
-                </md-content>                
+                               
                 </div>
                 </md-item-content>
             </md-item>

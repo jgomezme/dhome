@@ -1,0 +1,41 @@
+ <md-list ng-init="loadOpenRequests()" layout-padding>
+
+      <md-lis-item ng-if="values && correspondences.length == 0 && !$root.loading">
+        <p>Parece que no tienes solicituddes de apertura por el momento.</p>
+      </md-lis-item>   
+     
+
+     <md-list-item class="md-3-line" ng-click="gotoopen()"  ng-init="parseCustomm()"  ng-repeat="value in values | filter:search || '' | orderBy:'-CorrespondenceDate' track by $index" >
+
+
+
+      <div class="md-avatar" style="background:#ebebeb; text-align:center; line-height:2.5; text-transform:uppercase"  aria-label="profile">
+       {{value.Correspondence.inits}}
+      </div>
+      
+      <div   class="md-list-item-text" flex  aria-label="profile" ng-click="goToProfile()">
+          
+            <h3>{{ 'APTO. ' + value.SuiteName }}</h3>          
+          <p class="p-aligned">
+          fecha: {{ moment(value.Correspondence.CorrespondenceDate).format("MMMM Do YYYY, h:mm a") }} <br>
+           {{ value.Correspondence.CustomData.de ? 'de: ' + value.Correspondence.CustomData.de : '' }}
+          </p>                       
+        </div>
+        <div layout="column">
+        <div layout="row">
+  
+      </div>
+      </div>
+ 
+<md-divider md-inset ng-if="!$last"></md-divider>
+    
+
+
+     </md-list-item> 
+
+
+     
+
+
+      
+    </md-list>

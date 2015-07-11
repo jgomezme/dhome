@@ -1,34 +1,29 @@
- <md-list ng-init="load()" style="position:relative" layout-padding>
+ <md-list ng-init="load()" style="position:relative; background:white" layout-padding>
       <md-lis-item ng-if="values && correspondences.length == 0 && !$root.loading">
         <p>Parece que no tienes correspondencias por el momento.</p>
       </md-lis-item>   
      
 
-     <md-list-item class="md-3-line" ng-init="parseCustom()"   ng-repeat="value in values | filter:{} | filter:search || '' | orderBy:'-CorrespondenceDate' track by $index" aria-label="swipe">
+  <md-card  layout="column" ui-sref="correspondencias.detalle({id:{{value.Id}}})"  ng-repeat="value in values | filter:search || '' track by $index"  aria-label="swipe" style="  margin-bottom: 20px !important;   position: relative;">
+  <md-card-content >
+<small layout="row">Correspondencia de</small>
+        <md-button  class="md-icon-button"  aria-label="more-center" style="  position: absolute;
+  right: 0;
+  top: 3px;">
+                  <ng-md-icon icon="email" style="fill:gray"></ng-md-icon>   
+              </md-button>
+              <div></div>
+     <strong layout="row" style="font-size: 20px; color:#444">
+     {{value.CustomData.de || 'Pedro Perez'}}</strong>
 
+  </md-card-content>
+  <md-card-content  style="  padding-bottom: 0;
+  padding-top: 0;">
+     <small>fecha: {{ moment(value.CorrespondenceDate).format("MMMM Do YYYY, h:mm a")}}</small>
+    </md-card-content>
 
-
-      
-      <div class="md-list-item-text" flex  aria-label="profile" ng-click="goToProfile()">
-          
-          <h3>{{ value.To }}</h3>          
-          <p class="p-aligned">{{ value.Observations.ellipsis()}}</p>          
-        </div>
-        <div layout="column">
-        <div layout="row">
-      <md-button  class="md-icon-button" ng-click="centerBottomSheet(value)" aria-label="more-center" style="position: relative;
-left: 25px;">
-          <md-icon md-svg-icon="assets/icons/more_vert.svg"></md-icon>    
-      </md-button>
-      </div>
-      </div>
- 
-      <br>
-       <md-divider inset></md-divider>
-
-
-     </md-list-item> 
-
+  <br>
+</md-card>
 
       
     </md-list>

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="assets/libs/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="assets/font/custom/style.css">
     <link rel="stylesheet" href="assets/libs/ng-responsive-calendar/dist/css/calendar.css">
+    <link rel="stylesheet" href="assets/libs/ionicons-min/css/ionicons.min.css">
 
 
     <link rel="stylesheet/less"  href="assets/less/default.less">
@@ -23,28 +24,44 @@
 
    <div  layout="column" flex>
     
-      <div style="position:fixed;   top:0; width:100%; height:100%; z-index:100000 !important" ng-show="$root.loading">
+      <div style="position:fixed;   top:0; width:100%; height:100%; z-index:100000 !important" ng-hide="!$root.loading">
 
-           <div layout="row" style=" top:50%; margin-top:-25px; left: 50%; margin-left:-25px; text-align:center; position: relative">
-              <md-progress-circular class="md-hu-2 md-default-theme"    md-mode="indeterminate">
+           <div layout="row" style="   top: 50%;
+  margin-top: -25px;
+  left: 50%;
+  margin-left: -50px;
+  text-align: center;
+  position: relative;">
+             
+             <div class="centered" style="  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 5px;
+  box-shadow: 1px 2px 5px rgba(128, 128, 128, 0.42);">
+             
+              <md-progress-circular class="md-hu-2 md-default-theme" style="margin:0 auto"   md-mode="indeterminate">
               </md-progress-circular>
-              <br>
-              <br>
-              <br>
-              <span style="position: relative; top: 83px; left: -64px;">  Cargando... </span>
+
+              <span style="  position: relative;
+  display: block;
+  width: 100%;
+  text-align: center;"> 
+
+<br>
+   Cargando... </span>
+              </div>
 
             </div>
 
       </div>
 
-    <md-content style="background:#f6f6f6; height: 100%;"   class="md-default-theme"  ui-view></md-content>
+    <md-content style="background:#F4F4F4; height: 100%;"   class="md-default-theme clearfix"  ui-view></md-content>
       <br>
   <br>
     </div>
 
      <div layout="column">
 
-       <div ng-include="'views/common/sidebar.html'"></div>
+       <div ng-include="'views/common/sidebar.html'" style="overflow:true !important"></div>
 
       </div>
   

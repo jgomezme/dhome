@@ -121,7 +121,7 @@ angular.module('dhome')
 
 
     $stateProvider
-        /*.state('visitas', {
+        .state('visitas', {
             url: "/visitas",
             templateUrl: "views/visitas.html",
             controller: visitasCtrl,
@@ -157,7 +157,7 @@ angular.module('dhome')
             controller: visitasCtrl,
             data : {title:'Todas'}
         })
-        */
+        
         .state('detalle_visitas', {
             url: "/detalle_visita/:id",
             templateUrl: "views/detalle_visita.html",
@@ -218,7 +218,7 @@ angular.module('dhome')
             controller: correspondenceCtrl,
             data : {title:'Correspondencias'}            
         })
-       /*
+       
         .state('correspondencias.todas', {
             url: "/todas",
             templateUrl: "views/correspondencias/todas.html",
@@ -237,12 +237,7 @@ angular.module('dhome')
             controller: correspondenceCtrl,
             data : {title:'Correspondencias'}            
         })
-        .state('nueva-correspondencia', {
-            url: "/nueva-correspondencia",
-            templateUrl: "views/nueva_correspondencia.html",
-            controller: correspondenceCtrl,
-            data : {title:'Correspondencia'}            
-        }) */
+   
         .state('home', {
             url: "/home",
             templateUrl: "views/news.html",
@@ -260,6 +255,12 @@ angular.module('dhome')
             templateUrl: "views/areas/areas.html",
             controller: spaceCtrl,
             data : {title: 'Areas' }                             
+        })
+          .state('visitas.caducadas', {
+            url: "/caducadas",
+            templateUrl: "views/visitas/past.html",
+            controller: visitasCtrl,
+            data : {title:'Caducadas'}
         })
              .state('reservar_area', {
             url: "/reservar_area",

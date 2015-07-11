@@ -1,7 +1,5 @@
-<md-content layout-padding ng-init="loadOne()" ng-if="!$root.loading">
-	<md-content>
-		<h3> APTO. {{value.CustomData.suite || $root.nothing}} ( {{value.CustomData.tower || $root.nothing}})</h3>
-	<md-content>
+
+<md-content layout-padding ng-init="loadOne()" >
 	<md-input-container flex="">
 		<h4>Para el Residente</h4>
 		<span>{{value.To || $root.nothing }}</span>
@@ -16,8 +14,20 @@
 
 		<h4>Foto de apertura de correspondencia</h4>
 
-		<img  width="350"  ng-src="{{$root.apiurl + '/images?buildingid='+ $root.building + '&amp;name=' + value.OpenImage}}" alt="image">
+		<img  width="350"  ng-src="{{value.OpenImage}}" alt="image">
 
 		</div>
+<br>
+<br>
+
+		<md-content layout="row" ng-if="(canOpen(value) != -1) && value.State == 'Pendiente' && !value.OpenImage">
+
+   <md-button class="md-raised md-primary"  flex ng-click="open(value)">
+     Solicitar Apertura
+   </md-button>
+
+</md-content>
 	</md-input-container>
 </md-content>
+
+

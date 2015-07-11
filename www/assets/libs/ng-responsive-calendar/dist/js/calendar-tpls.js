@@ -286,9 +286,22 @@ angular.module('ui.rCalendar', ['ui.rCalendar.tpls'])
                     return dates;
                 }
 
+
                 scope.select = function (selectedDate) {
 
+                    var day_ = new Date(selectedDate).getDate();
+                        day_ = day_ < 10 ? "0" + day_ : day_;
+
+                    if($("#"+day_).hasClass("disable-day"))
+                      return;
+
+
+                   rootScope.day_ = selectedDate;
+                   
+
                     scope.$parent.calendarMode = 'day';
+
+
                   
 
                     var rows = scope.rows;
@@ -344,8 +357,33 @@ angular.module('ui.rCalendar', ['ui.rCalendar.tpls'])
                         });
                     }
 
+                
 
-                    console.log(ctrl.days, 'DAYYYYYS')
+
+
+                  rootScope.getMonthSpace(window.location.hash.split("/")[2], startDate.getMonth()+2, function(rs){ 
+
+                        console.log("RS", rs);
+                        console.log("Month", startDate.getMonth())
+
+                        var Days = rs.Days;
+
+                        for(var x in Days)
+                            if(!Days[x])
+                                {
+                                    if(x < 10)
+                                    $("#0" + (x-0)).addClass("disable-day").attr("disable");
+                                    else
+                                    $("#" + (x-0)).addClass("disable-day").attr("disable");
+
+                                }
+
+
+
+                  });
+
+
+                   console.log(ctrl.days, 'DAYYYYYS')
 
                     scope.labels = new Array(7);
                     for (var j = 0; j < 7; j++) {
@@ -491,6 +529,8 @@ angular.module('ui.rCalendar', ['ui.rCalendar.tpls'])
                         numDisplayedFromPreviousMonth = (difference > 0) ? 7 - difference : -difference,
                         startDate = new Date(firstDayOfMonth),
                         endDate;
+
+                      
 
                     if (numDisplayedFromPreviousMonth > 0) {
                         startDate.setDate(-numDisplayedFromPreviousMonth + 1);
@@ -791,9 +831,31 @@ angular.module('ui.rCalendar', ['ui.rCalendar.tpls'])
                     updateScrollGutter();
                 });
 
+                scope.index = 0;
+
                 ctrl.mode = {
                     step: {days: 1}
                 };
+
+
+
+                  rootScope.getDaySpace(window.location.hash.split("/")[2], rootScope.day_, function(rs){ 
+
+                        console.log("RS day hours", rs);
+               
+
+                        var Days = rs;
+
+                        for(var x in Days)
+                            if(!Days[x])
+                                    {
+                                    $("#" + (x-0)).addClass("disable-day").attr("disable")
+                                    $("#" + (x-0)).find(".calendar-hour-column").text($("#" + (x-0)).find(".calendar-hour-column").text() + " - No disponible");        
+                                }
+
+
+
+                  });
 
 
                 scope.toMonth = function(){
@@ -806,6 +868,10 @@ angular.module('ui.rCalendar', ['ui.rCalendar.tpls'])
                 var finindex = null;
 
                 scope.hour = function(elem){    
+
+
+                       if($("#"+this.$index).hasClass("disable-day"))
+                        return;
 
                    
 
@@ -859,8 +925,8 @@ angular.module('ui.rCalendar', ['ui.rCalendar.tpls'])
                                     $('#'+i).addClass('selectedhour')
                                 
 
-
                         console.log(scope.inihour, scope.finhour, iniindex, finindex);
+                        console.log("In Unix time",new Date(scope.inihour).getTime(), new Date(scope.finhour).getTime());
 
 
                 }
@@ -868,7 +934,16 @@ angular.module('ui.rCalendar', ['ui.rCalendar.tpls'])
                 scope.reserve = function(){
 
                      
-                   rootScope.reserve(scope.inihour,scope.finhour);
+
+                   if(!scope.finhour)
+                      {
+
+                        var finhour = new Date(scope.inihour);
+                            finhour = finhour.setHours(finhour.getHours() +1);
+
+                    }
+
+                   rootScope.reserve(scope.inihour,scope.finhour || finhour);
 
 
                 }
@@ -1048,7 +1123,7 @@ angular.module("template/rcalendar/day.html", []).run(["$templateCache", functio
     "<div >\n" +
     "<div style='display: table;margin: 0 auto;padding: 20px 0;'>\n" +
     "<md-button class='md-raised' ng-click='toMonth()' >Volver</md-button>" +
-    "<md-button class='md-raised md-primary' ng-click='reserve()' ng-disabled='!inihour || !finhour'>Reservar</md-button>" +
+    "<md-button class='md-raised md-primary' ng-click='reserve()' ng-disabled='!inihour'>Reservar</md-button>" +
     "<small style='display:block;padding: 10px 0;'>Seleccione un rango de horas para reservar</small>" +
     "</div >\n" +
     "    <div class=\"dayview-allday-table ng-hide\">\n" +
@@ -1076,7 +1151,7 @@ angular.module("template/rcalendar/day.html", []).run(["$templateCache", functio
     "        <table class=\"table table-fixed\">\n" +
     "            <tbody>\n" +
     "            <tr ng-repeat=\"tm in rows track by $index\" id='{{$index}}' ng-click='hour()'>\n" +
-    "                <td class=\"calendar-hour-column text-center\">\n" +
+    "                <td class=\"calendar-hour-column text-center\" >\n" +
     "                    {{$index<12?($index === 0?12:$index)+'am':($index === 12?$index:$index-12)+'pm'}}\n" +
     "                </td>\n" +
     "            </tr>\n" +
@@ -1103,7 +1178,7 @@ angular.module("template/rcalendar/month.html", []).run(["$templateCache", funct
     "            <td ng-show=\"showWeeks\" class=\"calendar-week-column text-center\">\n" +
     "                <small><em>{{ weekNumbers[$index] }}</em></small>\n" +
     "            </td>\n" +
-    "            <td ng-repeat=\"dt in row track by dt.date\" class=\"monthview-dateCell\" id='{{$id}}' ng-click=\"select(dt.date)\"\n" +
+    "            <td ng-repeat=\"dt in row track by dt.date\" class=\"monthview-dateCell\" id='{{dt.label}} ' data-month='{{startDate.getMonth()}}' ng-click=\"select(dt.date)\"\n" +
     "                ng-class=\"{'text-center':true, 'monthview-current': dt.current&&!dt.selected&&!dt.hasEvent,'monthview-secondary-with-event': dt.secondary&&dt.hasEvent, 'monthview-primary-with-event':!dt.secondary&&dt.hasEvent&&!dt.selected, 'monthview-selected': dt.selected}\">\n" +
     "                <div class='aday' ng-class=\"{'text-muted':dt.secondary}\">\n" +
     "                   {{dt.label}}\n" +
