@@ -10,10 +10,29 @@ function detalleVisitaController($scope,$rootScope, $stateParams, $http, $API, $
         .visit($stateParams.id)
         .get()
         .success(function(visita){
+            visita.CustomData.suiteName = visita.CustomData.VisitName || visita.CustomData.suite + " (" + visita.CustomData.tower + ")"; 
             $scope.current_visit = visita || [];
-            $scope.current_visit.CustomData = JSON.parse($scope.current_visit.CustomData);
-            console.log(visita)
+           console.log(visita)
         });
+    }
+
+    $scope.markAsOk = function(){
+          $API
+          .visit()
+          .add("/" + $scope.current_visit.Id + "/Received")
+          .put()
+          .success(function(rs, code){
+
+              if(code === 200)
+                  {
+                     $rootScope.alerta("Prealerta", "Se ha marcado como recibida la prealerta")
+                     .then(function(){
+     window.location = "#/home/suites";
+                        
+                     }, null)
+                  }
+
+          })
     }
 
 }
@@ -132,7 +151,8 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
   $scope.Corr = {};
   $scope.Corr.show = true;
 
-  $rootScope.platform = (window.cordova) ? window.cordova.platformId : 'web';
+var unregistered = true;
+var platform = (window.cordova) ? window.cordova.platformId : 'web';
 
   $rootScope.hideBS = function(){
       $mdBottomSheet.hide();
@@ -338,21 +358,259 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
       $scope._form = {};
 
 
+       window.pushNotification = '';
+
+    
+    document.addEventListener('deviceready', function(){
+
+       window.pushNotification = window.plugins.pushNotification || window.cordova.plugins.pushNotification;
+
+
+    var pushs = function(){
+
+
+      var route = function(uri){
+
+        uri = uri.toLowerCase();
+
+
+        console.log(uri.split('/'))
+     
+
+           if(uri.match('visit'))
+              {window.location = "#/detalle_visita/" + uri.split('/')[1]; return;}
+
+
+           if(uri.match('correspondencia'))
+              {window.location = "#/correspondencias/detalle/" + uri.split('/')[1]; return;}
+
+           if(uri.match('reserva'))
+              {window.location = "#/area/reserva/" + uri.split('/')[1]; return;}
+
+             if(uri.match('noticia'))
+               {window.location = "#/noticia/" + uri.split('/')[1]; return;}
+
+
+              window.location = "#/home";
+
+
+      }
+
+ var successHandler = function(rs){
+                console.log(rs, 'success handler')
+                
+              }
+
+              var errorHandler = function(err){
+                  console.log(err)
+              }
+
+
+            
+
+                function tokenHandler (result) {
+ 
+                               console.log('device token '+result); 
+
+
+                               try{
+                                 
+                                  $API
+                                  .register()
+                                  .post({
+                                    Handle : result,
+                                    platform : 'apns',
+                                    BuildingId : $storage.get('buildings')[0].BuildingId
+                                  }, {headers : {Authorization : 'Bearer ' + window.localStorage.token}})
+                                  .success(function(rs, code){
+
+
+
+                                       if(code === 200){
+                                         console.log('dispositivo registrado');
+                                         unregistered = false;
+                                         $storage.save('hub', rs.Registration);
+
+                                         //window.location = "app.html";
+                                          }
+                                        else
+                                          console.log('error registrando dispositivo ', rs);
+
+                                  })
+                                  .error(function(err){
+                                         console.log(err)
+                                  })
+
+                                }
+                                catch(e){
+
+                                }
+                                finally{
+                                        // window.location = "app.html";
+                                    
+                                }
+
+
+                     }
+
+
+
+
+         window.onNotification = function(e) {
+
+
+
+                    switch( e.event )
+                    {
+                    case 'registered':
+                        if ( e.regid.length > 0 )
+                        {
+
+
+                               $API
+                                  .register()
+                                  .post({
+                                    Handle : e.regid,
+                                    platform : 'gcm',
+                                    BuildingId : $storage.get('buildings')[0].BuildingId
+                                  }, {headers : {Authorization : 'Bearer ' +  window.localStorage.token}} )
+                                  .success(function(rs){
+                                         console.log('dispositivo registrado');
+                                         $storage.save('hub', rs.Registration);
+
+                                         unregistered = false;
+
+                                         //window.location = "app.html";
+                                  })
+
+                        }
+                    break;
+
+                    case 'message':
+                        // if this flag is set, this notification happened while we were in the foreground.
+                        // you might want to play a sound to get the user's attention, throw up a dialog, etc.
+                        if ( e.foreground )
+                        {
+
+                          console.log(e)
+
+                  $rootScope.alerta("Notificación", e.payload.message)
+                    .then(function(){
+                      route(e.payload.message.Uri || e.payload.Uri);
+                    }, null)
+
+                            // on Android soundname is outside the payload.
+                            // On Amazon FireOS all custom attributes are contained within payload
+                            var soundfile = e.soundname || e.payload.sound;
+                            // if the notification contains a soundname, play it.
+                            var my_media = new Media("/android_asset/www/"+ soundfile);
+                            my_media.play();
+                        }
+                        else
+                       {
+                          window.localStorage.badge = window.localStorage.badge || 0;
+                          window.localStorage.badge++;
+                          cordova.plugins.notification.badge.set(window.localStorage.badge);
+                          route(e.payload.message.Uri || e.payload.Uri);
+                       }
+                       //var action = e.payload.message.split('/');
+                    
+                    break;
+
+                    case 'error':
+                       console.log(e.msg );
+                    break;
+
+                    default:
+
+                       
+                        console.log('unknow action');
+                    break;
+             }
+        }
+
+
+
+        window.onNotificationAPN = function(event) {
+        
+          console.log('hey hello', event);
+
+            
+
+            if ( event.alert )
+            {
+
+
+                if(event.foreground === "1"){
+                    $rootScope.alerta("Notificación", event.alert)
+                    .then(function(){
+                      route(event.Uri);
+                    }, null)
+                }else{
+                  window.localStorage.badge = window.localStorage.badge || 0;
+                  window.localStorage.badge++;
+                  cordova.plugins.notification.badge.set(window.localStorage.badge);
+                  route(event.Uri);
+
+                }
+            }
+
+            if ( event.sound )
+            {
+                var snd = new Media(event.sound);
+                snd.play();
+            }
+
+            if ( event.badge )
+            {
+                pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, event.badge);
+            }
+        }
+
+   
+
+      if(window.cordova)    
+      {    
+ 
+       if ( platform == 'android' || platform == 'Android' || platform == "amazon-fireos" )
+                  pushNotification.register(
+                  successHandler,
+                  errorHandler,
+                  {
+                      "senderID":"148915533168",
+                      "ecb":"window.onNotification"
+                  });
+                else 
+               pushNotification.register(
+                    tokenHandler,
+                    errorHandler,
+                    {
+                        "badge":"true",
+                        "sound":"true",
+                        "alert":"true",
+                        "ecb":"window.onNotificationAPN"
+                    });
+        
+       }
+    
+
+}
+
+
+         if(unregistered)
+            if(window.location.pathname.match('app.html'))
+              pushs();
+
+
+
+    });
+
+
     if(window.config.env.match('dev'))
     {
       $scope._form.username = 1047;
       $scope._form.password = "C0ntr4";
     }
-
-     var pushNotification = '';
-
-    
-    document.addEventListener('deviceready', function(){
-
-       pushNotification = window.plugins.pushNotification || window.cordova.plugins.pushNotification;
-
-
-    });
 
 
     $scope.login = function(){  
@@ -389,178 +647,10 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
               $rootScope.loged=true;          
               $scope._form = null;   
 
-               
-
-               // window.location = "app.html";
-
-
-              var successHandler = function(rs){
-
-                
-              }
-
-              var errorHandler = function(err){
-                  console.log(err)
-              }
-
-
-            
-
-               function tokenHandler (result) {
- 
-                               console.log('device token '+result); 
-
-                               try{
-                                 
-                                  $API
-                                  .register()
-                                  .post({
-                                    Handle : result,
-                                    platform : 'apn',
-                                    BuildingId : $storage.get('config').buildingId
-                                  }, {headers : {Authorization : 'Bearer ' + rs.access_token}})
-                                  .success(function(rs, code){
-
-                                       if(code != 500){
-                                         console.log('dispositivo registrado');
-                                         window.location = "app.html";
-                                          }
-                                        else
-                                          console.log('error registrando dispositivo ', rs);
-
-                                  })
-                                  .error(function(err){
-                                         console.log(err)
-                                  })
-
-                                }
-                                catch(e){
-
-                                }
-                                finally{
-                                         window.location = "app.html";
-
-                                }
-
-
-                     }
-
-
-
-         window.onNotification = function(e) {
-
-
-
-                switch( e.event )
-                    {
-                    case 'registered':
-                        if ( e.regid.length > 0 )
-                        {
-
-
-                               $API
-                                  .register()
-                                  .post({
-                                    Handle : e.regid,
-                                    platform : 'gcm',
-                                    BuildingId : $storage.get('config').buildingId
-                                  }, {headers : {Authorization : 'Bearer ' + rs.access_token}} )
-                                  .success(function(rs, code){
-
-                                       if(code != 500){
-                                         console.log('dispositivo registrado',rs);
-                                      
-                                         window.location = "app.html";
-                                          }
-                                        else
-                                          console.log('error registrando dispositivo ', rs);
-                                  })
-
-                        }
-                    break;
-
-                    case 'message':
-                        // if this flag is set, this notification happened while we were in the foreground.
-                        // you might want to play a sound to get the user's attention, throw up a dialog, etc.
-                        if ( e.foreground )
-                        {
-                          
-
-                            // on Android soundname is outside the payload.
-                            // On Amazon FireOS all custom attributes are contained within payload
-                            var soundfile = e.soundname || e.payload.sound;
-                            // if the notification contains a soundname, play it.
-                            var my_media = new Media("/android_asset/www/"+ soundfile);
-                            my_media.play();
-                        }
-                    
-
-                       $("#app-status-ul").append('<li>MESSAGE -> MSG: ' + e.payload.message + '</li>');
-
-                       var action = e.payload.message.split('/');
-                    
-                    break;
-
-                    case 'error':
-                       console.log(e.msg );
-                    break;
-
-                    default:
-                        console.log('unknow action');
-                    break;
-             }
-        }
-
-
-
-        window.onNotificationAPN = function(event) {
-            if ( event.alert )
-            {
-                navigator.notification.alert(event.alert);
-            }
-
-            if ( event.sound )
-            {
-                var snd = new Media(event.sound);
-                snd.play();
-            }
-
-            if ( event.badge )
-            {
-                pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, event.badge);
-            }
-        }
-
-   
-
-      if(window.cordova)    
-      {    
-       if ( $rootScope.platform == 'android' || $rootScope.platform == 'Android' || $rootScope.platform == "amazon-fireos" )
-                  pushNotification.register(
-                  successHandler,
-                  errorHandler,
-                  {
-                      "senderID":"148915533168",
-                      "ecb":"window.onNotification"
-                  });
-         else
-              pushNotification.register(
-                    tokenHandler,
-                    errorHandler,
-                    {
-                        "badge":"true",
-                        "sound":"true",
-                        "alert":"true",
-                        "ecb":"window.onNotificationAPN"
-                    });
-
-       }
-        else
+           
             window.location = "app.html";
 
         
-        
-
 
           })
           .error(function(err){
@@ -573,7 +663,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
     }
 
-    $scope.logout = function(){
+     $scope.logout = function(){
 
 
        var confirm = $mdDialog.confirm()
@@ -586,15 +676,36 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
       $mdDialog.show(confirm)
         .then(function(){
-         
-          $storage.delete('config');
-         $storage.delete('token');
+          
+          var hub = $storage.get("hub");
    
-    if(window.cordova)
-         pushNotification.unregister(function(rs){ console.log('Registrado del dispositivo eliminado'); }, function(rs){ console.log(rs); });
+     if(window.cordova){
+         
+         window.plugins.pushNotification.unregister(function(rs){ console.log('Registrado del dispositivo eliminado'); }, function(rs){ console.log(rs); });
 
-         window.location.reload();
+          $API
+          .register()
+          .add("/" +  hub)
+          .delete()
+          .success(function(rs, code){
 
+          window.localStorage.clear();
+           
+         if(code === 200)
+            {
+            console.log(rs)
+           window.location = 'index.html';
+            }
+          
+          return;
+
+          });
+
+          }else{
+          window.localStorage.clear();
+          window.location = 'index.html';
+          }
+         
         }, function(){
            
         })
@@ -1504,6 +1615,8 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
       if($rootScope.photosrc)
       data.append('file', dataURLToBlob($rootScope.photosrc))
 
+
+
       $API
       .file($storage.get('config').buildingId)
       .post(data, { headers : {'Content-Type' : undefined} })
@@ -1549,7 +1662,7 @@ function correspondenceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet, 
                .then(function(){
 
                  $scope.form = null;
-                 $scope.photosrc = null;
+                 $rootScope.photosrc = null;
                 
                 $rootScope.gohome();
            

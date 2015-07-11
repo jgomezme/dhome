@@ -67,8 +67,8 @@ angular.module('dhome')
 
                 //do something 
 
-                if (window.config.env.match('qa|dev'))
-                    console.log(response, 'response rq');
+               // if (window.config.env.match('qa|dev'))
+                    //console.log(response, 'response rq');
 
                 rootScope.loading = false;
 

@@ -1,7 +1,10 @@
 <md-content ng-cloak layout-padding ng-init="load()">
-	<md-content ng-cloak>
-		<h3>APTO {{current_visit.CustomData.suite}} ({{current_visit.CustomData.tower}})</h3>
-	<md-content>
+	
+
+	<md-content ng-if="current_visit.CustomData.suiteName" >
+		<h3>APTO {{current_visit.CustomData.suiteName}}</h3>
+	</md-content>
+
 	<md-input-container flex="">
 		<h4>Fecha</h4>
 		<span>{{moment(current_visit.VisitDate).format("MMMM Do YYYY, h:mm a")}}</span>
@@ -19,5 +22,12 @@
 		<span ng-if="!current_visit.CustomData.image">{{ $root.nothing }}</span>
 		<img width="350" ng-if="current_visit.CustomData.image" src="{{$root.apiurl + '/images?buildingid='+ $root.building + '&name=' + current_visit.CustomData.image}}" alt="image">
 	</md-input-container>
+
+	<br>
+
+	<md-content ng-show="!current_visit.Received && current_visit.CustomData.prealerted">
+	   <md-button ng-click="markAsOk()">Marcar como recibido</md-button>
+	</md-content>
+
 </md-content>
 
