@@ -10,7 +10,8 @@ function detalleVisitaController($scope,$rootScope, $stateParams, $http, $API, $
         .visit($stateParams.id)
         .get()
         .success(function(visita){
-            visita.CustomData.suiteName = visita.CustomData.VisitName || visita.CustomData.suite + " (" + visita.CustomData.tower + ")"; 
+
+            visita.CustomData.suiteName = visita.CustomData.suiteName || (visita.CustomData.suite + " ("+ visita.CustomData.tower + ")");
             $scope.current_visit = visita || [];
            console.log(visita)
         });
@@ -133,16 +134,14 @@ var dataURLToBlob = function(dataURL) {
     return new Blob([uInt8Array], {type: contentType});
   }
 
+var unregistered = true;
 
 function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdMedia, $mdBottomSheet, $state, $API, $storage, $location, $mdToast){
 
        //handling device ready
         $mdBottomSheet.hide();
 
-      document.addEventListener('deviceready', function(){
-         console.log(cordova.plugins)
-         
-      })
+   
 
   moment.locale('es');
   $scope.moment = moment;
@@ -151,7 +150,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
   $scope.Corr = {};
   $scope.Corr.show = true;
 
-var unregistered = true;
+
 var platform = (window.cordova) ? window.cordova.platformId : 'web';
 
   $rootScope.hideBS = function(){
@@ -363,6 +362,7 @@ var platform = (window.cordova) ? window.cordova.platformId : 'web';
     
     document.addEventListener('deviceready', function(){
 
+
        window.pushNotification = window.plugins.pushNotification || window.cordova.plugins.pushNotification;
 
 
@@ -420,7 +420,7 @@ var platform = (window.cordova) ? window.cordova.platformId : 'web';
                                   .post({
                                     Handle : result,
                                     platform : 'apns',
-                                    BuildingId : $storage.get('buildings')[0].BuildingId
+                                    BuildingId : $storage.get('config').buildingId
                                   }, {headers : {Authorization : 'Bearer ' + window.localStorage.token}})
                                   .success(function(rs, code){
 
@@ -428,7 +428,7 @@ var platform = (window.cordova) ? window.cordova.platformId : 'web';
 
                                        if(code === 200){
                                          console.log('dispositivo registrado');
-                                         unregistered = false;
+                                         unregistered  = false;
                                          $storage.save('hub', rs.Registration);
 
                                          //window.location = "app.html";
@@ -472,13 +472,13 @@ var platform = (window.cordova) ? window.cordova.platformId : 'web';
                                   .post({
                                     Handle : e.regid,
                                     platform : 'gcm',
-                                    BuildingId : $storage.get('buildings')[0].BuildingId
+                                    BuildingId : $storage.get('config').buildingId
                                   }, {headers : {Authorization : 'Bearer ' +  window.localStorage.token}} )
                                   .success(function(rs){
                                          console.log('dispositivo registrado');
                                          $storage.save('hub', rs.Registration);
 
-                                         unregistered = false;
+                                       unregistered  = false;
 
                                          //window.location = "app.html";
                                   })
@@ -508,9 +508,6 @@ var platform = (window.cordova) ? window.cordova.platformId : 'web';
                         }
                         else
                        {
-                          window.localStorage.badge = window.localStorage.badge || 0;
-                          window.localStorage.badge++;
-                          cordova.plugins.notification.badge.set(window.localStorage.badge);
                           route(e.payload.message.Uri || e.payload.Uri);
                        }
                        //var action = e.payload.message.split('/');
@@ -646,6 +643,8 @@ var platform = (window.cordova) ? window.cordova.platformId : 'web';
               $storage.save('token', rs.access_token)     
               $rootScope.loged=true;          
               $scope._form = null;   
+
+              window.localStorage.unregistered = true;
 
            
             window.location = "app.html";
@@ -857,10 +856,6 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
    $scope.building = $storage.get('config').buildingId;
 
 
-
-    document.addEventListener('deviceready', function(){
-         StatusBar.show();
-      });
 
 
 $scope.selectAll = function(){
