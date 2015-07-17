@@ -191,10 +191,22 @@ function entityCtrlBase($scope, $rootScope, $stateParams){
 }
 
 
-function newsCtrl($scope, $rootScope, $API, $storage){
+function newsCtrl($scope, $rootScope, $API, $storage, $stateParams){
 
 
    $scope.load = function(){
+         $API
+          .noticesss()
+         .add('/building/'+$storage.get('buildings')[0].BuildingId+'?page=1')
+         .get()
+         .success(function(rs){
+                $scope.values = rs;
+                console.log(rs, 'news')
+         })
+   }
+
+
+   $scope.loadOne = function(){
          $API
           .noticesss()
          .add('/building/'+$storage.get('buildings')[0].BuildingId+'?page=1')
@@ -483,10 +495,6 @@ function buildingCtrl($scope, $rootScope, $storage, $API, $stateParams, $mdBotto
    $scope.building = $storage.get('config').buildingId;
 
 
-
-    document.addEventListener('deviceready', function(){
-         StatusBar.show();
-      });
 
 
 $scope.selectAll = function(){
@@ -781,6 +789,7 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
 
      $scope._form.CustomData = $scope._form.CustomData || {};
      $scope._form.CustomData.prealerted = true;
+
      $scope._form.CustomData.suiteName = $storage.get("config").lastSuiteName;
      
       $API
@@ -842,7 +851,7 @@ function visitasCtrl($scope, $rootScope, $mdBottomSheet, $stateParams, $api, $st
         .get()
         .success(function(rs){
             $scope.values = rs;
-        })
+        });
 
   }
 
@@ -1419,14 +1428,11 @@ function spaceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet){
       preserveScope : true
     })
     .then(function(){ 
-         if(!$state.current.name.match('profile'))    
-       delete $rootScope.center;
+        
 
        $mdBottomSheet.hide();
     }, function(){
-         if(!$state.current.name.match('profile'))          
-      delete $rootScope.center; 
-      
+        
       $mdBottomSheet.hide();
     })
     ;
@@ -1455,8 +1461,12 @@ function spaceCtrl($scope, $rootScope, $API, $storage, $mdBottomSheet){
         .put()
         .success(function(rs, code){
              console.log("cancel", rs)
-             if(code === 200)
-                $rootScope.alerta("Reservas", "Se ha cancelado la reserva.");
+             if(code === 200){
+                $rootScope.alerta("Reservas", "Se ha cancelado la reserva.")
+                .then(function(){
+                  $scope.loadReservations();
+                }, null);
+             }
 
               $rootScope.hideBS();
         })
@@ -1585,6 +1595,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
                          {
                           $rootScope.alerta('Reserva','Espacio reservado exitosamente')
                           .then(function(){
+
                               window.location = "#/areas";
                           }, null)
                          }
@@ -1853,15 +1864,19 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
     
 
-     window.pushNotification = '';
+    window.pushNotification = '';
 
     
     document.addEventListener('deviceready', function(){
 
-       window.pushNotification = window.plugins.pushNotification || window.cordova.plugins.pushNotification;
+
+    window.pushNotification = window.plugins.pushNotification || window.cordova.plugins.pushNotification;
+
 
 
     var pushs = function(){
+
+  
 
 
       var route = function(uri){
@@ -1890,6 +1905,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
 
       }
+      
 
  var successHandler = function(rs){
                 console.log(rs, 'success handler')
@@ -1905,7 +1921,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
                 function tokenHandler (result) {
  
-                               console.log('device token '+result); 
+                               console.log('device token ' + result); 
 
 
                                try{
@@ -1923,7 +1939,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
 
                                        if(code === 200){
                                          console.log('dispositivo registrado');
-                                         unregistered = false;
+                                         unregistered  = false;
                                          $storage.save('hub', rs.Registration);
 
                                          //window.location = "app.html";
@@ -1962,6 +1978,8 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
                         {
 
 
+
+
                                $API
                                   .register()
                                   .post({
@@ -1973,7 +1991,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
                                          console.log('dispositivo registrado');
                                          $storage.save('hub', rs.Registration);
 
-                                         unregistered = false;
+                                     unregistered  = false;
 
                                          //window.location = "app.html";
                                   })
@@ -2003,9 +2021,7 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
                         }
                         else
                        {
-                          window.localStorage.badge = window.localStorage.badge || 0;
-                          window.localStorage.badge++;
-                          cordova.plugins.notification.badge.set(window.localStorage.badge);
+                
                           route(e.payload.message.Uri || e.payload.Uri);
                        }
                        //var action = e.payload.message.split('/');
@@ -2087,14 +2103,16 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
                     });
         
        }
-    
+
+
 
 }
 
 
-         if(unregistered)
+     if(unregistered)
             if(window.location.pathname.match('app.html'))
               pushs();
+     
 
 
 
@@ -2155,7 +2173,8 @@ function mainCtrl($scope, $rootScope, $window, $mdDialog, $mdSidenav, $api, $mdM
                // window.location = "app.html";
 
 
-             
+             window.localStorage.unregistered  = true;
+
             window.location = "app.html";
           
 

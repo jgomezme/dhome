@@ -244,6 +244,18 @@ angular.module('dhome')
             controller: newsCtrl,
             data : {title: 'Noticias' }                             
         }) 
+        .state('news', {
+            url: "/news",
+            templateUrl: "views/news.html",
+            controller: newsCtrl,
+            data : {title: 'Noticias' }                             
+        }) 
+        .state('news.detalle', {
+            url: "/detalle/:id",
+            templateUrl: "views/noticias/detalle.html",
+            controller: newsCtrl,
+            data : {title: 'Noticias' }                             
+        }) 
          .state('notificar_visita', {
             url: "/notificar_visita",
             templateUrl: "views/visitas/notificar_visita.html",
