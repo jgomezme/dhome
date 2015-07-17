@@ -2,7 +2,7 @@
 
 window.config = {
 
-	env : "dev",
+	env : "prod",
 	dev : {
 	    apiUrlBase : "http://dhmysqlserver.cloudapp.net:82",
 	    apiBaseUri : "/api"
